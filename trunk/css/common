@@ -1,0 +1,164 @@
+// SQF
+//
+// common macros "\css\common"
+// Copyright (c) 2009-2010 Denis Usenko (DenVdmj)
+// MIT-style license
+//
+
+#ifndef __css_common__
+#define __css_common__ defined
+
+//
+//
+//
+
+#ifndef __project_name
+#define __project_name -
+#endif
+
+#ifndef __module_name
+#define __module_name -
+#endif
+
+#define __quoted(str) #str
+#define __ns_prefix /__project_name/__module_name
+
+#define __nsSet(ns,varname,value) ns setVariable [__quoted(/__ns_prefix/varname), value]
+#define __nsGet(ns,varname) ((ns)getVariable __quoted(/__ns_prefix/varname))
+
+#define __uiSet(varname,value) __nsSet(uiNamespace,varname,value)
+#define __uiGet(varname) __nsGet(uiNamespace,varname)
+
+#define var(name) __project_name##_var_##name
+#define func(name) __project_name##_func_##name
+#define invoke(name) call func(name)
+#define currentLangAbbr (localize "STR:CSS:CURRENT_LANG_ABBR")
+#define currentLang (localize "STR:CSS:CURRENT_LANG")
+
+#define preprocessFile preprocessFileLineNumbers
+#define compileFile compile preprocessFile
+#define callFile call compileFile
+
+//
+// Arguments macro
+//
+
+#define arg(x)            (_this select (x))
+#define argIf(x)          if(count _this > (x))
+#define argIfType(x,t)    if(argIf(x)then{typeName arg(x) == (t)}else{false})
+#define argSafe(x)        argIf(x)then{arg(x)}
+#define argSafeType(x,t)  argIfType(x,t)then{arg(x)}
+#define argOr(x,v)        (argSafe(x)else{v})
+
+//
+// Array macro
+//
+
+#define item(a,v)  ((a)select(((v)min(count(a)-1))max 0))
+#define itemr(a,v) (item((a),if((v)<0)then{count(a)+(v)}else{v}))
+#define push(a,v)  (a)set[count(a),(v)]
+#define pushTo(a)  call{(a)set[count(a),_this]}
+#define top(a)     ((a)select((count(a)-1)max 0))
+#define pop(a)     (0 call{_this=top(a);a resize((count(a)-1)max 0);_this})
+#define selectRnd(a) (a select floor random count a)
+
+//
+// Position macro
+//
+
+#define x(a) ((a) select 0)
+#define y(a) ((a) select 1)
+#define z(a) ((a) select 2)
+#define w(a) ((a) select 2)
+#define h(a) ((a) select 3)
+
+//
+// Other macro
+//
+
+#define MATH_INF 1e9999
+#define LOGN(power,number) ((log number)/(log power))
+#define LOG2(number) ((log number)/.3010299956639812)
+#define GET_BIT(num,bit) (floor((num / (2^bit)) % 2))
+#define CHECK_BIT(num,bit) (GET_BIT(num,bit) == 1)
+#define XOR(a,b) (!(a && b) && (a || b))
+#define INC(n) (call { n = n + 1; n })
+#define DEC(n) (call { n = n - 1; n })
+#define _(v)   _##v = _##v
+#define STRSQF "call" + str
+
+//
+// FOR, MAP, GREP
+//
+
+#define FOR_CONF(list) call{private"___n";___n=list;for"_i"from(0)to(count ___n-1)do{private"_x";_x=___n select _i;private"___n";_x call _this}}
+#define MAP_ARRAY(list) call{private"___r";___r=[];{___r set[count ___r,call{private"___r";_x call _this}]}foreach(list);___r}
+#define GREP_ARRAY(list) call{private"___r";___r=[];{if(call{private"___r";_x call _this})then{push(___r,_x)}}foreach(list);___r}
+#define MAP(list) call{private["___r","___n"];___r=[];___n=list;for"_i"from(0)to(count ___n-1)do{private"_x";_x=___n select _i;___r set[count ___r,call{private["___r","___n"];call _this}]};___r}
+#define GREP(list) call{private["___r","___n"];___r=[];___n=list;for"_i"from(0)to(count ___n-1)do{private"_x";_x=___n select _i;if(call{private["___r","___n"];_x call _this})then{push(___r,_x)}};___r}
+
+//
+// Type of expression
+//
+
+#define IS_CODE(v) (typeName(v) == "CODE")
+#define IS_NUM(v)  (typeName(v) == "SCALAR")
+#define IS_HNDL(v) (typeName(v) == "SCRIPT")
+#define IS_SIDE(v) (typeName(v) == "SIDE")
+#define IS_STML(v) (typeName(v) == "TEXT")
+
+#define IS_ARR(v)  (typeName(v) == "ARRAY")
+#define IS_BOOL(v) (typeName(v) == "BOOL")
+#define IS_CONF(v) (typeName(v) == "CONFIG")
+#define IS_CTRL(v) (typeName(v) == "CONTROL")
+#define IS_DSPL(v) (typeName(v) == "DISPLAY")
+#define IS_GRP(v)  (typeName(v) == "GROUP")
+#define IS_OBJ(v)  (typeName(v) == "OBJECT")
+#define IS_STR(v)  (typeName(v) == "STRING")
+
+#define __ManPosNoActions -1
+#define __ManPosDead 0
+#define __ManPosWeapon 1
+#define __ManPosBinocLying 2
+#define __ManPosLyingNoWeapon 3
+#define __ManPosLying 4
+#define __ManPosHandGunLying 5
+#define __ManPosCrouch 6
+#define __ManPosHandGunCrouch 7
+#define __ManPosCombat 8
+#define __ManPosHandGunStand 9
+#define __ManPosStand 10
+#define __ManPosSwimming 11
+#define __ManPosNoWeapon 12
+#define __ManPosBinoc 13
+#define __ManPosBinocStand 14
+
+#define __WeaponNoSlot 0
+#define __WeaponSlotPrimary 1
+#define __WeaponSlotHandGun 2
+#define __WeaponSlotSecondary 4
+#define __WeaponSlotMashinegun 5
+#define __WeaponSlotHandGunMag 16
+#define __WeaponSlotMag 256
+#define __WeaponSlotGoggle 4096
+#define __WeaponHardMounted 65536
+#define __WeaponSlotItem 131072
+
+#define __TEast 0
+#define __TWest 1
+#define __TGuerrila 2
+#define __TCivilian 3
+#define __TSideUnknown 4
+#define __TEnemy 5
+#define __TFriendly 6
+#define __TLogic 7
+#define __private 0
+#define __protected 1
+#define __public 2
+
+#define __prflrInit _profilerOutput_ = [];
+#define __prflrStart _profilerStartTime_ = diag_ticktime;
+#define __prflrEnd(text) _profilerOutput_ set [count _profilerOutput_, text + ": " + str (diag_ticktime - _profilerStartTime_)];
+#define __prflrOut call { private ["_s1", "_s2", "_n"]; _n = toString [0x0D, 0x0A]; _s1 = ""; _s2 = ""; { _s1 = _s1 + _x + "\n"; _s2 = _s2 + _x + _n } foreach _profilerOutput_; hint _s1; copyToClipboard _s2; _profilerOutput_ };
+
+#endif
