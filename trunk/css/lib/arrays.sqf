@@ -10,7 +10,8 @@
 func(List2Set) = {
     private ["_col", "_rem"];
     _col = [];
-    while { count _this != 0 } do {
+    for "" from 1 to count _this do {
+        if (count _this == 0) exitwith {};
         _rem = _this - [_this select 0];
         _col set [count _col, [_this select 0, count _this - count _rem]];
         _this = _rem;
@@ -23,23 +24,23 @@ func(CanonizeSet) = {
     _set = [];
     _keys = [];
     {
-        #define __OldKey    (_x select 0)
-        #define __OldValue  (_x select 1)
-        #define __NewPair   (_set select _pos)
-        #define __NewKey    (__NewPair select 0)
-        #define __NewValue  (__NewPair select 1)
-        _pos = _keys find __OldKey;
+        #define __oldKey    (_x select 0)
+        #define __oldValue  (_x select 1)
+        #define __newPair   (_set select _pos)
+        #define __newKey    (__newPair select 0)
+        #define __newValue  (__newPair select 1)
+        _pos = _keys find __oldKey;
         if (_pos == -1) then {
             push(_set, _x);
-            push(_keys, __OldKey);
+            push(_keys, __oldKey);
         } else {
-            __NewPair set [1, __NewValue + __OldValue]
+            __newPair set [1, __newValue + __oldValue]
         };
-        #undef __OldKey
-        #undef __OldValue
-        #undef __NewPair
-        #undef __NewKey
-        #undef __NewValue
+        #undef __oldKey
+        #undef __oldValue
+        #undef __newPair
+        #undef __newKey
+        #undef __newValue
     } foreach _this;
     _set
 };

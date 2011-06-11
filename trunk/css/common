@@ -156,9 +156,8 @@
 #define __protected 1
 #define __public 2
 
-#define __prflrInit _profilerOutput_ = [];
-#define __prflrStart _profilerStartTime_ = diag_ticktime;
-#define __prflrEnd(text) _profilerOutput_ set [count _profilerOutput_, text + ": " + str (diag_ticktime - _profilerStartTime_)];
-#define __prflrOut call { private ["_s1", "_s2", "_n"]; _n = toString [0x0D, 0x0A]; _s1 = ""; _s2 = ""; { _s1 = _s1 + _x + "\n"; _s2 = _s2 + _x + _n } foreach _profilerOutput_; hint _s1; copyToClipboard _s2; _profilerOutput_ };
+#define __profilerStart private "_profilerOutput_"; _profilerOutput_ = []; private "_profilerPointTime_"; _profilerPointTime_ = diag_ticktime;
+#define __profiler(message) _profilerOutput_ set [count _profilerOutput_, message + ": " + str (diag_ticktime - _profilerPointTime_)]; _profilerPointTime_ = diag_ticktime;
+#define __profilerEnd call { private ["_s1", "_s2", "_n"]; _n = toString [0x0D, 0x0A]; _s1 = ""; _s2 = _n; { _s1 = _s1 + _x + "\n"; _s2 = _s2 + _x + _n } foreach _profilerOutput_; hint _s1; copyToClipboard _s2; diag_log _s2; _profilerOutput_ };
 
 #endif

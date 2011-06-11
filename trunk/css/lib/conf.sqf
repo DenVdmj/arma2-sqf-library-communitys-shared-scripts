@@ -17,6 +17,18 @@ func(ReadSlotGoggle)      = { floor((_this invoke(ReadSlots)) / 4096 ) % 8 };
 func(ReadSlotHardMounted) = { floor((_this invoke(ReadSlots)) / 65536 ) % 2 };
 func(ReadSlotItem)        = { floor((_this invoke(ReadSlots)) / 131072 ) % 16 };
 
+func(isInheritFrom) = {
+    private ["_curr", "_parent", "_void"];
+    _curr = _this select 0;
+    _parent = _this select 1;
+    _void = configFile >> "*";
+    while { true }  do {
+        if (_curr == _void) exitwith { false };
+        if (_curr == _parent) exitwith { true };
+        _curr = inheritsFrom _curr;
+    };
+};
+
 func(ConfigAmmo) = {
     configFile >> "CfgAmmo" >> (
         getText ( configFile >> "CfgMagazines" >> _this >> "ammo" )
@@ -89,7 +101,7 @@ func(FilterWeapon) = {
         } foreach (
             arg(0) call {
                 switch (typeName _this) do {
-                    case "OBJECT" : func(GetWeaponsExt);
+                    case "OBJECT" : func(GetUnitWeaponsExt);
                     case "ARRAY" : { _this };
                     case "STRING" : { [_this] };
                     default {
@@ -230,7 +242,7 @@ func(GetWeaponByTypes) = {
     } foreach (arg(0) call {
         switch (typeName _this) do {
             case "ARRAY" : { _this };
-            case "OBJECT" : func(GetWeaponsExt);
+            case "OBJECT" : func(GetUnitWeaponsExt);
             default { [] };
         }
     });
@@ -263,14 +275,8 @@ func(GetTurretsWeapons) = {
     _weapons;
 };
 
-func(GetWeaponsExt) = if (count supportInfo "*:getweaponcargo*" != 0) then {{
+func(GetUnitWeaponsExt) = if (count supportInfo "*:getweaponcargo*" != 0) then {{
     (weapons _this) + (getWeaponCargo _this select 0)
 }} else {{
     (weapons _this)
 }};
-
-
-
-
-
-
