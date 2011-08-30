@@ -12,7 +12,7 @@
 
 if (isNil{__getStorage}) then { __setStorage([]) };
 
-func(CreateDialog_new) = {
+func(CreateDialog) = {
 
     private ["_rsc", "_display", "_parent", "_private", "_handlers", "_constructor", "_destructor"];
 
