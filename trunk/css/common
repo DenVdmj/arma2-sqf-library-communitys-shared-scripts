@@ -137,7 +137,7 @@
 #define __WeaponSlotPrimary 1
 #define __WeaponSlotHandGun 2
 #define __WeaponSlotSecondary 4
-#define __WeaponSlotMashinegun 5
+#define __WeaponSlotMachinegun 5
 #define __WeaponSlotHandGunMag 16
 #define __WeaponSlotMag 256
 #define __WeaponSlotGoggle 4096

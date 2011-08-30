@@ -23,31 +23,41 @@ func(ArmAs) = {
     } foreach getArray (_donor >> "weapons");
 };
 
-/*
-func(CreateCustomVehicle)
-    Создает технику
-    Синтаксис:
-        [
-            string vehicleType,
-            string special,
-            position position,
-            side or group or object group,
-            array of string crewSlots,
-            array of soldiers unitList
-        ] call funcCreateVehicle
-
-    vehicleType --  тип создаваемой техники
-    special     --  возможные значения: "NONE" (или ""), "FLY"
-    position    --  позиция в которой создается техника
-    group       --  группа которой будет принадлежать экипаж созданной техники,
-                    если указан юнит -- экипаж будет принадлежать его группе,
-                    если указана сторона -- будет создана новая группа с указанной строной,
-                    если укзано другое значение (например 0 или "" или "default" или не указано), для экипажа будет создана
-                    новая группа принадлежащая стороне специфичной для данной техники
-    crewSlots   --  комплектация экипажа, массив содержащий некоторые из следующих значений: "commander", "driver", "gunner", "cargo".
-                    (создавать (если не задан пятый параметр) и помещать в технику: командира, водителя/пилота, пулеметчика/пулеметчиков, пассажиров)
-    unitList    --  если задан -- юниты экипажа будут браться по очереди из данного списка
-*/
+// 
+// func(CreateCustomVehicle)
+// Syntax:
+//     [
+//         String vehicleType,
+//         String special,
+//         Position position,
+//         Side or Group or Object group,
+//         Array of String crewSlots,
+//         Array of Soldiers unitList
+//     ] invoke(CreateCustomVehicle)
+//
+// Arguments:
+//     vehicleClass  —  the vehicle class.
+//     special       —  create vehicle in the air or on the land, possable values: "NONE" (or ""), "FLY".
+//     position      —  position of the vehicle.
+//     group         —  group of the vehicle crew,
+//                      if the soldier - will be used his group
+//                      if the side - will create a new group by this side
+//                      if the other value (eg 0 or "" or "default"), will create a new group
+//                      owned by a native side of the vehicle.
+//     crewSlots     —  bring the crew up to strength. А list containing some of the following
+//                      values: "commander", "driver", "gunner", "cargo".
+//     unitList      —  if present — crewmans will be retrieved one by one from this list,
+//                      else — crewmans will be created.
+//
+// Example:
+//     [
+//         "RHIB",
+//         "none",
+//         screenToWorld [.5, .5],
+//         west,
+//         ["driver", "gunner"]
+//     ] call css_func_CreateCustomVehicle
+//
 
 func(CreateCustomVehicle) = {
     private [
@@ -85,7 +95,7 @@ func(CreateCustomVehicle) = {
             }
         }
     } else {
-        _crewType = getText( configFile >> "CfgVehicles" >> _vehicleType >> "crew" );
+        _crewType = getText (configFile >> "CfgVehicles" >> _vehicleType >> "crew");
         {
             _crewType createUnit [_position, _group, "", .7];
             units _group select ((count units _group)-1)

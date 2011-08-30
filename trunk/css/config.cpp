@@ -11,12 +11,12 @@ class CfgPatches {
 class CfgMods {
     class css {
         dir = "@\CSS";
-        name = "RPG Like System";
+        name = "Community shared scripts";
         picture = "";
         hidePicture = "true";
         hideName = "true";
         actionName = "Website";
-        action = "http://www.google.ru";
+        action = "";
     };
 };
 

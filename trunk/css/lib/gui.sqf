@@ -12,7 +12,7 @@
 
 if (isNil{__getStorage}) then { __setStorage([]) };
 
-func(CreateDialog) = {
+func(CreateDialog_new) = {
 
     private ["_rsc", "_display", "_parent", "_private", "_handlers", "_constructor", "_destructor"];
 
@@ -53,7 +53,7 @@ func(CreateDialog) = {
             _thisScope = [
                 "_thisScope", "_confDialog", "_idd",
                 "_dsplPrivateValues", "_dsplMapClassnames", "_dsplMapCtrls", "_dsplMapConfs", "_dsplGetConfByCtrl",
-                "_loadCode", "_saveCode", "_eventHandlerExecutor", "_ehTpl", "_destructorTpl", "_dsplDataIndex",
+                "_dsplSpawn", "_loadCode", "_saveCode", "_eventHandlerExecutor", "_ehTpl", "_destructorTpl", "_dsplDataIndex",
                 "_handlersList", "_toArray", "_createDisplay", "_storage", "_ehCtrl", "_ehType", "_ehCode"
             ];
             private _thisScope;
@@ -135,6 +135,15 @@ func(CreateDialog) = {
                 };
             };
 
+            // find a free place (nil) in the global storage
+            _storage = __getStorage; // link on global storage
+            _dsplDataIndex = 0 call {
+                for "_i" from 0 to count _storage do {
+                    _this = _storage select _i;
+                    if (isNil "_this") exitwith {_i};
+                }
+            };
+
             // export into user-code
             #define export(name) push(_private,__quoted(name)); push(_dsplPrivateValues,name);
 
@@ -142,6 +151,10 @@ func(CreateDialog) = {
             export(_dsplMapCtrls);
             export(_dsplMapConfs);
             export(_dsplGetConfByCtrl);
+
+            _dsplSpawn = compile format ['_this spawn { disableSerialization; __1 = __getStorage select %1; [__1 select 1, _this select 0, _this select 1] call (__1 select 0)}', _dsplDataIndex];
+
+            export(_dsplSpawn);
 
             _loadCode = ""; // loader of variables
             _saveCode = ""; // unloader of variables
@@ -163,15 +176,6 @@ func(CreateDialog) = {
                 'private "__1"; __2 = _this select 0; ' + _loadCode +
                 'call { private "__2"; (_this select 1) call (_this select 2) }; ' + _saveCode
             );
-
-            // find a free place (nil) in the global storage
-            _storage = __getStorage; // link on global storage
-            _dsplDataIndex = 0 call {
-                for "_i" from 0 to count _storage do {
-                    _this = _storage select _i;
-                    if (isNil "_this") exitwith {_i};
-                }
-            };
 
             _handlersList = [];
 

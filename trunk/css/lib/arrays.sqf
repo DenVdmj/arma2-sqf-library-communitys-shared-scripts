@@ -7,6 +7,27 @@
 
 #include "\css\css"
 
+
+// 
+// func(List2Set)
+// syntax:
+//     (array listOfAnyComparableValues) invoke(List2Set)
+// Converts an array-list to array-set. Format of array-set:
+//     [
+//         ["item 1", count of these items],
+//         ["item 2", count of these items],
+//         ...
+//         ["item N", count of these items]
+//     ]
+// Example:
+//     magazines player invoke(List2Set)
+// Result:
+//     [
+//         ["30Rnd_556x45_Stanag", 6],
+//         ["HandGrenade_West", 4]
+//     ]
+// 
+
 func(List2Set) = {
     private ["_col", "_rem"];
     _col = [];
@@ -18,6 +39,23 @@ func(List2Set) = {
     };
     _col
 };
+
+
+// 
+// func(CanonizeSet)
+// syntax:
+//     (array listOfAnyComparableValues) invoke(CanonizeSet)
+// Function fixes invalid array-set, an example of usage:
+//     (
+//         (magazines officer1 invoke(List2Set)) +
+//         (magazines officer2 invoke(List2Set))
+//     ) invoke(CanonizeSet)
+// Result:
+//     [
+//         ["30Rnd_556x45_Stanag", 6],
+//         ["7Rnd_45ACP_1911", 8]
+//     ]
+// 
 
 func(CanonizeSet) = {
     private ["_set", "_keys", "_pos"];
@@ -45,6 +83,14 @@ func(CanonizeSet) = {
     _set
 };
 
+
+// 
+// func(GetUnduplicatedArray)
+// syntax:
+//     _arrayWithDuplicates invoke(UnduplicatedArray)
+// Deletes all duplicate entries in array. Returns new array.
+//
+
 func(GetUnduplicatedArray) = {
     private["_e","_i"];
     _i = 0;
@@ -55,6 +101,29 @@ func(GetUnduplicatedArray) = {
     };
     _this
 };
+
+
+// 
+// func(MapGrep)
+// syntax:
+//     [array list, code filter] invoke(MapGrep)
+//     [config class, code condition] invoke(MapGrep)
+// Returns an array for those elements for which the condition evaluates to notNil. 
+// Examples:
+// 
+//     // Returns all classnames of cars.
+//     [configFile >> "CfgVehicles", {
+//         if (getText(_x >> "simulation") == "car") then { configName _x }
+//     }] invoke(MapGrep)
+// 
+//     // names of players' soldiers
+//     [units player, { name _x }] invoke(MapGrep)
+// 
+//     // positions of all cars requiring repairs:
+//     [allUnits, {
+//         if (_x isKindOf "Car" && ! canMove _x) then { getPosASL2 _x }
+//     }] invoke(MapGrep)
+// 
 
 func(MapGrep) = {
     private ["_SC0PE_", "_x"];
@@ -72,6 +141,28 @@ func(MapGrep) = {
     };
     _1iST_;
 };
+
+
+// 
+// func(SortArray)
+// syntax:
+//     (two parralel arrays) invoke(SortArray)
+// Sort two parralel arrays (using a heapsort algorithm, O(n log n)). Format of arrays:
+//     [
+//         [values],
+//         [linked data]
+//     ]
+// Example:
+//     [
+//         [  32,   43,   12,   3,   6565,   43,   3,   4,   5,   234,   876,   872,   7 ],
+//         ["_32","_43","_12","_3","_6565","_43","_3","_4","_5","_234","_876","_872","_7"]
+//     ] invoke(SortArray)
+// Result:
+//     [
+//         [  3,   3,   4,   5,   7,   12,   32,   43,   43,   234,   872,   876,   6565 ],
+//         ["_3","_3","_4","_5","_7","_12","_32","_43","_43","_234","_872","_876","_6565"]
+//     ]
+// 
 
 func(SortArray)={private["_s","_1","_2","_t","_i","_l","_u","_c","_a","_d"];_s={_a=_1 select
 _l;_d=_2 select _l;while{_c=_l+_l+1;if(_c<=_u)then{if(_c<_u)then{if(_1 select _c+1>_1 select
