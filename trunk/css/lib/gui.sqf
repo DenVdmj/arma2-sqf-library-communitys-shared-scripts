@@ -12,13 +12,44 @@
 
 if (isNil{__getStorage}) then { __setStorage([]) };
 
+//  func(CreateDialog)
+//  syntax:
+//    {
+//        _rsc = "RscDisplay";
+//    
+//        // list of local variables which available from the constructor, destructor and event handlers code
+//        _private = ["_list", "_of", "_your", "_local", "_variables"];
+//    
+//        // Event handlers, 
+//        _handlers = [
+//            // you can declare them as follows:
+//            "CtrlClassName", "EventName", {
+//                // event handler code
+//            },
+//            // or as follows:
+//            ["CtrlClassName", "AnotherCtrlClassName"],
+//            ["EventName", "AnotherEventName"], {
+//                // event handler code
+//            }
+//        ];
+//        _constructor = {
+//            // constructor code
+//            
+//        };
+//        _destructor = {
+//             // destructor code
+//        };
+//    
+//    } invoke(CreateDialog);
+//
+
 func(CreateDialog) = {
 
     private ["_rsc", "_display", "_parent", "_private", "_handlers", "_constructor", "_destructor"];
 
     disableSerialization;
 
-    // default values
+    // Automatic variables -- default values
     _display = displayNull;
     _parent = objNull;
     _private = [];

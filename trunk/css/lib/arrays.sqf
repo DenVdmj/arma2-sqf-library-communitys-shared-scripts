@@ -102,6 +102,29 @@ func(GetUnduplicatedArray) = {
     _this
 };
 
+// 
+// func(removeItemsFromArray)
+// syntax:
+//     [_array, _removedEntries] invoke(removeItemsFromArray)
+// Deletes all specified entries from specified array. Returns the same modified array.
+//
+
+func(removeItemsFromArray) = {
+    private ["_array", "_items", "_offset", "_item"];
+    _array = arg(0);
+    _items = arg(1);
+    _offset = 0;
+    for "_i" from 0 to count _array do {
+        _item = _array select _i;
+        if (_offset > 0) then {
+            _array set [_i - _offset, _item]
+        };
+        if (_item in _items) then {
+            _offset = _offset + 1;
+        };
+    };
+    _array;
+};
 
 // 
 // func(MapGrep)
