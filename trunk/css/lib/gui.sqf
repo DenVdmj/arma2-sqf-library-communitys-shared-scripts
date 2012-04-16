@@ -1,46 +1,48 @@
-// SQF
+﻿// SQF
 //
 // sqf-library "\css\lib\gui.sqf"
-// Copyright (c) 2009-2010 Denis Usenko (DenVdmj)
+// Copyright (c) 2009-2012 Denis Usenko (DenVdmj)
 // MIT-style license
 //
 
 #include "\css\css"
+#define __PATH__ \css\lib
 
-#define __setStorage(value) __uiSet(CreateDialog/Storage, value)
+#define __setStorage __uiSet(CreateDialog/Storage)
 #define __getStorage __uiGet(CreateDialog/Storage)
 
-if (isNil{__getStorage}) then { __setStorage([]) };
+if (isNil{__getStorage}) then { [] __setStorage };
 
-//  func(CreateDialog)
-//  syntax:
-//    {
-//        _rsc = "RscDisplay";
-//    
-//        // list of local variables which available from the constructor, destructor and event handlers code
-//        _private = ["_list", "_of", "_your", "_local", "_variables"];
-//    
-//        // Event handlers, 
-//        _handlers = [
-//            // you can declare them as follows:
-//            "CtrlClassName", "EventName", {
-//                // event handler code
-//            },
-//            // or as follows:
-//            ["CtrlClassName", "AnotherCtrlClassName"],
-//            ["EventName", "AnotherEventName"], {
-//                // event handler code
-//            }
-//        ];
-//        _constructor = {
-//            // constructor code
-//            
-//        };
-//        _destructor = {
-//             // destructor code
-//        };
-//    
-//    } invoke(CreateDialog);
+//
+// Function func(CreateDialog)
+// Syntax:
+//   {
+//       _rsc = "RscDisplay";
+//   
+//       // list of local variables which available from the constructor, destructor and event handlers code
+//       _private = ["_list", "_of", "_your", "_local", "_variables"];
+//   
+//       // Event handlers, 
+//       _handlers = [
+//           // you can declare them as follows:
+//           "CtrlClassName", "EventName", {
+//               // event handler code
+//           },
+//           // or as follows:
+//           ["CtrlClassName", "AnotherCtrlClassName"],
+//           ["EventName", "AnotherEventName"], {
+//               // event handler code
+//           }
+//       ];
+//       _constructor = {
+//           // constructor code
+//           
+//       };
+//       _destructor = {
+//            // destructor code
+//       };
+//   
+//   } invoke(CreateDialog);
 //
 
 func(CreateDialog) = {
@@ -49,7 +51,7 @@ func(CreateDialog) = {
 
     disableSerialization;
 
-    // Automatic variables -- default values
+    // Automatic variables — default values
     _display = displayNull;
     _parent = objNull;
     _private = [];
@@ -103,7 +105,7 @@ func(CreateDialog) = {
 
             _idd = getNumber(_confDialog >> "idd");
 
-            // the idd must be valid, creating dialog must be successful, otherwise an error - user asked incorrect resource name (_rsc)
+            // the idd must be valid, creating dialog must be successful, otherwise an error — user asked incorrect resource name (_rsc)
             if (_idd < 0) then {
                 throw ("negative idd in resource class " + str _rsc)
             };
@@ -131,10 +133,10 @@ func(CreateDialog) = {
             _dsplMapCtrls = [];
             _dsplMapConfs = [];
 
-            // user-defined variable _private -- declare variables private dialogue;
-            // _dsplPrivateValues -- keeps the values of these variables
+            // user-defined variable _private — declare variables private dialogue;
+            // _dsplPrivateValues — keeps the values of these variables
             _dsplPrivateValues = [];
-            _dsplPrivateValues resize count _private; // not initialized variables -- nil
+            _dsplPrivateValues resize count _private; // not initialized variables — nil
 
             _confDialog call {
                 private ["_walk", "_idc"];
@@ -142,11 +144,11 @@ func(CreateDialog) = {
                     if (isClass _this) then {
                         _idc = getNumber(_this >> "idc");
                         if (_idc > 0) then {
-                            push(_private, "_ctrl" + configName _this);          // extend the list of names of private controls
-                            push(_dsplPrivateValues, _display displayCtrl _idc); // write down their values
-                            push(_dsplMapClassnames, configName _this);
-                            push(_dsplMapCtrls, _display displayCtrl _idc);
-                            push(_dsplMapConfs, _this);
+                            __push(_private, "_ctrl" + configName _this);          // extend the list of names of private controls
+                            __push(_dsplPrivateValues, _display displayCtrl _idc); // write down their values
+                            __push(_dsplMapClassnames, configName _this);
+                            __push(_dsplMapCtrls, _display displayCtrl _idc);
+                            __push(_dsplMapConfs, _this);
                         };
                         for "_i" from 0 to count _this - 1 do {
                             _this select _i call _walk
@@ -176,7 +178,7 @@ func(CreateDialog) = {
             };
 
             // export into user-code
-            #define export(name) push(_private,__quoted(name)); push(_dsplPrivateValues,name);
+            #define export(name) __push(_private,__q(name)); __push(_dsplPrivateValues,name);
 
             export(_display);
             export(_dsplMapCtrls);
@@ -196,7 +198,7 @@ func(CreateDialog) = {
             };
 
             // create a template of native handlers
-            // %1 -- _ehIndex
+            // %1 — _ehIndex
             _ehTpl = '__ret = false; __1 = __getStorage select %1; [__1 select 1, _this, (__1 select 2) select %2] call (__1 select 0); __ret;';
             _destructorTpl = '__1 = __getStorage select %1; [__1 select 1, _this, __1 select 3] call (__1 select 0); __getStorage set [%1, nil]';
 
@@ -224,7 +226,7 @@ func(CreateDialog) = {
                     throw format ["Invalid type of event handler (%1, must be CODE, index: %2)", typeName _ehCode, _i];
                 };
 
-                push(_handlersList, _ehCode);
+                __push(_handlersList, _ehCode);
 
                 {
                     _ehCtrl = _x;

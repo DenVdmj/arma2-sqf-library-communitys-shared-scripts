@@ -1,16 +1,27 @@
-// SQF
+﻿// SQF
 //
 // sqf-library "\css\lib\strings.sqf"
-// Copyright (c) 2009-2010 Denis Usenko (DenVdmj)
+// Copyright (c) 2009-2012 Denis Usenko (DenVdmj)
 // MIT-style license
 //
 
 #include "\css\css"
+#define __PATH__ \css\lib
+
+//
+// Function func(JoinString)
+//
+// Syntax:
+//     [array listOfStrings] invoke(JoinString)
+//     [array listOfStrings, string glue] invoke(JoinString)
+//
+// Fast string concatenation.
+// Example:
+//     [magazines player, ", "] invoke(JoinString)
+//
 
 func(JoinString) = {
-    //
-    // Fast string concatenation,
-    //
+
     private ["_list", "_char", "_size", "_subsize", "_oversize", "_j"];
 
     _list = arg(0);
@@ -18,7 +29,7 @@ func(JoinString) = {
 
     if (count _list < 1) exitwith {""};
 
-    for "" from 1 to ceil LOG2(count _list) do {
+    for "" from 1 to ceil __log2(count _list) do {
         _size = count _list / 2;
         _subsize = floor _size;
         _oversize = ceil _size;

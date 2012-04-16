@@ -1,0 +1,85 @@
+// SQF
+//
+// common macros "\css\config"
+// Copyright (c) 2009-2010 Denis Usenko (DenVdmj)
+// MIT-style license
+//
+
+#ifndef __config_macro_present
+#define __config_macro_present
+
+#define __true 1
+#define __false 0
+
+//
+// Inheritance access specifier
+//
+
+#define __ReadAndWrite     0  // any modifications enabled
+#define __ReadAndCreate    1  // only adding new class members is allowed
+#define __ReadOnly         2  // no modifications enabled
+#define __ReadOnlyVerified 3  // no modifications enabled, CRC test applied
+
+//
+// Type scope, used for show entry
+//
+
+// private item is never visible
+#define __private 0 
+// protected item "advanced designer" switch must be activated to use it
+#define __protected 1 
+// public item anyone can see/use it
+#define __public 2         
+
+//
+// Sides
+//
+
+#define __TEast 0
+#define __TWest 1
+#define __TGuerrila 2
+#define __TCivilian 3
+#define __TSideUnknown 4
+#define __TEnemy 5
+#define __TFriendly 6
+#define __TLogic 7
+
+//
+// Man's positions, possible values for property CfgMovesBasic/Actions/*/UpDegree
+// that used in animation graph in game config.
+//
+
+#define __ManPosNoActions -1
+#define __ManPosDead 0
+#define __ManPosWeapon 1
+#define __ManPosBinocLying 2
+#define __ManPosLyingNoWeapon 3
+#define __ManPosLying 4
+#define __ManPosHandGunLying 5
+#define __ManPosCrouch 6
+#define __ManPosHandGunCrouch 7
+#define __ManPosCombat 8
+#define __ManPosHandGunStand 9
+#define __ManPosStand 10
+#define __ManPosSwimming 11
+#define __ManPosNoWeapon 12
+#define __ManPosBinoc 13
+#define __ManPosBinocStand 14
+
+//
+// Weapons slot types
+//
+
+#define __WeaponNoSlot             0 // dummy weapons
+#define __WeaponSlotPrimary        1 // primary weapons
+#define __WeaponSlotSecondary      4 // secondary weapons
+#define __WeaponSlotHandGun        2 // HandGun
+#define __WeaponSlotHandGunItem   16 // HandGun magazines
+#define __WeaponSlotHandGunMag    16 // HandGun magazines
+#define __WeaponSlotItem         256 // items
+#define __WeaponSlotMag          256 // items
+#define __WeaponSlotBinocular   4096 // binocular
+#define __WeaponHardMounted    65536 
+#define __WeaponSlotInventory 131072 // inventory items
+
+#endif

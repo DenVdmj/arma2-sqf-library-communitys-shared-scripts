@@ -1,22 +1,23 @@
-// SQF
+ï»¿// SQF
 //
 // sqf-library "\css\lib\geo.sqf"
-// Copyright (c) 2009-2010 Denis Usenko (DenVdmj)
+// Copyright (c) 2009-2012 Denis Usenko (DenVdmj)
 // MIT-style license
 //
 
 #include "\css\css"
-
+#define __PATH__ \css\lib
 
 //
-//  func(CurrentCameraVector)
-//  syntax:
-//      invoke(ViewportVector)
-//  Returns the direction vector of the current camera.
+// Function func(CurrentCameraVector)
+//
+// Syntax:
+//     invoke(ViewportVector)
+// Returns the direction vector of the current camera.
 //
 
 func(CurrentCameraVector) = {
-    // Author of this way -- Spooner (http://www.ofpec.com/forum/index.php?topic=31686.0)
+    // Author of this wayâ€”Spooner (http://www.ofpec.com/forum/index.php?topic=31686.0)
     private ["_viewport", "_target"];
     _viewport = positionCameraToWorld [0, 0, 0];
     _target = positionCameraToWorld [0, 0, 1e+10];
@@ -29,10 +30,11 @@ func(CurrentCameraVector) = {
 
 
 //
-//  func(CurrentCameraPosition)
-//  syntax:
-//      func(ViewportPosition)
-//  Returns the position of the current camera.
+// Function func(CurrentCameraPosition)
+//
+// Syntax:
+//     func(ViewportPosition)
+// Returns the position of the current camera.
 //
 
 func(CurrentCameraPosition) = {
@@ -41,10 +43,11 @@ func(CurrentCameraPosition) = {
 
 
 //
-//  func(GetFOV)
-//  syntax:
-//      func(GetFOV)
-//  Returns the FOV of the current camera.
+// Function func(GetFOV)
+//
+// Syntax:
+//     func(GetFOV)
+// Returns the FOV of the current camera.
 //
 
 func(GetFOV) = {
@@ -53,13 +56,14 @@ func(GetFOV) = {
 
 
 //
-//  func(Vector2Azimuth)
-//  syntax:
-//      (Position unitVector) invoke(Vector2Azimuth)
+// Function func(Vector2Azimuth)
 //
-//  Returns the angle (Number) in the center of the coordinate system between the Y axis and the point unitVector.
-//  If the angle is impossible (zero vector) - returns a negative value.
-//  Example: player weaponDirection currentWeapon player invoke(Vector2Azimuth)
+// Syntax:
+//     (Position unitVector) invoke(Vector2Azimuth)
+//
+// Returns the angle (Number) in the center of the coordinate system between the Y axis and the point unitVector.
+// If the angle is impossible (zero vector)â€”returns a negative value.
+// Example: player weaponDirection currentWeapon player invoke(Vector2Azimuth)
 //
 
 func(Vector2Azimuth) = {
@@ -71,11 +75,12 @@ func(Vector2Azimuth) = {
 
 
 //
-//  func(Azimuth)
-//  syntax:
-//      [Position A, Position B] invoke(Azimuth)
-//  Returns the azimuth (Number 0 .. 360), the angle at point A between the direction to the north and the direction to point B,
-//  If the angle is impossible (same position) - returns a negative value.
+// Function func(Azimuth)
+//
+// Syntax:
+//     [Position A, Position B] invoke(Azimuth)
+// Returns the azimuth (Number 0 .. 360), the angle at point A between the direction to the north and the direction to point B,
+// If the angle is impossible (same position)â€”returns a negative value.
 //
 
 func(Azimuth) = {
@@ -89,7 +94,8 @@ func(Azimuth) = {
 };
 
 //
-// func(CompassPoint)
+// Function func(CompassPoint)
+//
 // Syntax:
 //    [
 //        (Number or Vector or two Positions) direction,
@@ -102,26 +108,26 @@ func(Azimuth) = {
 //    ] invoke(CompassPoint)
 // Arguments:
 //
-//    direction    — Source angle (Number) or a direction vector (Vector Array) or an two items array: [from_position, to_position]
-//    limit        — The number of compass points (4, 8, 16, 32). Default: 16.
-//    format       — Format string, where:
-//                     %1 — Abbreviation of the compass points (the Dutch term (old international term)):
+//    direction    â€” Source angle (Number) or a direction vector (Vector Array) or an two items array: [from_position, to_position]
+//    limit        â€” The number of compass points (4, 8, 16, 32). Default: 16.
+//    format       â€” Format string, where:
+//                     %1 â€” Abbreviation of the compass points (the Dutch term (old international term)):
 //                             N, NtO, NNO, NOtN, NO, NOtO, ONO, OtN,
 //                             O, OtS, OSO, SOtO, SO, SOtS, SSO, StO,
 //                             S, StW, SSW, SWtS, SW, SWtW, WSW, WtS,
 //                             W, WtN, WNW, NWtW, NW, NWtN, NNW, NtW
 //
-//                     %2 — number of points (1 .. 32)
-//                     %3 — heading: 0 .. 359
-//                     %4 — relative heading:
-//                             0  .. 90 (N -> O, S -> W)
-//                             90 ..  0 (O -> S, W -> N)
-//                     %5 .. %19 — reserved
-//                     %20 and more — localize strings (require the <localization> argument(s)), optional argument,
+//                     %2 â€” number of points (1 .. 32)
+//                     %3 â€” heading: 0 .. 359
+//                     %4 â€” relative heading:
+//                             0 .. 90 (N -> O, S -> W)
+//                             90 .. 0 (O -> S, W -> N)
+//                     %5..%19 â€” reserved
+//                     %20 and more â€” localize strings (require the <localization> argument(s)), optional argument,
 //                                     if isn't present, then by default uses a localizing string "%1"
 //
-//    localization  — Template of the localization string, such as "STR_COMPASS_POINT_%1_SHORTNAME",
-//                    where %1 — acronym of a compass point.
+//    localization  â€” Template of the localization string, such as "STR_COMPASS_POINT_%1_SHORTNAME",
+//                    where %1 â€” acronym of a compass point.
 //                    Within the templates are all of the above wildcards: %1 %2 %3 %4
 //
 // The function returns a format string filled with actual data.
@@ -136,20 +142,20 @@ func(Azimuth) = {
 //            [getpos player, getpos SomeObject],
 //            32,
 //            "Rumb: %1\nRumb Num: %2\nFull degree: %3\nQuarter degree: %4\nL1: %20\nL2: %21\nL3: %22",
-//            "STR:RHUMB:%1:FN",
-//            "STR:RHUMB:DUTCH:%1:SN",
-//            "STR:RHUMB:EN:%1:SN"
+//            "STR/RHUMB/%1:FN",
+//            "STR/RHUMB/DUTCH/%1:SN",
+//            "STR/RHUMB/EN/%1:SN"
 //        ] invoke(CompassPoint)
 //    )
 //
 
 func(CompassPoint) = {
-    // Author of original idea -- Spooner
+    // Author of original idea â€” Spooner
     private ["_degree", "_rumbsLimit", "_format", "_out", "_qDegree", "_rumbNum", "_rumb"];
     _degree = round (
         arg(0) call {
-            if (IS_ARR(_this)) then {
-                _this call ( if (IS_ARR(arg(0))) then { func(Azimuth) } else { func(Vector2Azimuth) } )
+            if (__isArray(_this)) then {
+                _this call ( if (__isArray(arg(0))) then { func(Azimuth) } else { func(Vector2Azimuth) } )
             } else { _this }
         }
     );
@@ -170,17 +176,85 @@ func(CompassPoint) = {
     format _out
 };
 
+// 
+// Function func(GetNearestTown)
+//
+// Syntax:
+//     (Position position) invoke(GetNearestTown)
+//     (Object position) invoke(GetNearestTown)
+// 
+// Returns the nearest town (config entry, or void config entry, if nothing is found).
+// Example:
+//     getText (player invoke(GetNearestTown) >> "name");
+//     getArray (player invoke(GetNearestTown) >> "position");
+// 
+
 func(GetNearestTown) = {
     [_this, ["NameCityCapital", "NameVillage", "NameCity"]] invoke(GetNearestTopography)
 };
 
+//
+// Function func(GetNearestLocal)
+//
+// Syntax:
+//     (Position position) invoke(GetNearestLocal)
+//     (Object position) invoke(GetNearestLocal)
+// 
+// Returns the nearest settlement, including the places "NameLocal" also.
+// If nothing is found, then returns void config entry.
+// Return value: config
+// Example:
+//     getText (player invoke(GetNearestLocal) >> "name");
+//     getArray (player invoke(GetNearestLocal) >> "position");
+// 
+
 func(GetNearestLocal) = {
-    [_this, ["NameCityCapital", "NameVillage", "NameCity", "NameLocal"]] invoke(GetNearestTopography)
+    [_this, [
+        "NameCityCapital", "NameVillage", 
+        "NameCity", "NameLocal"
+    ]] invoke(GetNearestTopography)
 };
 
+// 
+// Function func(GetNearestForest)
+//
+// Syntax:
+//     (Position position) invoke(GetNearestForest)
+//     (Object position) invoke(GetNearestForest)
+// 
+// Returns the nearest forest (config entry, or void config entry, if nothing is found).
+// Example:
+//     getText (player invoke(GetNearestForest) >> "name");
+//     getArray (player invoke(GetNearestForest) >> "position");
+// 
+
 func(GetNearestForest) = {
-    [_this, ["VegetationFir", "VegetationBroadleaf", "VegetationVineyard", "VegetationPalm"]] invoke(GetNearestTopography)
+    [_this, [
+        "VegetationFir", "VegetationBroadleaf", 
+        "VegetationVineyard", "VegetationPalm"
+    ]] invoke(GetNearestTopography)
 };
+
+//
+// Function func(GetNearestTopography)
+//
+// Syntax:
+//     [PositionOrObject position, ArrayOrString regionTypes] invoke(GetNearestTopography)
+// 
+// Returns the nearest topographic region.
+// If nothing is found, then returns void config entry.
+// Return value: config
+// 
+// Example:
+//     getText ([player, "Hill"] invoke(GetNearestTopography) >> "name");
+//     getArray ([player, "Hill"] invoke(GetNearestForest) >> "position");
+//     getText ([player, ["VegetationVineyard", "VegetationPalm"]] invoke(GetNearestTopography) >> "name");
+// 
+// Available regions types:
+//    "NameCityCapital", "NameVillage", "NameCity",
+//    "VegetationFir", "VegetationBroadleaf", "VegetationVineyard", "VegetationPalm",
+//    "Hill", "NameMarine", "NameLocal", "ViewPoint", "BorderCrossing", "RockArea"
+//
 
 func(GetNearestTopography) = {
 
@@ -197,7 +271,7 @@ func(GetNearestTopography) = {
 
     _position = arg(0);
     _requestedTypes = arg(1) call {
-        if (IS_ARR(_this)) then { _this } else { [_this] }
+        if (__isArray(_this)) then { _this } else { [_this] }
     };
 
     _cfgRegions = configFile >> "CfgWorlds" >> worldName >> "Names";
@@ -219,6 +293,20 @@ func(GetNearestTopography) = {
     _nearestRegion
 };
 
+// 
+// Function func(NearAirport)
+//
+// Syntax:
+//     (Position position) invoke(NearAirport)
+//     (Object position) invoke(NearAirport)
+// 
+// Returns the nearest airport (configEntry, or void configEntry, if nothing is found).
+// If nothing is found, then returns void config entry.
+// Return value: config
+// Example:
+//     getArray (player invoke(NearAirport) >> "ilsPosition");
+// 
+
 func(NearAirport) = {
     private ["_position", "_confWorld", "_minDistance", "_distance", "_nearest"];
     _position = _this;
@@ -231,7 +319,8 @@ func(NearAirport) = {
             _nearest = _x;
         };
     } foreach (
-        // "Àýðîïîðòû", ñïèñîê config óêàçàòåëåé, ñîäåðæàùèõ ñâîéñòâà ilsPosition, ilsDirection, ilsTaxiIn, ilsTaxiOff, drawTaxiway
+        // "ÐÑÑ€Ð¾Ð¿Ð¾Ñ€Ñ‚Ñ‹", ÑÐ¿Ð¸ÑÐ¾Ðº config ÑƒÐºÐ°Ð·Ð°Ñ‚ÐµÐ»ÐµÐ¹, ÑÐ¾Ð´ÐµÑ€Ð¶Ð°Ñ‰Ð¸Ñ… ÑÐ²Ð¾Ð¹ÑÑ‚Ð²Ð° 
+        //  ilsPosition, ilsDirection, ilsTaxiIn, ilsTaxiOff, drawTaxiway
         [_confWorld] + (
             [_confWorld >> "SecondaryAirports", {
                 if (isClass _x) then { _x }

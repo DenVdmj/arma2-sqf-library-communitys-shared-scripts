@@ -5,7 +5,7 @@ use Win32::Registry;
 
 my @filelist;
 my $currentPath = POSIX::getcwd();
-my $DIRSPACER = ',';
+my $DIRSPACER = ' - ';
 my @contentFileChunks = ();
 
 walkDir(
@@ -83,7 +83,7 @@ sub parseSqfInlineDocs {
         my $text = $2;
         $text =~ s{\n//$padding?}{\n}g;
         $text =~ s{(//|\s)+$}{}g;
-        my $textFunction = $text =~ /[а-яА-Я]/ ? "Функция" : "Function";
+        my $textFunction = $text =~ /[a-zA-Z0-9]/ ? "Function" :  "Функция";
         push(@content, "$textFunction $text");
     };
 
@@ -92,7 +92,7 @@ sub parseSqfInlineDocs {
         my $text = $2;
         $text =~ s{\n$padding}{\n}g;
         $text =~ s{\s+$}{}g;
-        my $textFunction = $text =~ /[а-яА-Я]/ ? "Функция" : "Function";
+        my $textFunction = $text =~ /[a-zA-Z0-9]/ ? "Function" :  "Функция";
         push(@content, "$textFunction $text");
     };
 
@@ -199,7 +199,7 @@ sub htmlTPL {
 <html>
 <head>
 <title></title>
-<meta http-equiv="content-type" content="text/html; charset=windows-1251" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <style type="text/css">
 body { margin: auto; }
 * {cursor:default}
@@ -242,7 +242,7 @@ qq{<!doctype html>
 <title></title>
 <meta http-equiv="content-type" content="text/html; charset=windows-1251" />
 <style type="text/css">
-body { margin: auto; padding: 1em 0; width: 45em }
+body { font: normal normal 11pt/150% Verdana; margin: auto; padding: 1em 0; width: 45em }
 </style>
 </head>
 <body>

@@ -5,12 +5,8 @@
 // MIT-style license
 //
 
-#ifndef __css_common__
-#define __css_common__ defined
-
-//
-//
-//
+#ifndef __common_macro_present
+#define __common_macro_present present
 
 #ifndef __project_name
 #define __project_name -
@@ -20,47 +16,57 @@
 #define __module_name -
 #endif
 
-#define __quoted(str) #str
 #define __ns_prefix /__project_name/__module_name
+#define __q(str) #str
 
-#define __nsSet(ns,varname,value) ns setVariable [__quoted(/__ns_prefix/varname), value]
-#define __nsGet(ns,varname) ((ns)getVariable __quoted(/__ns_prefix/varname))
+#define __nsSet(ns,varname) call { ns setVariable [__q(/__ns_prefix/varname), _this] }
+#define __nsGet(ns,varname) ((ns) getVariable __q(/__ns_prefix/varname))
 
-#define __uiSet(varname,value) __nsSet(uiNamespace,varname,value)
-#define __uiGet(varname) __nsGet(uiNamespace,varname)
+#define __uiSet(varname) __nsSet(uiNamespace,varname)
+#define __uiGet(varname) __nsGet(uiNamespace,varname) 
+
+#define __mSet(varname) __nsSet(missionNamespace,varname)
+#define __mGet(varname) __nsGet(missionNamespace,varname) 
+
+#define __pSet(varname) __nsSet(parsingNamespace,varname)
+#define __pGet(varname) __nsGet(parsingNamespace,varname) 
+
+#define __errorLog call { diag_log parseText format ['Error in file "%1" on line %2: %3', __FILE__, __LINE__, _this]; };
+#define __errorFormat call { format ['Error in file "%1" on line %2: %3', __FILE__, __LINE__, _this]; };
 
 #define var(name) __project_name##_var_##name
 #define func(name) __project_name##_func_##name
 #define invoke(name) call func(name)
-#define currentLangAbbr (localize "STR:CSS:CURRENT_LANG_ABBR")
-#define currentLang (localize "STR:CSS:CURRENT_LANG")
 
+// redefine name preprocessFile
 #define preprocessFile preprocessFileLineNumbers
-#define compileFile compile preprocessFile
-#define callFile call compileFile
+#define __compileFile compile preprocessFile
+#define __callFile call __compileFile
+#define __lib __callFile
+#define __currentLangAbbr (localize "STR/CSS/CURRENT_LANG_ABBR")
+#define __currentLang (localize "STR/CSS/CURRENT_LANG")
+#define __sqf2str "call" + str
 
 //
 // Arguments macro
 //
 
-#define arg(x)            (_this select (x))
-#define argIf(x)          if(count _this > (x))
-#define argIfType(x,t)    if(argIf(x)then{typeName arg(x) == (t)}else{false})
-#define argSafe(x)        argIf(x)then{arg(x)}
-#define argSafeType(x,t)  argIfType(x,t)then{arg(x)}
-#define argOr(x,v)        (argSafe(x)else{v})
+#define arg(i)          (_this select (i))
+#define ifExistArg(i)   if (count _this > (i))
+#define ifArgType(i,t)  if (ifExistArg(i) then { typeName arg(i) == (t) } else { false })
+#define argIfExist(i)   ifExistArg(i) then { arg(i) }
+#define argIfType(i,t)  ifArgType(i,t) then { arg(i) }
+#define argOr(i,v)      argIfExist(i) else { v }
 
-//
-// Array macro
-//
-
-#define item(a,v)  ((a)select(((v)min(count(a)-1))max 0))
-#define itemr(a,v) (item((a),if((v)<0)then{count(a)+(v)}else{v}))
-#define push(a,v)  (a)set[count(a),(v)]
-#define pushTo(a)  call{(a)set[count(a),_this]}
-#define top(a)     ((a)select((count(a)-1)max 0))
-#define pop(a)     (0 call{_this=top(a);a resize((count(a)-1)max 0);_this})
-#define selectRnd(a) (a select floor random count a)
+#define private1(a) private __q(a)
+#define private2(a,b) private [__q(a),__q(b)]
+#define private3(a,b,c) private [__q(a),__q(b),__q(c)]
+#define private4(a,b,c,d) private [__q(a),__q(b),__q(c),__q(d)]
+#define private5(a,b,c,d,e) private [__q(a),__q(b),__q(c),__q(d),__q(e)]
+#define private6(a,b,c,d,e,f) private [__q(a),__q(b),__q(c),__q(d),__q(e),__q(f)]
+#define private7(a,b,c,d,e,f,g) private [__q(a),__q(b),__q(c),__q(d),__q(e),__q(f),__q(g)]
+#define private8(a,b,c,d,e,f,g,h) private [__q(a),__q(b),__q(c),__q(d),__q(e),__q(f),__q(g),__q(h)]
+#define private9(a,b,c,d,e,f,g,h,i) private [__q(a),__q(b),__q(c),__q(d),__q(e),__q(f),__q(g),__q(h),__q(i)]
 
 //
 // Position macro
@@ -73,92 +79,66 @@
 #define h(a) ((a) select 3)
 
 //
-// Other macro
+// Array macro
 //
 
-#define MATH_INF 1e9999
-#define LOGN(power,number) ((log number)/(log power))
-#define LOG2(number) ((log number)/.3010299956639812)
-#define GET_BIT(num,bit) (floor((num / (2^bit)) % 2))
-#define CHECK_BIT(num,bit) (GET_BIT(num,bit) == 1)
-#define XOR(a,b) (!(a && b) && (a || b))
-#define INC(n) (call { n = n + 1; n })
-#define DEC(n) (call { n = n - 1; n })
-#define _(v)   _##v = _##v
-#define STRSQF "call" + str
+#define __item(a,v) ((a)select(((v)min(count(a)-1))max 0))
+#define __itemr(a,v) (__item((a),if((v)<0)then{count(a)+(v)}else{v}))
+#define __push(a,v) (a)set[count(a),(v)]
+#define __pushTo(a) call{(a)set[count(a),_this]}
+#define __top(a) ((a)select((count(a)-1)max 0))
+#define __pop(a) (0 call{_this=__top(a);a resize((count(a)-1)max 0);_this})
+#define __randomSelect(a) (a select floor random count a)
 
 //
-// FOR, MAP, GREP
+// Math macro
 //
 
-#define FOR_CONF(list) call{private"___n";___n=list;for"_i"from(0)to(count ___n-1)do{private"_x";_x=___n select _i;private"___n";_x call _this}}
-#define MAP_ARRAY(list) call{private"___r";___r=[];{___r set[count ___r,call{private"___r";_x call _this}]}foreach(list);___r}
-#define GREP_ARRAY(list) call{private"___r";___r=[];{if(call{private"___r";_x call _this})then{push(___r,_x)}}foreach(list);___r}
-#define MAP(list) call{private["___r","___n"];___r=[];___n=list;for"_i"from(0)to(count ___n-1)do{private"_x";_x=___n select _i;___r set[count ___r,call{private["___r","___n"];call _this}]};___r}
-#define GREP(list) call{private["___r","___n"];___r=[];___n=list;for"_i"from(0)to(count ___n-1)do{private"_x";_x=___n select _i;if(call{private["___r","___n"];_x call _this})then{push(___r,_x)}};___r}
+#define __mathInf 1e9999
+#define __logN(pow,num) ((log num)/(log pow))
+#define __log2(num) ((log num)/.3010299956639812)
+#define __getBit(num,bit) (floor((num / (2^bit)) % 2))
+#define __checkBit(num,bit) (__getBit(num,bit) == 1)
+#define __xor(a,b) (!(a && b) && (a || b))
+#define __inc(n) (call { n = n + 1; n })
+#define __dec(n) (call { n = n - 1; n })
+#define __change(_v) _v = _v
+#define _(v) _##v = _##v
 
 //
-// Type of expression
+// for, map, grep
 //
 
-#define IS_CODE(v) (typeName(v) == "CODE")
-#define IS_NUM(v)  (typeName(v) == "SCALAR")
-#define IS_HNDL(v) (typeName(v) == "SCRIPT")
-#define IS_SIDE(v) (typeName(v) == "SIDE")
-#define IS_STML(v) (typeName(v) == "TEXT")
+#define __forConf(list) call{private"_0n_";_0n_=list;for"_i"from(0)to(count _0n_-1)do{private"_x";_x=_0n_ select _i;private"_0n_";_x call _this}}
+#define __mapArray(list) call{private"_0r_";_0r_=[];{_0r_ set[count _0r_,call{private"_0r_";_x call _this}]}foreach(list);_0r_}
+#define __grepArray(list) call{private"_0r_";_0r_=[];{if(call{private"_0r_";_x call _this})then{__push(_0r_,_x)}}foreach(list);_0r_}
+#define __map(list) call{private["_0r_","_0n_"];_0r_=[];_0n_=list;for"_i"from(0)to(count _0n_-1)do{private"_x";_x=_0n_ select _i;_0r_ set[count _0r_,call{private["_0r_","_0n_"];call _this}]};_0r_}
+#define __grep(list) call{private["_0r_","_0n_"];_0r_=[];_0n_=list;for"_i"from(0)to(count _0n_-1)do{private"_x";_x=_0n_ select _i;if(call{private["_0r_","_0n_"];_x call _this})then{__push(_0r_,_x)}};_0r_}
 
-#define IS_ARR(v)  (typeName(v) == "ARRAY")
-#define IS_BOOL(v) (typeName(v) == "BOOL")
-#define IS_CONF(v) (typeName(v) == "CONFIG")
-#define IS_CTRL(v) (typeName(v) == "CONTROL")
-#define IS_DSPL(v) (typeName(v) == "DISPLAY")
-#define IS_GRP(v)  (typeName(v) == "GROUP")
-#define IS_OBJ(v)  (typeName(v) == "OBJECT")
-#define IS_STR(v)  (typeName(v) == "STRING")
+//
+// Type checking
+//
 
-#define __ManPosNoActions -1
-#define __ManPosDead 0
-#define __ManPosWeapon 1
-#define __ManPosBinocLying 2
-#define __ManPosLyingNoWeapon 3
-#define __ManPosLying 4
-#define __ManPosHandGunLying 5
-#define __ManPosCrouch 6
-#define __ManPosHandGunCrouch 7
-#define __ManPosCombat 8
-#define __ManPosHandGunStand 9
-#define __ManPosStand 10
-#define __ManPosSwimming 11
-#define __ManPosNoWeapon 12
-#define __ManPosBinoc 13
-#define __ManPosBinocStand 14
+#define __isArray(v)    (typeName(v) == "ARRAY")             
+#define __isBool(v)     (typeName(v) == "BOOL")              
+#define __isCode(v)     (typeName(v) == "CODE")              
+#define __isConfig(v)   (typeName(v) == "CONFIG")            
+#define __isControl(v)  (typeName(v) == "CONTROL")           
+#define __isDiary(v)    (typeName(v) == "DIARY_RECORD")      
+#define __isDisplay(v)  (typeName(v) == "DISPLAY")           
+#define __isGroup(v)    (typeName(v) == "GROUP")             
+#define __isObject(v)   (typeName(v) == "OBJECT")            
+#define __isScalar(v)   (typeName(v) == "SCALAR")            
+#define __isScript(v)   (typeName(v) == "SCRIPT")            
+#define __isSide(v)     (typeName(v) == "SIDE")              
+#define __isString(v)   (typeName(v) == "STRING")
+#define __isTask(v)     (typeName(v) == "TASK")
+#define __isText(v)     (typeName(v) == "TEXT")
 
-#define __WeaponNoSlot 0
-#define __WeaponSlotPrimary 1
-#define __WeaponSlotHandGun 2
-#define __WeaponSlotSecondary 4
-#define __WeaponSlotMachinegun 5
-#define __WeaponSlotHandGunMag 16
-#define __WeaponSlotMag 256
-#define __WeaponSlotGoggle 4096
-#define __WeaponHardMounted 65536
-#define __WeaponSlotItem 131072
-
-#define __TEast 0
-#define __TWest 1
-#define __TGuerrila 2
-#define __TCivilian 3
-#define __TSideUnknown 4
-#define __TEnemy 5
-#define __TFriendly 6
-#define __TLogic 7
-#define __private 0
-#define __protected 1
-#define __public 2
-
-#define __errorLog call { diag_log parseText format ['Error in file "%1" on line %2: %3', __FILE__, __LINE__, _this]; };
-#define __profilerStart private "_profilerOutput_"; _profilerOutput_ = []; private "_profilerPointTime_"; _profilerPointTime_ = diag_ticktime;
-#define __profiler(message) _profilerOutput_ set [count _profilerOutput_, message + ": " + str (diag_ticktime - _profilerPointTime_)]; _profilerPointTime_ = diag_ticktime;
-#define __profilerEnd call { private ["_s1", "_s2", "_n"]; _n = toString [0x0D, 0x0A]; _s1 = ""; _s2 = _n; { _s1 = _s1 + _x + "\n"; _s2 = _s2 + _x + _n } foreach _profilerOutput_; hint _s1; copyToClipboard _s2; diag_log _s2; _profilerOutput_ };
+#define __isBoolean(v)  __isBool(v)
+#define __isFunction(v) __isCode(v)
+#define __isHandle(v)   __isScript(v)
+#define __isNumber(v)   __isScalar(v)
+#define __isSGML(v)     __isText(v)
 
 #endif

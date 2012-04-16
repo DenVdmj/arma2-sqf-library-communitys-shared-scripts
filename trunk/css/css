@@ -8,8 +8,8 @@
 
 #define __project_name css
 
-#ifndef __css_css__
-#define __css_css__ defined
+#ifndef __css_present
+#define __css_present defined
 
 #include "\css\common"
 

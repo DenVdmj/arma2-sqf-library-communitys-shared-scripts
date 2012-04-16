@@ -1,11 +1,12 @@
 // SQF
 //
 // sqf-library "\css\lib\vehicles.sqf"
-// Copyright (c) 2009-2010 Denis Usenko (DenVdmj)
+// Copyright (c) 2009-2012 Denis Usenko (DenVdmj)
 // MIT-style license
 //
 
 #include "\css\css"
+#define __PATH__ \css\lib
 
 func(ArmAs) = {
     private ["_unit","_donor","_coef"];
@@ -24,7 +25,7 @@ func(ArmAs) = {
 };
 
 // 
-// func(CreateCustomVehicle)
+// Function func(CreateCustomVehicle)
 // Syntax:
 //     [
 //         String vehicleType,
@@ -40,14 +41,14 @@ func(ArmAs) = {
 //     special       —  create vehicle in the air or on the land, possable values: "NONE" (or ""), "FLY".
 //     position      —  position of the vehicle.
 //     group         —  group of the vehicle crew,
-//                      if the soldier - will be used his group
-//                      if the side - will create a new group by this side
+//                      if the soldier—will be used his group
+//                      if the side—will create a new group by this side
 //                      if the other value (eg 0 or "" or "default"), will create a new group
 //                      owned by a native side of the vehicle.
 //     crewSlots     —  bring the crew up to strength. А list containing some of the following
 //                      values: "commander", "driver", "gunner", "cargo".
-//     unitList      —  if present — crewmans will be retrieved one by one from this list,
-//                      else — crewmans will be created.
+//     unitList      —  if present—crewmans will be retrieved one by one from this 
+//                      list, else—crewmans will be created.
 //
 // Example:
 //     [
@@ -83,14 +84,14 @@ func(CreateCustomVehicle) = {
             }
         }
     };
-    _crewSlots = argSafeType(4, "array") else {
+    _crewSlots = argIfType(4, "array") else {
         ["commander", "driver", "gunner", "cargo"]
     };
-    _getNextUnit = argIf(5) then {
+    _getNextUnit = argIfExist(5) then {
         _unitList = arg(5);
         _unitIndex = -1;
         {
-            if (INC(_unitIndex) < count _unitList) then {
+            if (__inc(_unitIndex) < count _unitList) then {
                 _unitList select _unitIndex
             }
         }

@@ -1,16 +1,16 @@
-// SQF
+﻿// SQF
 //
 // sqf-library "\css\lib\arrays.sqf"
-// Copyright (c) 2009-2010 Denis Usenko (DenVdmj)
+// Copyright (c) 2009-2012 Denis Usenko (DenVdmj)
 // MIT-style license
 //
 
 #include "\css\css"
-
+#define __PATH__ \css\lib
 
 // 
-// func(List2Set)
-// syntax:
+// Function func(List2Set)
+// Syntax:
 //     (array listOfAnyComparableValues) invoke(List2Set)
 // Converts an array-list to array-set. Format of array-set:
 //     [
@@ -42,8 +42,8 @@ func(List2Set) = {
 
 
 // 
-// func(CanonizeSet)
-// syntax:
+// Function func(CanonizeSet)
+// Syntax:
 //     (array listOfAnyComparableValues) invoke(CanonizeSet)
 // Function fixes invalid array-set, an example of usage:
 //     (
@@ -69,8 +69,8 @@ func(CanonizeSet) = {
         #define __newValue  (__newPair select 1)
         _pos = _keys find __oldKey;
         if (_pos == -1) then {
-            push(_set, _x);
-            push(_keys, __oldKey);
+            __push(_set, _x);
+            __push(_keys, __oldKey);
         } else {
             __newPair set [1, __newValue + __oldValue]
         };
@@ -85,8 +85,8 @@ func(CanonizeSet) = {
 
 
 // 
-// func(GetUnduplicatedArray)
-// syntax:
+// Function func(GetUnduplicatedArray)
+// Syntax:
 //     _arrayWithDuplicates invoke(UnduplicatedArray)
 // Deletes all duplicate entries in array. Returns new array.
 //
@@ -103,8 +103,8 @@ func(GetUnduplicatedArray) = {
 };
 
 // 
-// func(removeItemsFromArray)
-// syntax:
+// Function func(removeItemsFromArray)
+// Syntax:
 //     [_array, _removedEntries] invoke(removeItemsFromArray)
 // Deletes all specified entries from specified array. Returns the same modified array.
 //
@@ -127,8 +127,8 @@ func(removeItemsFromArray) = {
 };
 
 // 
-// func(MapGrep)
-// syntax:
+// Function func(MapGrep)
+// Syntax:
 //     [array list, code filter] invoke(MapGrep)
 //     [config class, code condition] invoke(MapGrep)
 // Returns an array for those elements for which the condition evaluates to notNil. 
@@ -159,7 +159,7 @@ func(MapGrep) = {
         _x = _C0NF_ select _1_;
         // safe own namespace and call user-callback-function
         _Fi1T3R_ call { private _SC0PE_; _x call _this } call {
-            push(_1iST_, _this); // push if isn't nil
+            __push(_1iST_, _this); // push if isn't nil
         };
     };
     _1iST_;
@@ -167,23 +167,24 @@ func(MapGrep) = {
 
 
 // 
-// func(SortArray)
-// syntax:
+// Function func(SortArray)
+// Syntax:
 //     (two parralel arrays) invoke(SortArray)
-// Sort two parralel arrays (using a heapsort algorithm, O(n log n)). Format of arrays:
+// Sort two parralel arrays (using a heapsort algorithm, O(n log n)). 
+// Format of arrays:
 //     [
 //         [values],
 //         [linked data]
 //     ]
 // Example:
 //     [
-//         [  32,   43,   12,   3,   6565,   43,   3,   4,   5,   234,   876,   872,   7 ],
-//         ["_32","_43","_12","_3","_6565","_43","_3","_4","_5","_234","_876","_872","_7"]
+//         [  32,   43,   12,   3,   6565,   43,   3,   4,   5,   234 ],
+//         ["_32","_43","_12","_3","_6565","_43","_3","_4","_5","_234 ]
 //     ] invoke(SortArray)
 // Result:
 //     [
-//         [  3,   3,   4,   5,   7,   12,   32,   43,   43,   234,   872,   876,   6565 ],
-//         ["_3","_3","_4","_5","_7","_12","_32","_43","_43","_234","_872","_876","_6565"]
+//         [  3,   3,   4,   5,   12,   32,   43,   43,   234,   6565 ],
+//         ["_3","_3","_4","_5","_12","_32","_43","_43","_234","_6565"]
 //     ]
 // 
 
