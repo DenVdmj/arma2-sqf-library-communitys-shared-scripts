@@ -17,7 +17,7 @@ walkDir(
 
         if ($file =~ /\.txt$/) {
             my $linkInfo = processFile($file, sub { my ($text, $filename) = @_; htmlTPL($text)});
-            push(@contentFileChunks, qq(<a href="$linkInfo->{href}">/$linkInfo->{title}</a> (описание)\n));
+            push(@contentFileChunks, qq(<a href="$linkInfo->{href}">/$linkInfo->{title}</a>\n));
         };
 
         if ($file =~ /\.sqf$/) {
@@ -27,7 +27,7 @@ walkDir(
                     my ($text, $filename) = @_; 
                     htmlTPL( htmlTplBlock( join("<hr />", map {escapeHTML($_)} @content), $filename, $text ) );
                 });
-                push(@contentFileChunks, qq(<a href="$linkInfo->{href}">/$linkInfo->{title}</a> (скрипт)\n));
+                push(@contentFileChunks, qq(<a href="$linkInfo->{href}">/$linkInfo->{title}</a>\n));
             };
         };
     }
