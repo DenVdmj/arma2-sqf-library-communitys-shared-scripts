@@ -2,16 +2,18 @@
 @setlocal enabledelayedexpansion
 
 rem ----------------------------------------------------------------------------------------------
-rem
+rem   Requires binarize
 set   binarize=on
+rem   Requires signing
 set   sign=on
+rem   Current path
 set   thispath=%~dp0
-set   dirlist="%~dp0css" "%~dp0doc"
+rem   Directories of addons
+set   dirlist="%~dp0css"
+rem   Mask of added files
 set   mask=*
-rem
 rem ----------------------------------------------------------------------------------------------
 
-call :ReadBiPrivateKey "biprivatekey.private" "biprivatekey"
 call :RegRead "BinPBOPath" "HKLM\SOFTWARE\Bohemia Interactive\BinPBO Personal Edition" "MAIN" 
 call :CanonizePath "targetAddonDir" "%~dp0..\..\addons"
 
@@ -53,14 +55,19 @@ rem ----------------------------------------------------------------------------
     echo --------------------------------
 
     if "%sign%"=="on" (
-        if not "%biprivatekey%"=="" (
-            for %%i in ("%targetAddonDir%\*.pbo") do (
-                echo Sign file "%%~i" by "%biprivatekey%"
-                "%BinPBOPath%\DSSignFile\DSSignFile.exe" "%biprivatekey%" "%%~i"
-            )
-        ) else (
-            echo variable %%biprivatekey%% is void
+        call :ReadBiPrivateKey "biprivatekey.private" "biprivatekey"
+
+        for %%i in ("%targetAddonDir%\*.pbo") do (
+            echo Sign file "%%~i" by "!biprivatekey!"
+            "%BinPBOPath%\DSSignFile\DSSignFile.exe" "!biprivatekey!" "%%~i"
         )
+
+        if "!biprivatekey!"=="" (
+            echo Error: variable "biprivatekey" is void
+            echo Check your biprivatekey.private file
+            pause
+        )
+
     )
 
 goto :eof
@@ -95,6 +102,9 @@ goto :eof
         )
     ) else (
         echo File "%~1" not found.
-        echo Create in here dir the "%~1" file that contains path to your biprivatekey key.
+        echo Create in here direcory the "%~1" file that contains path to your biprivatekey key.
+        echo ;create here path to your biprivatekey file>biprivatekey.private
+        echo c:/path/to/your/your-key-name.biprivatekey>>biprivatekey.private
+        pause
     )
 goto :eof
