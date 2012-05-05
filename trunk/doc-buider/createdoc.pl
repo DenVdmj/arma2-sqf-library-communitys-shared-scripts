@@ -7,6 +7,7 @@ my @filelist;
 my $currentPath = POSIX::getcwd();
 my $DIRSPACER = ' - ';
 my @contentFileChunks = ();
+my $targetPath = "$currentPath/../doc/";
 
 walkDir(
     path => "$currentPath/../css",
@@ -34,7 +35,7 @@ walkDir(
 
 { 
     local *fhContent;
-    open(fhContent, '+>index.html') or die;
+    open(fhContent, "+>$targetPath/index.html") or die "$targetPath/index.html";
     print fhContent htmlContentTPL(join("", map {"<li>$_</li>"} @contentFileChunks));
     close(fhContent);
 };
@@ -42,6 +43,7 @@ walkDir(
 ############################################################
 
 sub processFile {
+    
     my $file = shift;
     my $callback = shift;
     my $relFileName = $file;
@@ -49,9 +51,12 @@ sub processFile {
     my $htmlFileName = $relFileName;
     $htmlFileName =~ s/\/|\\/$DIRSPACER/g;
     $htmlFileName .= ".html";
+
+    print qq(Process file "$file"\n);
+
     {
         local *hndlOutFile;
-        open(hndlOutFile, "+>$currentPath/$htmlFileName");
+        open(hndlOutFile, "+>$targetPath/$htmlFileName");
         my $coloredText = getColoredText(qq(-h -imyshorttags "$file"));
         # удалить идентификационнцю строку колорера
         $coloredText =~ s/^Created with colorer-take5 library. Type '\w+'//;
@@ -110,10 +115,10 @@ sub getColoredText {
     $node->QueryValueEx('executable', $type, $value) or
         die 'Not found "colorer.exe", version 4you';
 
-    local *FILEIN;
-    my $pid = open(FILEIN, "-|", ($value." ".(shift)));
-    my $result = join("", map {$_} <FILEIN>);
-    close(FILEIN);
+    local *fhInput;
+    my $pid = open(fhInput, "-|", ($value." ".(shift)));
+    my $result = join("", map {$_} <fhInput>);
+    close(fhInput);
     $result;
 };
 
@@ -194,63 +199,28 @@ $sourcecode
 <hr />}
 }
 
-sub htmlTPL {
-    qq{<!doctype html>
-<html>
-<head>
-<title></title>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<style type="text/css">
-body { margin: auto; }
-* {cursor:default}
-pre {
-padding: 1em 4em;
-}
-pre.code,
-pre.code b,
-pre.code i,
-pre.code s,
-pre.code u,
-pre.code tt,
-pre.code em,
-pre.code var {
-text-decoration: none;
-font: normal normal 14px/150% Consolas, monospace;
-}
-pre.code b  {color:#009}
-pre.code i  {color:#080}
-pre.code s  {color:#BBB; font-style: italic}
-pre.code u  {color:#0A0}
-pre.code tt {color:#994}
-pre.code em {color:#A00}
-pre.code var {color:#5E5E5E}
 
-hr { margin: 1em 0 1em 0; border: 1px dashed #ccc; }
-#unfoldcode:hover { cursor: hand; color: red }
-</style>
-</head>
-<body>
-<pre class="code">@_[0]</pre>
-</body>
-</html>}
+BEGIN {
+    local *fhMainTpl;
+    local *fhPageTpl;
+
+    my $strMainTpl = "";
+    my $strPageTpl = "";
+
+    open fhMainTpl, "createdoc.pl.main.tpl.html" or die q(can't open tamplate file "createdoc.pl.main.tpl.html");
+    read fhMainTpl, $strMainTpl, -s fhMainTpl;
+    close fhMainTpl;
+
+    open fhPageTpl, "createdoc.pl.page.tpl.html" or die q(can't open tamplate file "createdoc.pl.page.tpl.html");
+    read fhPageTpl, $strPageTpl, -s fhPageTpl;
+    close fhPageTpl;
+
+    sub htmlContentTPL {
+        return join(shift, split(/<!-- INSERT HERE -->/, $strMainTpl))
+    };
+
+    sub htmlTPL {
+        return join(shift, split(/<!-- INSERT HERE -->/, $strPageTpl))
+    };
 };
 
-sub htmlContentTPL {
-qq{<!doctype html>
-<html>
-<head>
-<title></title>
-<meta http-equiv="content-type" content="text/html; charset=windows-1251" />
-<style type="text/css">
-body { font: normal normal 11pt/150% Verdana; margin: auto; padding: 1em 0; width: 45em }
-</style>
-</head>
-<body>
-<h1>CSS (auto-documentation)</h1>
-<h2>Scripts and help files</h2>
-<ul>
-@_[0]
-</ul>
-</body>
-</html>}
-};

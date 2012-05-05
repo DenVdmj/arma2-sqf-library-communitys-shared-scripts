@@ -1,5 +1,5 @@
 
-# mkdir 'css';
+mkdir 'css';
 
 for my $filename (<../css/lib/*.sqf>) {
     print '"' . $filename . '" --> "css/'.getFileNameInfo($filename)->{'file'} . qq("\n);
