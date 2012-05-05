@@ -104,7 +104,7 @@ goto :eof
         echo File "%~1" not found.
         echo Create in here direcory the "%~1" file that contains path to your biprivatekey key.
         echo ;create here path to your biprivatekey file>biprivatekey.private
-        echo c:/path/to/your/your-key-name.biprivatekey>>biprivatekey.private
+        echo c:/this/is/default/path/to/your-key-name.biprivatekey>>biprivatekey.private
         pause
     )
 goto :eof
