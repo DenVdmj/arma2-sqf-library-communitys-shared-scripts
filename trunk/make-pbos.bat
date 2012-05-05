@@ -8,10 +8,10 @@ set   sign=on
 set   thispath=%~dp0
 set   dirlist="%~dp0css" "%~dp0doc"
 set   mask=*
-set   biprivatekey="D:\den\MyMailPosts(rescopy)\keys\DenVdmj.biprivatekey"
 rem
 rem ----------------------------------------------------------------------------------------------
 
+call :ReadBiPrivateKey "biprivatekey.private" "biprivatekey"
 call :RegRead "BinPBOPath" "HKLM\SOFTWARE\Bohemia Interactive\BinPBO Personal Edition" "MAIN" 
 call :CanonizePath "targetAddonDir" "%~dp0..\..\addons"
 
@@ -53,9 +53,13 @@ rem ----------------------------------------------------------------------------
     echo --------------------------------
 
     if "%sign%"=="on" (
-        for %%i in ("%targetAddonDir%\*.pbo") do (
-            echo Sign file "%%~i" by %biprivatekey%
-            "%BinPBOPath%\DSSignFile\DSSignFile.exe" %biprivatekey% "%%~i"
+        if not "%biprivatekey%"=="" (
+            for %%i in ("%targetAddonDir%\*.pbo") do (
+                echo Sign file "%%~i" by "%biprivatekey%"
+                "%BinPBOPath%\DSSignFile\DSSignFile.exe" "%biprivatekey%" "%%~i"
+            )
+        ) else (
+            echo variable %%biprivatekey%% is void
         )
     )
 
@@ -82,4 +86,15 @@ goto :eof
         set %~2=___%~2___%%i%%j%%k%%l%%m%%n_%%o___
     )
     echo %~1>%mask%
+goto :eof
+
+:ReadBiPrivateKey
+    if exist "%~1" (
+        for /f "tokens=*" %%i in (%~1) do (
+            set %~2=%%~i
+        )
+    ) else (
+        echo File "%~1" not found.
+        echo Create in here dir the "%~1" file that contains path to your biprivatekey key.
+    )
 goto :eof
