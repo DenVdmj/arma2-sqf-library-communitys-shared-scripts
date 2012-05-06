@@ -2,12 +2,12 @@
 mkdir 'css';
 
 for my $filename (<../css/lib/*.sqf>) {
-    print '"' . $filename . '" --> "css/'.getFileNameInfo($filename)->{'file'} . qq("\n);
+    printf(qq("%s" --> "css/%s"), $filename, getFileNameInfo($filename)->{'file'});
     copyFile($filename, 'css/' . getFileNameInfo($filename)->{file}, textReplace);
 }
 
 for my $filename ('common', 'css', <../css/*.macro>) {
-    print '"../css/' . $filename . '" --> "css/'.getFileNameInfo($filename)->{'file'} . qq("\n);
+    printf(qq("../css/%s" --> "css/%s"\n), $filename, getFileNameInfo($filename)->{'file'});
     copyFile('../css/' . $filename, 'css/' . getFileNameInfo($filename)->{file}, textReplace);
 }
 
