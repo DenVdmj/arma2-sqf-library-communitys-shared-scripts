@@ -1,14 +1,14 @@
 
 mkdir 'css';
 
-for my $filename (<../css/lib/*.sqf>) {
-    printf(qq("%s" --> "css/%s"), $filename, getFileNameInfo($filename)->{'file'});
+for my $filename (
+    <../css/common>, 
+    <../css/css>, 
+    <../css/lib/*.sqf>, 
+    <../css/*.macro>
+) {
+    printf(qq(copy and process file "%s" ---> "css/%s"\n), $filename, getFileNameInfo($filename)->{'file'});
     copyFile($filename, 'css/' . getFileNameInfo($filename)->{file}, textReplace);
-}
-
-for my $filename ('common', 'css', <../css/*.macro>) {
-    printf(qq("../css/%s" --> "css/%s"\n), $filename, getFileNameInfo($filename)->{'file'});
-    copyFile('../css/' . $filename, 'css/' . getFileNameInfo($filename)->{file}, textReplace);
 }
 
 sub textReplace {
