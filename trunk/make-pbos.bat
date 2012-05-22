@@ -10,7 +10,7 @@ rem   Requires signing
 set   Sign=on
 rem   Current path
 set   ThisPath=%~dp0
-rem   Directories of addons
+rem   Addons directories list, may be a mask, as %~dp0/*
 set   DirList="%~dp0css"
 rem   Mask of added files
 set   Mask=*
@@ -32,7 +32,10 @@ if not exist %TargetAddonDir% (
 copy "mod.cpp" "%TargetAddonDir%/../mod.cpp"
 
 call :MakePboProcess "%DirList%"
-call "make-distrib.bat"
+
+if exist "make-distrib.bat" (
+    call "make-distrib.bat"
+)
 
 goto :eof
 

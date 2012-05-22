@@ -1,7 +1,7 @@
 ﻿// SQF
 //
 // sqf-library "\css\init.sqf"
-// Copyright (c) 2009-2010 Denis Usenko (DenVdmj)
+// Copyright (c) 2009-2012 Denis Usenko (DenVdmj)
 // MIT-style license
 //
 
