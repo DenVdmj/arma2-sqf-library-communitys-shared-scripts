@@ -10,6 +10,6 @@
 
 #define __profilerStart private "__PROFILER_LOG__"; __PROFILER_LOG__ = []; private "___profiler_time_point"; ___profiler_time_point = diag_ticktime;
 #define __profiler(message) __PROFILER_LOG__ set [count __PROFILER_LOG__, message + ": " + str (diag_ticktime - ___profiler_time_point)]; ___profiler_time_point = diag_ticktime;
-#define __profilerEnd call { private ["_s1", "_s2", "_n"]; _n = toString [0x0D, 0x0A]; _s1 = ""; _s2 = _n; { _s1 = _s1 + _x + "\n"; _s2 = _s2 + _x + _n } foreach __PROFILER_LOG__; hintC _s1; copyToClipboard _s2; diag_log _s2; __PROFILER_LOG__ };
-
+#define __profilerEnd call { private ["_s1", "_s2", "_n"]; _n = toString [0x0D, 0x0A]; _s1 = ""; _s2 = _n; { _s1 = _s1 + _x + "\n"; _s2 = _s2 + _x + _n } foreach __PROFILER_LOG__; hint _s1; copyToClipboard _s2; diag_log parseText _s2; __PROFILER_LOG__ };
+                                                                                                                                
 #endif

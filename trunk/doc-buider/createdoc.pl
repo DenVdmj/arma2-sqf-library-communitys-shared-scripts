@@ -8,15 +8,18 @@ my $currentPath = POSIX::getcwd();
 my $DIRSPACER = ' - ';
 my @contentFileChunks = ();
 my $targetPath = "$currentPath/../doc/";
+my $libPath = "$currentPath/../css";
+
+mkdir $targetPath;
 
 walkDir(
-    path => "$currentPath/../css",
+    path => $libPath,
     proc => sub {
         my ($file, $deep) = @_;
         return if -d $file;
 
         if ($file =~ /\.txt$/) {
-            my $linkInfo = processFile($file, sub { my ($text, $filename) = @_; htmlTPL($text)});
+            my $linkInfo = processFile($file, sub { my ($text, $filename) = @_; htmlFileTemplate($text)});
             push(@contentFileChunks, qq(<a href="$linkInfo->{href}">/$linkInfo->{title}</a>\n));
         };
 
@@ -25,7 +28,7 @@ walkDir(
             if (scalar @content > 0) {
                 my $linkInfo = processFile($file, sub { 
                     my ($text, $filename) = @_; 
-                    htmlTPL( htmlTplBlock( join("<hr />", map {escapeHTML($_)} @content), $filename, $text ) );
+                    htmlFileTemplate( htmlTplBlock( join("<hr />", map {escapeHTML($_)} @content), $filename, $text ), $filename );
                 });
                 push(@contentFileChunks, qq(<a href="$linkInfo->{href}">/$linkInfo->{title}</a>\n));
             };
@@ -36,7 +39,7 @@ walkDir(
 { 
     local *fhContent;
     open(fhContent, "+>$targetPath/index.html") or die "$targetPath/index.html";
-    print fhContent htmlContentTPL(join("", map {"<li>$_</li>"} @contentFileChunks));
+    print fhContent htmlTOCTemplate(join("", map {"<li>$_</li>"} @contentFileChunks));
     close(fhContent);
 };
 
@@ -83,24 +86,19 @@ sub parseSqfInlineDocs {
         close(hndlOutFile);
     };
 
-    while ( $sqfFileContent =~ m<\n//(\s+)?(?:(?:Функция|function)\s+)?((func(?:\w+|\(\w+\))).*?)\n\s*\3\s*\=\s*{>gcis ) {
-        my $padding = $1;
-        my $text = $2;
+    while ( 
+        $sqfFileContent =~ m<
+                (?:\n//([\x20\x09]+)?(?:(?:function)\s+)?((func(?:\w+|\(\w+\))).*?)\n\s*\3\s*\=\s*{) |
+            (?:\*\n*([\x20\x09]+)?(?:(?:function)\s+)?((func(?:\w+|\(\w+\))).*?)\n\*/\s*\6\s*\=\s*{)
+        >gcisx
+    ) {
+        my $padding = $1 | $4;
+        my $text = $2 | $5;
         $text =~ s{\n//$padding?}{\n}g;
         $text =~ s{(//|\s)+$}{}g;
-        my $textFunction = $text =~ /[a-zA-Z0-9]/ ? "Function" :  "Функция";
-        push(@content, "$textFunction $text");
+        push(@content, "Function $text");
     };
-
-    while ( $sqfFileContent =~ m<\n/\*\n*(\s+)?(?:(?:Функция|function)\s+)?((func(?:\w+|\(\w+\))).*?)\n\*/\s*\3\s*\=\s*{>gcis ) {
-        my $padding = $1;
-        my $text = $2;
-        $text =~ s{\n$padding}{\n}g;
-        $text =~ s{\s+$}{}g;
-        my $textFunction = $text =~ /[a-zA-Z0-9]/ ? "Function" :  "Функция";
-        push(@content, "$textFunction $text");
-    };
-
+    
     return @content;
 };
 
@@ -199,6 +197,19 @@ $sourcecode
 <hr />}
 }
 
+sub canonizePath {
+    my $path = shift;
+    my @pathChunks = split(/[\/\\]/, $path);
+    my @canonizedPathChunks;
+    for my $chunk (@pathChunks) {
+        if ($chunk eq '..') {
+            pop(@canonizedPathChunks);
+        } else {
+            push(@canonizedPathChunks, $chunk)
+        }
+    }
+    return join('/', @canonizedPathChunks);
+}
 
 BEGIN {
     local *fhMainTpl;
@@ -215,12 +226,14 @@ BEGIN {
     read fhPageTpl, $strPageTpl, -s fhPageTpl;
     close fhPageTpl;
 
-    sub htmlContentTPL {
+    sub htmlTOCTemplate {
         return join(shift, split(/<!-- INSERT HERE -->/, $strMainTpl))
     };
 
-    sub htmlTPL {
-        return join(shift, split(/<!-- INSERT HERE -->/, $strPageTpl))
+    sub htmlFileTemplate {
+        return (
+            join(shift, split(/<!-- INSERT HERE -->/, join(shift, split(/<!-- INSERT FILENAME -->/, $strPageTpl))))
+        )
     };
 };
 

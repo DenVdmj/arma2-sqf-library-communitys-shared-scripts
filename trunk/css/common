@@ -31,8 +31,11 @@
 #define __pSet(varname) __nsSet(parsingNamespace,varname)
 #define __pGet(varname) __nsGet(parsingNamespace,varname) 
 
+// Example: "The first argument type must be of type string!" __errorLog
 #define __errorLog call { diag_log parseText format ['Error in file "%1" on line %2: %3', __FILE__, __LINE__, _this]; };
-#define __errorFormat call { format ['Error in file "%1" on line %2: %3', __FILE__, __LINE__, _this]; };
+
+// Example: diag_log ("The first argument type must be of type string!" __makeErrorMessage)
+#define __makeErrorMessage call { parseText format ['Error in file "%1" on line %2: %3', __FILE__, __LINE__, _this]; };
 
 #define var(name) __project_name##_var_##name
 #define func(name) __project_name##_func_##name
@@ -88,6 +91,7 @@
 #define __pushTo(a) call{(a)set[count(a),_this]}
 #define __top(a) ((a)select((count(a)-1)max 0))
 #define __pop(a) (0 call{_this=__top(a);a resize((count(a)-1)max 0);_this})
+#define __writeTop(a,v) (a)set[count(a)-1,v]
 #define __randomSelect(a) (a select floor random count a)
 
 //
@@ -95,13 +99,16 @@
 //
 
 #define __mathInf 1e9999
-#define __logN(pow,num) ((log num)/(log pow))
-#define __log2(num) ((log num)/.3010299956639812)
-#define __getBit(num,bit) (floor((num / (2^bit)) % 2))
-#define __checkBit(num,bit) (__getBit(num,bit) == 1)
-#define __xor(a,b) (!(a && b) && (a || b))
-#define __inc(n) (call { n = n + 1; n })
-#define __dec(n) (call { n = n - 1; n })
+#define __logN(pow,num) ((log(num))/(log(pow)))
+#define __log2(num) ((log(num))/.3010299956639812)
+#define __toRange(left,right) call{((left)max _this)min(right)}
+#define __int(v) (if((v)<0)then{ceil(v)}else{floor(v)})
+#define __frac(v) ((v)-__int(v))
+#define __getBit(num,bit) (floor(((num)/(2^bit))%2))
+#define __checkBit(num,bit) (__getBit(num,bit)==1)
+#define __xor(a,b) (!((a)&&(b))&&((a)||(b)))
+#define __inc(n) (call{n=n+1;n})
+#define __dec(n) (call{n=n-1;n})
 #define __change(_v) _v = _v
 #define _(v) _##v = _##v
 
