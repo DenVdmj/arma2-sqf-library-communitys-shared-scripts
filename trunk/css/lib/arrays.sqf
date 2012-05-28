@@ -136,7 +136,11 @@ func(removeItemsFromArray) = {
 // 
 //     // Returns all classnames of cars.
 //     [configFile >> "CfgVehicles", {
-//         if (getText(_x >> "simulation") == "car") then { configName _x }
+//         if (isClass _x) then { 
+//            if (getText(_x >> "simulation") == "car") then { 
+//                configName _x 
+//            }
+//         }
 //     }] invoke(MapGrep)
 // 
 //     // names of players' soldiers
@@ -149,7 +153,21 @@ func(removeItemsFromArray) = {
 // 
 
 func(MapGrep) = {
+    private "_x";
+    _this set [2, []];
+    for "____i" from 0 to count arg(0) -1 do {
+        _x = arg(0) select ____i;
+        _this set [3, _x call arg(1)];
+        if !(isNil {arg(3)}) then {
+            __push(arg(2), arg(3));
+        };
+    };
+    arg(2);
+};
+
+func(MapGrep_obsolete) = {
     private ["_SC0PE_", "_x"];
+    // We use such strange names, in order to callback can refer to any variables of the calling context
     _SC0PE_ = ["_SC0PE_", "_C0NF_", "_Fi1T3R_", "_1iST_", "_1_"];
     private _SC0PE_;
     _C0NF_ = arg(0);
@@ -157,14 +175,13 @@ func(MapGrep) = {
     _1iST_ = [];
     for "_1_" from 0 to count _C0NF_ -1 do {
         _x = _C0NF_ select _1_;
-        // safe own namespace and call user-callback-function
+        // Protect own variables and call usercallback filter function
         _Fi1T3R_ call { private _SC0PE_; _x call _this } call {
             __push(_1iST_, _this); // push if isn't nil
         };
     };
     _1iST_;
 };
-
 
 // 
 // Function func(SortArray)

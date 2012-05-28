@@ -265,8 +265,8 @@ func(GetNearestTopography) = {
         "_minDistance",
         "_nearestRegion",
         "_position",
-        "_requiredTypes",
-        "_regionType"
+        "_regionType",
+        "_requestedTypes"
     ];
 
     _position = arg(0);
