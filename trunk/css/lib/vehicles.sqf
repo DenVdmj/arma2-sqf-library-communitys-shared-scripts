@@ -62,34 +62,37 @@ func(ArmAs) = {
 
 func(CreateCustomVehicle) = {
     private [
-        "_vehicleType", "_position", "_group",
-        "_crewSlots", "_getNextUnit", "_unitList",
-        "_unitIndex", "_crewType", "_vehicle", "_moveIn"
+        "_vehicleType", "_position", "_vehicleDefaultSide", "_group", "_crewSlots",
+        "_getNextUnit", "_unitList", "_unitIndex", "_crewType", "_vehicle", "_funcMoveIn"
     ];
+
     _vehicleType = arg(0);
     _position = arg(2);
+
+    _vehicleDefaultSide = [
+        east, west, resistance, civilian, nil, sideEnemy, sideFriendly, nil
+    ] select getNumber (
+        configFile >> "CfgVehicles" >> _vehicleType >> "side"   
+    );
+    
     _group = argOr(3, 0) call {
-        switch ( typeName _this ) do {
+        switch (typeName _this) do {
             case "GROUP" : { _this };
             case "OBJECT" : { group _this };
             case "SIDE" : { createGroup createCenter _this };
-            default {
-                createGroup createCenter (
-                    [
-                        east, west, resistance, civilian, nil, enemy, friendly, nil
-                    ] select getNumber (
-                        configFile >> "CfgVehicles" >> _vehicleType >> "side"
-                    )
-                )
-            }
+            default { createGroup createCenter _vehicleDefaultSide };
         }
     };
+    
     _crewSlots = argIfType(4, "array") else {
         ["commander", "driver", "gunner", "cargo"]
     };
-    _getNextUnit = argIfExist(5) then {
+    
+    _getNextUnit = ifExistArg(5) then {
+        // If specified unit list -- gets units from list
         _unitList = arg(5);
         _unitIndex = -1;
+        // Returns anonimous function
         {
             if (__inc(_unitIndex) < count _unitList) then {
                 _unitList select _unitIndex
@@ -97,24 +100,34 @@ func(CreateCustomVehicle) = {
         }
     } else {
         _crewType = getText (configFile >> "CfgVehicles" >> _vehicleType >> "crew");
-        {
-            _crewType createUnit [_position, _group, "", .7];
-            units _group select ((count units _group)-1)
+        // New syntax of createUnit faster, but not able to create units to the other side
+        if (_vehicleDefaultSide != side _group) then {
+            // Returns anonimous function 
+            {
+                _crewType createUnit [_position, _group, "", .7];
+                units _group select ((count units _group)-1)
+            }
+        } else {
+            // Returns anonimous function
+            {
+                _group createUnit [_crewType, _position, [], 0, ""];
+            }
         }
     };
     _vehicle = createVehicle [_vehicleType, _position, [], 0, arg(1)];
     {
-        _moveIn = (switch (toLower(_x)) do {
+        _funcMoveIn = (switch (toLower(_x)) do {
             case "commander" : {{ _this moveInCommander _vehicle }};
             case "driver"    : {{ _this moveInDriver _vehicle }};
             case "gunner"    : {{ _this moveInTurret [_vehicle, [_pos]] }};
             case "cargo"     : {{ _this moveInCargo _vehicle }};
-            default { diag_log "error in func(CreateCustomVehicle), cargo type mismatch"; {} }
+            default { "Cargo type mismatch!" __errorLog; {} }
         });
         for "_pos" from 0 to (_vehicle emptyPositions _x) - 1 do {
-            call _getNextUnit call _moveIn
+            call _getNextUnit call _funcMoveIn
         }
     } foreach _crewSlots;
     _vehicle
 };
+
 

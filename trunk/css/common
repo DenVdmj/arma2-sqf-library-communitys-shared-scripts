@@ -32,10 +32,12 @@
 #define __pGet(varname) __nsGet(parsingNamespace,varname) 
 
 // Example: "The first argument type must be of type string!" __errorLog
-#define __errorLog call { diag_log parseText format ['Error in file "%1" on line %2: %3', __FILE__, __LINE__, _this]; };
+#define __errorLog call { diag_log parseText format ['Error! File "%1" on line %2: %3', __FILE__, __LINE__, _this]; };
+#define __messageLog call { diag_log parseText format ['Message! File "%1" on line %2): %3', __FILE__, __LINE__, _this]; };
 
-// Example: diag_log ("The first argument type must be of type string!" __makeErrorMessage)
-#define __makeErrorMessage call { parseText format ['Error in file "%1" on line %2: %3', __FILE__, __LINE__, _this]; };
+// Example: diag_log ("The first argument type must be of type string!" __makeErrorText)
+#define __makeErrorText call { parseText format ['Error! File "%1" on line %2: %3', __FILE__, __LINE__, _this]; };
+#define __makeMessageText call { parseText format ['Message! File "%1" on line %2: %3', __FILE__, __LINE__, _this]; };
 
 #define var(name) __project_name##_var_##name
 #define func(name) __project_name##_func_##name

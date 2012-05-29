@@ -105,8 +105,9 @@ func(GetUnduplicatedArray) = {
 // 
 // Function func(removeItemsFromArray)
 // Syntax:
-//     [_array, _removedEntries] invoke(removeItemsFromArray)
+//     [array list, arrayOfAnyValues removedEntries] invoke(removeItemsFromArray)
 // Deletes all specified entries from specified array. Returns the same modified array.
+// Use for cases where it is important to keep a reference to an array.
 //
 
 func(removeItemsFromArray) = {
@@ -135,14 +136,17 @@ func(removeItemsFromArray) = {
 // Examples:
 // 
 //     // Returns all classnames of cars.
-//     [configFile >> "CfgVehicles", {
-//         if (isClass _x) then { 
-//            if (getText(_x >> "simulation") == "car") then { 
-//                configName _x 
-//            }
-//         }
-//     }] invoke(MapGrep)
-// 
+//     [configFile >> "CfgVehicles", {                         
+//         if (isClass _x) then {                              
+//            if (                                             
+//                getNumber (_x >> "scope") > 0 &&             
+//                getText(_x >> "simulation") == "car"         
+//            ) then {                                         
+//                configName _x                                
+//            }                                                
+//         }                                                   
+//     }] call SQFCALC_MapGrep                                 
+//     
 //     // names of players' soldiers
 //     [units player, { name _x }] invoke(MapGrep)
 // 
@@ -163,24 +167,6 @@ func(MapGrep) = {
         };
     };
     arg(2);
-};
-
-func(MapGrep_obsolete) = {
-    private ["_SC0PE_", "_x"];
-    // We use such strange names, in order to callback can refer to any variables of the calling context
-    _SC0PE_ = ["_SC0PE_", "_C0NF_", "_Fi1T3R_", "_1iST_", "_1_"];
-    private _SC0PE_;
-    _C0NF_ = arg(0);
-    _Fi1T3R_ = arg(1);
-    _1iST_ = [];
-    for "_1_" from 0 to count _C0NF_ -1 do {
-        _x = _C0NF_ select _1_;
-        // Protect own variables and call usercallback filter function
-        _Fi1T3R_ call { private _SC0PE_; _x call _this } call {
-            __push(_1iST_, _this); // push if isn't nil
-        };
-    };
-    _1iST_;
 };
 
 // 
