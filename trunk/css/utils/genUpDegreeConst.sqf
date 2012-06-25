@@ -24,8 +24,8 @@ private "_posList";
 private "_numList";
 private "_result";
 
-_posList = { _x select 0 } MAP(_list);
-_numList = { _x select 1 } MAP(_list);
+_posList = { _x select 0 } __map(_list);
+_numList = { _x select 1 } __map(_list);
 
 [_numList, _posList] invoke(SortArray);
 

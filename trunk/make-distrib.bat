@@ -20,26 +20,26 @@ set DistribDir_modDir=%DistribDir%\ArmA2\@\css
         exit
     )
 
-    md "%DistribDir%\ArmA2"
-    md "%DistribDir_modDir%\addons"
+    mkdir "%DistribDir%\ArmA2"
+    mkdir "%DistribDir_modDir%\addons"
 
     echo xcopy /E /Y "%TargetAddonDir%" "%DistribDir_modDir%\addons"
     xcopy /E /Y "%TargetAddonDir%" "%DistribDir_modDir%\addons"
 
     echo Copy mission-version folder to distrib
-    md "%DistribDir%\mission-version\css"
+    mkdir "%DistribDir%\mission-version\css"
     xcopy /E /Y "%ThisPath%\mission-version\css" "%DistribDir%\mission-version\css"
     
     echo Copy doc folder to distrib
-    md "%DistribDir%\doc"
+    mkdir "%DistribDir%\doc"
     xcopy /E /Y "%ThisPath%doc" "%DistribDir%\doc"
 
-    echo "%DistribDir_modDir%\addons\*.log"
     del /Q "%DistribDir_modDir%\addons\*.log"
+    rmdir /S /Q "%DistribDir_modDir%\addons\log"
 
     copy "mod.cpp" "%DistribDir_modDir%\mod.cpp"
 
-    del "%DistribDir%.7z"
+    del /Q "%DistribDir%.7z"
     if exist "%DistribDir%.7z" (
         echo Error!
         exit
@@ -48,4 +48,3 @@ set DistribDir_modDir=%DistribDir%\ArmA2\@\css
     "%Z7%" a -r0 -t7z -mx9 %Z7param% -scsDOS -- "%DistribDir%.7z" "%DistribDir%\*"
 
 goto :eof
-

@@ -1,6 +1,6 @@
 // SQF
 //
-// common macros "\css\config"
+// common macros "\css\config.macro"
 // Copyright (c) 2009-2012 Denis Usenko (DenVdmj)
 // MIT-style license
 //
@@ -25,11 +25,11 @@
 //
 
 // private item is never visible
-#define __private 0 
+#define __private 0
 // protected item "advanced designer" switch must be activated to use it
-#define __protected 1 
+#define __protected 1
 // public item anyone can see/use it
-#define __public 2         
+#define __public 2
 
 //
 // Sides
@@ -73,13 +73,14 @@
 #define __WeaponNoSlot             0 // dummy weapons
 #define __WeaponSlotPrimary        1 // primary weapons
 #define __WeaponSlotSecondary      4 // secondary weapons
+#define __WeaponSlotMachinegun     5 // primary + secondary
 #define __WeaponSlotHandGun        2 // HandGun
 #define __WeaponSlotHandGunItem   16 // HandGun magazines
 #define __WeaponSlotHandGunMag    16 // HandGun magazines
 #define __WeaponSlotItem         256 // items
 #define __WeaponSlotMag          256 // items
 #define __WeaponSlotBinocular   4096 // binocular
-#define __WeaponHardMounted    65536 
+#define __WeaponHardMounted    65536
 #define __WeaponSlotInventory 131072 // inventory items
 
 #endif

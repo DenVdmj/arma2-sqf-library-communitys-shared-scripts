@@ -21,8 +21,10 @@ if exist "mod.cpp" (
 
 call :MakePboProcess "%DirList%"
 
-if exist "make-distrib.bat" (
-    call "make-distrib.bat"
+if not "%MakeDistrib%"=="" (
+    if exist "make-distrib.bat" (
+        call "make-distrib.bat"
+    )
 )
 
 goto :eof
@@ -30,8 +32,11 @@ goto :eof
 rem ==============================================================================================
 
 :MakePboProcess
-    
-    call :CreateTempFile "%Mask%" "mask"
+
+    if not "%Mask%"=="" (
+        call :CreateTempFile "%Mask%" "MASKFILE"
+        set includeMaskfile= -INCLUDE "!MASKFILE!"
+    )
     call :CreateTempDir "temp_binarize_pbos" "%temp%"
 
     echo --------------------------------
@@ -43,14 +48,18 @@ rem ============================================================================
             del "%TargetAddonDir%\%%~ni.*"
         )
         if "%Binarize%"=="on" (
-            "%BinPBOPath%\BinPBO.exe" "%%~i" "%TargetAddonDir%" -BINARIZE -TEMP "%temp_binarize_pbos%" -INCLUDE "%Mask%"
+            "%BinPBOPath%\BinPBO.exe" "%%~i" "%TargetAddonDir%" -BINARIZE -TEMP "%temp_binarize_pbos%" %includeMaskfile%
         ) else (
-            "%BinPBOPath%\BinPBO.exe" "%%~i" "%TargetAddonDir%" -INCLUDE "%Mask%"
+            "%BinPBOPath%\BinPBO.exe" "%%~i" "%TargetAddonDir%" %includeMaskfile%
         )
     )
 
-    del "%Mask%"
+    if exist "%MASKFILE%" del "%MASKFILE%"
     rmdir /S /Q "%temp_binarize_pbos%"
+    mkdir "%TargetAddonDir%\log"
+    for %%i in ("%TargetAddonDir%\*.log") do (
+        move "%%~i" "%TargetAddonDir%\log\%%~nxi"
+    )
 
     echo --------------------------------
     echo --       START SIGN PBO      --
@@ -71,7 +80,7 @@ rem ============================================================================
         )
 
     )
-    
+
 goto :eof
 
 :RegRead

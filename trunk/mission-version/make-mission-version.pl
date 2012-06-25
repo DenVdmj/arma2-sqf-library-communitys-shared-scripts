@@ -2,13 +2,15 @@
 mkdir 'css';
 
 for my $filename (
-    <../css/common>, 
     <../css/css>, 
     <../css/lib/*.sqf>, 
+    <../css/lib/*.sqs>,
     <../css/*.macro>
 ) {
+    my $filenameinfo = getFileNameInfo($filename);
+    next unless $filenameinfo->{name} =~ /\w[\w.-]+/;
     printf(qq(copy and process file "%s" ---> "css/%s"\n), $filename, getFileNameInfo($filename)->{'file'});
-    copyFile($filename, 'css/' . getFileNameInfo($filename)->{file}, textReplace);
+    copyFile($filename, 'css/' . $filenameinfo->{file}, textReplace);
 }
 
 sub textReplace {

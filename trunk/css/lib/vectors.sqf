@@ -37,7 +37,7 @@ func(VectorAdd) = {
 // Subtracts two vectors (v1-v2) and returns the difference.
 // Note: vector type—is a 3D vector, array of three number.
 // Return value: vector
-// 
+//
 
 func(VectorSubstract) = {
     private ["_v", "_u"];
@@ -68,7 +68,7 @@ func(VectorMagnitude) = {
 // Syntax:
 //     [] invoke(VectorNormalize)
 //
-// Returns the normalized version of a vector (each entry of the vector 
+// Returns the normalized version of a vector (each entry of the vector
 // divided by its magnitude). A normalized vector has a magnitude of 1.
 // Return value: vector
 //
@@ -148,10 +148,10 @@ func(VectorScalarProduct) = {
 // Syntax:
 //     (vector v) invoke(VectorAngle)
 //     [vector v1, vector v2] invoke(VectorAngle)
-// 
-// When one argument: returns angle between Ox axis and vector direction, in Counter 
+//
+// When one argument: returns angle between Ox axis and vector direction, in Counter
 // clockwise orientation. The result is normalised between 0 and 2*PI.
-// When two arguments: Returns the angle from vector V1 to vector V2, 
+// When two arguments: Returns the angle from vector V1 to vector V2,
 // in counter-clockwise order, and in degrees.
 //
 // Return value: scalar, angle in degrees
@@ -176,11 +176,11 @@ func(VectorAngle) = {
 
 func(VectorSide) = {
     (
-        ( 
+        (
             if (__isObject(arg(0))) then {
                 [vectorDir _this, vectorUp _this]
             } else {
-                _this 
+                _this
             }
         ) invoke(VectorProduct)
     ) invoke(VectorNormalize)
@@ -195,7 +195,7 @@ func(VectorSide) = {
     } else {
         (
             [arg(0), arg(1)] invoke(VectorProduct)
-        ) invoke(VectorNormalize)    
+        ) invoke(VectorNormalize)
     }
 };
 */

@@ -176,18 +176,18 @@ func(CompassPoint) = {
     format _out
 };
 
-// 
+//
 // Function func(GetNearestTown)
 //
 // Syntax:
 //     (Position position) invoke(GetNearestTown)
 //     (Object position) invoke(GetNearestTown)
-// 
+//
 // Returns the nearest town (config entry, or void config entry, if nothing is found).
 // Example:
 //     getText (player invoke(GetNearestTown) >> "name");
 //     getArray (player invoke(GetNearestTown) >> "position");
-// 
+//
 
 func(GetNearestTown) = {
     [_this, ["NameCityCapital", "NameVillage", "NameCity"]] invoke(GetNearestTopography)
@@ -199,38 +199,38 @@ func(GetNearestTown) = {
 // Syntax:
 //     (Position position) invoke(GetNearestLocal)
 //     (Object position) invoke(GetNearestLocal)
-// 
+//
 // Returns the nearest settlement, including the places "NameLocal" also.
 // If nothing is found, then returns void config entry.
 // Return value: config
 // Example:
 //     getText (player invoke(GetNearestLocal) >> "name");
 //     getArray (player invoke(GetNearestLocal) >> "position");
-// 
+//
 
 func(GetNearestLocal) = {
     [_this, [
-        "NameCityCapital", "NameVillage", 
+        "NameCityCapital", "NameVillage",
         "NameCity", "NameLocal"
     ]] invoke(GetNearestTopography)
 };
 
-// 
+//
 // Function func(GetNearestForest)
 //
 // Syntax:
 //     (Position position) invoke(GetNearestForest)
 //     (Object position) invoke(GetNearestForest)
-// 
+//
 // Returns the nearest forest (config entry, or void config entry, if nothing is found).
 // Example:
 //     getText (player invoke(GetNearestForest) >> "name");
 //     getArray (player invoke(GetNearestForest) >> "position");
-// 
+//
 
 func(GetNearestForest) = {
     [_this, [
-        "VegetationFir", "VegetationBroadleaf", 
+        "VegetationFir", "VegetationBroadleaf",
         "VegetationVineyard", "VegetationPalm"
     ]] invoke(GetNearestTopography)
 };
@@ -240,16 +240,16 @@ func(GetNearestForest) = {
 //
 // Syntax:
 //     [PositionOrObject position, ArrayOrString regionTypes] invoke(GetNearestTopography)
-// 
+//
 // Returns the nearest topographic region.
 // If nothing is found, then returns void config entry.
 // Return value: config
-// 
+//
 // Example:
 //     getText ([player, "Hill"] invoke(GetNearestTopography) >> "name");
 //     getArray ([player, "Hill"] invoke(GetNearestForest) >> "position");
 //     getText ([player, ["VegetationVineyard", "VegetationPalm"]] invoke(GetNearestTopography) >> "name");
-// 
+//
 // Available regions types:
 //    "NameCityCapital", "NameVillage", "NameCity",
 //    "VegetationFir", "VegetationBroadleaf", "VegetationVineyard", "VegetationPalm",
@@ -293,19 +293,19 @@ func(GetNearestTopography) = {
     _nearestRegion
 };
 
-// 
+//
 // Function func(NearAirport)
 //
 // Syntax:
 //     (Position position) invoke(NearAirport)
 //     (Object position) invoke(NearAirport)
-// 
+//
 // Returns the nearest airport (configEntry, or void configEntry, if nothing is found).
 // If nothing is found, then returns void config entry.
 // Return value: config
 // Example:
 //     getArray (player invoke(NearAirport) >> "ilsPosition");
-// 
+//
 
 func(NearAirport) = {
     private ["_position", "_confWorld", "_minDistance", "_distance", "_nearest"];
@@ -319,7 +319,7 @@ func(NearAirport) = {
             _nearest = _x;
         };
     } foreach (
-        // "Аэропорты", список config указателей, содержащих свойства 
+        // "Аэропорты", список config указателей, содержащих свойства
         //  ilsPosition, ilsDirection, ilsTaxiIn, ilsTaxiOff, drawTaxiway
         [_confWorld] + (
             [_confWorld >> "SecondaryAirports", {

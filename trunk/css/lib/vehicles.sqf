@@ -9,7 +9,7 @@
 #define __PATH__ \css\lib
 
 func(ArmAs) = {
-    private ["_unit","_donor","_coef"];
+    private ["_unit", "_donor", "_coef"];
     _unit = arg(0);
     _coef = argOr(2,1);
     _donor = configFile >> "CfgVehicles" >> arg(1);
@@ -18,13 +18,13 @@ func(ArmAs) = {
         for "" from 1 to ((_x select 1) * _coef) do {
             _unit addMagazine (_x select 0)
         };
-    } foreach ( getArray ( _donor >> "magazines" ) invoke(List2Set) );
+    } foreach (getArray (_donor >> "magazines") invoke(List2Set));
     {
         _unit addWeapon _x
     } foreach getArray (_donor >> "weapons");
 };
 
-// 
+//
 // Function func(CreateCustomVehicle)
 // Syntax:
 //     [
@@ -45,9 +45,9 @@ func(ArmAs) = {
 //                      if the side—will create a new group by this side
 //                      if the other value (eg 0 or "" or "default"), will create a new group
 //                      owned by a native side of the vehicle.
-//     crewSlots     —  bring the crew up to strength. А list containing some of the following
+//     crewSlots     —  bring the crew up to strength. An list containing some of the following
 //                      values: "commander", "driver", "gunner", "cargo".
-//     unitList      —  if present—crewmans will be retrieved one by one from this 
+//     unitList      —  if present—crewmans will be retrieved one by one from this
 //                      list, else—crewmans will be created.
 //
 // Example:
@@ -72,9 +72,9 @@ func(CreateCustomVehicle) = {
     _vehicleDefaultSide = [
         east, west, resistance, civilian, nil, sideEnemy, sideFriendly, nil
     ] select getNumber (
-        configFile >> "CfgVehicles" >> _vehicleType >> "side"   
+        configFile >> "CfgVehicles" >> _vehicleType >> "side"
     );
-    
+
     _group = argOr(3, 0) call {
         switch (typeName _this) do {
             case "GROUP" : { _this };
@@ -83,11 +83,11 @@ func(CreateCustomVehicle) = {
             default { createGroup createCenter _vehicleDefaultSide };
         }
     };
-    
+
     _crewSlots = argIfType(4, "array") else {
         ["commander", "driver", "gunner", "cargo"]
     };
-    
+
     _getNextUnit = ifExistArg(5) then {
         // If specified unit list -- gets units from list
         _unitList = arg(5);
@@ -102,7 +102,7 @@ func(CreateCustomVehicle) = {
         _crewType = getText (configFile >> "CfgVehicles" >> _vehicleType >> "crew");
         // New syntax of createUnit faster, but not able to create units to the other side
         if (_vehicleDefaultSide != side _group) then {
-            // Returns anonimous function 
+            // Returns anonimous function
             {
                 _crewType createUnit [_position, _group, "", .7];
                 units _group select ((count units _group)-1)

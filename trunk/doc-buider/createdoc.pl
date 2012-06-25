@@ -26,8 +26,8 @@ walkDir(
         if ($file =~ /\.sqf$/) {
             my @content = parseSqfInlineDocs($file);
             if (scalar @content > 0) {
-                my $linkInfo = processFile($file, sub { 
-                    my ($text, $filename) = @_; 
+                my $linkInfo = processFile($file, sub {
+                    my ($text, $filename) = @_;
                     htmlFileTemplate( htmlTplBlock( join("<hr />", map {escapeHTML($_)} @content), $filename, $text ), $filename );
                 });
                 push(@contentFileChunks, qq(<a href="$linkInfo->{href}">/$linkInfo->{title}</a>\n));
@@ -36,7 +36,7 @@ walkDir(
     }
 );
 
-{ 
+{
     local *fhContent;
     open(fhContent, "+>$targetPath/index.html") or die "$targetPath/index.html";
     print fhContent htmlTOCTemplate(join("", map {"<li>$_</li>"} @contentFileChunks));
@@ -46,7 +46,7 @@ walkDir(
 ############################################################
 
 sub processFile {
-    
+
     my $file = shift;
     my $callback = shift;
     my $relFileName = $file;
@@ -63,7 +63,7 @@ sub processFile {
         my $coloredText = getColoredText(qq(-h -imyshorttags "$file"));
         # удалить идентификационнцю строку колорера
         $coloredText =~ s/^Created with colorer-take5 library. Type '\w+'//;
-        # удалить избыточные теги раскрашивания
+        # удалить избыточные теги раскрашивани
         $coloredText =~ s/\<\/(\w)\>(\s*)\<\1\>/$2/ig;
         print hndlOutFile $callback->($coloredText, $relFileName);
         close(hndlOutFile);
@@ -86,7 +86,7 @@ sub parseSqfInlineDocs {
         close(hndlOutFile);
     };
 
-    while ( 
+    while (
         $sqfFileContent =~ m<
                 (?:\n//([\x20\x09]+)?(?:(?:function)\s+)?((func(?:\w+|\(\w+\))).*?)\n\s*\3\s*\=\s*{) |
             (?:\*\n*([\x20\x09]+)?(?:(?:function)\s+)?((func(?:\w+|\(\w+\))).*?)\n\*/\s*\6\s*\=\s*{)
@@ -98,7 +98,7 @@ sub parseSqfInlineDocs {
         $text =~ s{(//|\s)+$}{}g;
         push(@content, "Function $text");
     };
-    
+
     return @content;
 };
 

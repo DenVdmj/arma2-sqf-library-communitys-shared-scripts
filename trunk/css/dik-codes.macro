@@ -1,4 +1,7 @@
-// ARMA2
+// SQF
+//
+// common macros "\css\dik-codes.macro"
+//
 
 #define DIK_ESCAPE          0x01
 #define DIK_1               0x02

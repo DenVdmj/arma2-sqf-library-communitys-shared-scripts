@@ -12,7 +12,7 @@
 
 #define __readSlots(class) (getNumber (configFile >> "CfgVehicles" >> (class) >> "weaponSlots"))
 
-// 
+//
 // Function func(ReadSlotPrimary)
 // Function func(ReadSlotHandGun)
 // Function func(ReadSlotSecondary)
@@ -21,11 +21,11 @@
 // Function func(ReadSlotGoggle)
 // Function func(ReadSlotHardMounted)
 // Function func(ReadSlotItem)
-// 
+//
 // Syntax:
 //     (string vehicleClassName) invoke(ReadSlot<SlotName>)
 // Returns the number of (respectively) slots available vehicleClassName.
-// 
+//
 
 func(ReadSlotPrimary)     = { __readSlots(_this) % 2 };
 func(ReadSlotHandGun)     = { floor(__readSlots(_this) / 2 ) % 2 };
@@ -36,7 +36,7 @@ func(ReadSlotGoggle)      = { floor(__readSlots(_this) / 4096 ) % 8 };
 func(ReadSlotHardMounted) = { floor(__readSlots(_this) / 65536 ) % 2 };
 func(ReadSlotItem)        = { floor(__readSlots(_this) / 131072 ) % 16 };
 
-// 
+//
 // Function func(isInheritFrom)
 // Syntax:
 //     [config someConfHandle, config theParentConfHandle] invoke(isInheritFrom)
@@ -44,18 +44,18 @@ func(ReadSlotItem)        = { floor(__readSlots(_this) / 131072 ) % 16 };
 //
 // Example 1:
 //     [
-//         configFile >> "CfgWeapons" >> primaryWeapon player, 
+//         configFile >> "CfgWeapons" >> primaryWeapon player,
 //         configFile >> "CfgWeapons" >> "RifleCore"
 //     ] invoke(isInheritFrom);
 //
 // Example 2:
 //     [
-//         configFile >> "CfgWeapons" >> primaryWeapon player, 
+//         configFile >> "CfgWeapons" >> primaryWeapon player,
 //         configFile >> "CfgWeapons" >> "MissileCore"
 //     ] invoke(isInheritFrom)
 //
 
-func(isInheritFrom) = {
+func(IsInheritFrom) = {
     private ["_curr", "_parent", "_void"];
     _curr = _this select 0;
     _parent = _this select 1;
@@ -67,12 +67,12 @@ func(isInheritFrom) = {
     };
 };
 
-// 
+//
 // Function func(ConfigAmmo)
 // Syntax:
 //     (string magazineClassName) invoke(ConfigAmmo)
 // Returns the entrypoint of CfgAmmo for the specified magazine. Config type.
-// 
+//
 
 func(ConfigAmmo) = {
     configFile >> "CfgAmmo" >> (
@@ -80,13 +80,13 @@ func(ConfigAmmo) = {
     )
 };
 
-// 
+//
 // Function func(ReadOverlaying)
 // Syntax:
 //     [string weaponClassName, overlayingClassName] invoke(ReadOverlaying)
 //     [config weaponClassEntryPoint, "modes"] invoke(ReadOverlaying)
 // Read overlaying classes. Inside function.
-// 
+//
 
 func(ReadOverlaying) = {
     private ["_class", "_overlayingClasses"];
@@ -100,28 +100,28 @@ func(ReadOverlaying) = {
     _overlayingClasses
 };
 
-// 
+//
 // Function func(ReadModes)
 // Syntax:
 //     (string weaponClassName) invoke(ReadModes)
 //     (config weaponClassEntryPoint) invoke(ReadModes)
 // Returns an array of entry points into the "modes". Array of config.
-// 
+//
 
 func(ReadModes) = { [_this, "modes"] invoke(ReadOverlaying) };
 
-// 
+//
 // Function func(ReadMuzzles)
 // Syntax:
 //     (string weaponClassName) invoke(ReadMuzzles)
 //     (config weaponClassEntryPoint) invoke(ReadMuzzles)
-// Returns an array of entry points into weapons' muzzles. Array of config.
+// Returns an array of entry points into weapon's muzzles. Array of config.
 // Example of func(ReadModes) and func(ReadMuzzles):
 //     // correct reading of the properties of weapons (it real value of dispersion)
 //     hint str getNumber (
 //         ((primaryWeapon player invoke(ReadMuzzles) select 0) invoke(ReadModes) select 0) >> "dispersion"
 //     );
-// 
+//
 //     // the most accurate of all available muzzles
 //     _dispersion = 1e40; // 1.#INF
 //     {
@@ -129,13 +129,13 @@ func(ReadModes) = { [_this, "modes"] invoke(ReadOverlaying) };
 //             _dispersion = _dispersion min getNumber (_x >> "dispersion")
 //         } foreach (_x invoke(ReadModes))
 //     } foreach (primaryWeapon player invoke(ReadMuzzles));
-// 
+//
 //     hint str _dispersion;
-// 
+//
 
 func(ReadMuzzles) = { [_this, "muzzles"] invoke(ReadOverlaying) };
 
-// 
+//
 // Function func(FilterWeapon)
 // Syntax:
 //     [
@@ -147,17 +147,17 @@ func(ReadMuzzles) = { [_this, "muzzles"] invoke(ReadOverlaying) };
 //             declarative query
 //         }
 //     ] invoke(FilterWeapon)
-// 
+//
 // Filters an array of weapons with custom conditions. (for more, see. "en.funcFilterWeapon.readme.txt")
-// First and foremost this function is base for such functions as: 
+// First and foremost this function is base for such functions as:
 //   func(FilterWeaponSD), func(FilterATGun), func(FilterAAGun)
 // Example:
-// 
+//
 //     Search all weapon with ammo with simulation == shotRocket:
 //     [player, { _ammoFilter = {
 //         getText (_ammo >> "simulation") == "shotRocket"
 //     }}] invoke(FilterWeapon)
-// 
+//
 //     Result:
 //     [ // weapon list
 //         ["SMAW", // weapon classname
@@ -171,7 +171,7 @@ func(ReadMuzzles) = { [_this, "muzzles"] invoke(ReadOverlaying) };
 //             ]
 //         ]
 //     ]
-// 
+//
 
 func(FilterWeapon) = {
     private [
@@ -238,7 +238,7 @@ func(FilterWeapon) = {
     } catch { _exception }
 };
 
-// 
+//
 // Function func(ReadAnyMagazines)
 // Syntax:
 //     (string weaponClassName) invoke(ReadAnyMagazines)
@@ -254,7 +254,7 @@ func(FilterWeapon) = {
 //         "100Rnd_556x45_BetaCMag",
 //         "30Rnd_556x45_G36SD"
 //     ]
-// 
+//
 
 func(ReadAnyMagazines) = {
     private "_mags";
@@ -270,18 +270,18 @@ func(ReadAnyMagazines) = {
 #define __isWeaponSD(M) (getNumber((M) >> "fireLightIntensity") < __SDFireLightIntensity)
 #define __isAmmoSD(A) (getNumber((A) >> "audibleFire") < __SDAudibleFire)
 
-// 
+//
 // Function func(IsMagazineSD)
 // Syntax:
 //     (string MagazineName) invoke(IsMagazineSD)
 // Returns true if the magazine uses noiseless ammo.
-// 
+//
 
 func(IsMagazineSD) = {
     __isAmmoSD(_this invoke(ConfigAmmo))
 };
 
-// 
+//
 // Function func(IsWeaponSD)
 // Syntax:
 //     (string weaponClassName) invoke(IsWeaponSD)
@@ -289,15 +289,15 @@ func(IsMagazineSD) = {
 //     (object soldier) invoke(IsWeaponSD)
 // Returns true if the weapon has a small flash and uses a noiseless ammo.
 // Note: If the soldier, there will be a used list of weapons used by the soldier.
-// 
+//
 // Example:
-// 
+//
 //     // true if is the primary weapon with the suppressor
 //     primaryWeapon player invoke(IsWeaponSD)
-// 
+//
 //     // true if player has weapon with the suppressor
 //     weapons player invoke(IsWeaponSD)
-// 
+//
 
 func(IsWeaponSD) = {
     [ _this, {
@@ -341,7 +341,7 @@ func(IsWeaponSD) = {
 //     ]
 // Note: If the unit, there will be a used list of weapons used by the unit.
 // Note: If the "other type value", there will be a used list of all weapons, that presented in game.
-// Note: SD-sensitive, suppressed ammo are returned only for weapons (muzzles) of a small flash, and 
+// Note: SD-sensitive, suppressed ammo are returned only for weapons (muzzles) of a small flash, and
 //       vice versa — for such guns are returned only suppressed ammo.
 //
 
@@ -359,18 +359,18 @@ func(FilterWeaponSDSense) = {
     }] invoke(FilterWeapon)
 };
 
-// 
+//
 // Function func(FilterWeaponSD)
 // Syntax:
 //     (string weaponClassName) invoke(FilterWeaponSD)
 //     (array of string listOfWeaponClassNames) invoke(FilterWeaponSD)
 //     (object soldier) invoke(FilterWeaponSD)
 //     (otherType value) invoke(FilterWeaponSD)
-// Search (in listOfWeaponClassNames) SD weapons (has a small flash and uses a noiseless ammo), search 
+// Search (in listOfWeaponClassNames) SD weapons (has a small flash and uses a noiseless ammo), search
 // result is returned as an array of formats.
 // Note: If the soldier, there will be a used list of weapons used by the soldier.
 // Note: If the "other type value", there will be a used list of all weapons, that presented in game.
-// 
+//
 // Example:
 //     player invoke(FilterWeaponSD)
 //     Result:
@@ -397,7 +397,7 @@ func(FilterWeaponSDSense) = {
 //     ]
 //     // get all sd-weapons from game config
 //     0 invoke(FilterWeaponSD)
-// 
+//
 
 func(FilterWeaponSD) = {
     [ _this, {
@@ -406,18 +406,18 @@ func(FilterWeaponSD) = {
     }] invoke(FilterWeapon)
 };
 
-// 
+//
 // Function func(FilterATGun)
 // Syntax:
 //     (string WeaponClassName) invoke(FilterATGun)
 //     (array of string listOfWeaponClassNames) invoke(FilterATGun)
 //     (object soldier) invoke(FilterATGun)
 //     (otherType value) invoke(FilterATGun)
-// Search (in listOfWeaponClassNames) weapons capable of hitting a tank. Output format is similar 
+// Search (in listOfWeaponClassNames) weapons capable of hitting a tank. Output format is similar
 // to the output format of the function FilterWeaponSD.
 // Note: If the soldier, there will be a used list of weapons used by the soldier.
 // Note: If the "other type value", there will be a used list of all weapons, that presented in game.
-// 
+//
 
 func(FilterATGun) = {
     [ _this, {
@@ -431,19 +431,19 @@ func(FilterATGun) = {
     }] invoke(FilterWeapon)
 };
 
-// 
+//
 // Function func(FilterAAGun)
 // Syntax:
 //     (string WeaponClassName) invoke(FilterAAGun)
 //     (array of string listOfWeaponClassNames) invoke(FilterAAGun)
 //     (object unit) invoke(FilterAAGun)
 //     (otherType value) invoke(FilterAAGun)
-// 
-// Search (in listOfWeaponClassNames) weapons homing (irLock). Output format is 
+//
+// Search (in listOfWeaponClassNames) weapons homing (irLock). Output format is
 // similar to the output format of the function FilterWeaponSD.
 // Note: If the soldier, there will be a used list of weapons used by the soldier.
 // Note: If the "other type value", there will be a used list of all weapons, that presented in game.
-// 
+//
 
 func(FilterAAGun) = {
     [ _this, {
@@ -454,19 +454,19 @@ func(FilterAAGun) = {
     }] invoke(FilterWeapon)
 };
 
-// 
+//
 // Function func(FilterFirearm)
 // Syntax:
 //     (string WeaponClassName) invoke(FilterFirearm)
 //     (array of string listOfWeaponClassNames) invoke(FilterFirearm)
 //     (object unit) invoke(FilterFirearm)
 //     (otherType value) invoke(FilterFirearm)
-// 
-// Search (in listOfWeaponClassNames) firearm weapons (weapons firing shotBullets). Output 
+//
+// Search (in listOfWeaponClassNames) firearm weapons (weapons firing shotBullets). Output
 // format is similar to the output format of the function FilterWeaponSD.
 // Note: If the soldier, there will be a used list of weapons used by the soldier.
 // Note: If the "other type value", there will be a used list of all weapons, that presented in game.
-// 
+//
 
 func(FilterFirearm) = {
     [ _this, {
@@ -476,17 +476,17 @@ func(FilterFirearm) = {
     }] invoke(FilterWeapon)
 };
 
-// 
+//
 // Function func(ReadActions)
 // Syntax:
 //     [string unitClassName, string targetAnimation] invoke(ReadActions)
-// Return the entrypoint to class Actions (configFile >> _unitClassNameMoves >> "Actions") for 
+// Return the entrypoint to class Actions (configFile >> _unitClassNameMoves >> "Actions") for
 // specified unitClassName and his targetAnimation.
 // Example:
 //     player playMove ([typeOf player, animationState player] invoke(ReadActions) >> "reloadMagazine")
 //     // is the same as that:
 //     player playAction "reloadMagazine"
-// 
+//
 
 func(ReadActions) = {
     private "_moves";
@@ -494,11 +494,11 @@ func(ReadActions) = {
     _moves >> "Actions" >> getText ( _moves >> "States" >> arg(1) >> "actions" )
 };
 
-// 
+//
 // Function func(ReadUpDegree)
 // Syntax:
 //     (object soldier) invoke(ReadUpDegree)
-// Returns the value of the property UpDegree (AI Animation State) of the animation for the 
+// Returns the value of the property UpDegree (AI Animation State) of the animation for the
 // specified unit. Number type.
 // Possible values are defined in config game:
 //     enum {
@@ -518,19 +518,19 @@ func(ReadActions) = {
 //         MANPOSLYINGCIVIL = 3,
 //         MANPOSSTANDCIVIL = 12,
 //     };
-// 
+//
 // Note: file "\css\config.macros" contains the following macros:
 //     #define __ManPosLyingBinoc 2
 //     #define __ManPosStandBinoc 14
 //     #define __ManPosDead 0
 //     etc.
-// 
+//
 
 func(ReadUpDegree) = {
     getNumber ( [typeOf _this, animationState _this] invoke(ReadActions) >> "upDegree" )
 };
 
-// 
+//
 // Function func(ReadAnimType)
 // Syntax:
 //     (object soldier) invoke(ReadAnimType)
@@ -550,13 +550,13 @@ func(ReadUpDegree) = {
 //     "ManPosBinoc"
 //     "ManPosBinocLying"
 //     "ManPosBinocStand"
-// 
+//
 
 func(ReadAnimType) = {
     getText ( [typeOf _this, animationState _this] invoke(ReadActions) >> "upDegree" )
 };
 
-// 
+//
 // Function func(ReadWeaponType)
 // Syntax:
 //     (string weaponClassName) invoke(ReadWeaponType)
@@ -569,36 +569,36 @@ func(ReadAnimType) = {
 //     WeaponSlotMag         256   // Magazine slots (12x / 8x for medics)
 //     WeaponSlotGoggle     4096   // Goggle slot (2x)
 //     WeaponHardMounted   65536   // stationary weapons
-// 
+//
 // Note: file "\css\config.macros" contains the following macros:
 //     #define __WeaponNoSlot 0
 //     #define __WeaponSlotPrimary 1
 //     #define __WeaponSlotHandGun 2
 //     #define __WeaponSlotSecondary 4
 //     etc.
-//     
+//
 
 func(ReadWeaponType) = {
     getNumber ( configFile >> "CfgWeapons" >> _this >> "type" )
 };
 
-// 
+//
 // Function func(ReadMagazineType)
 // Syntax:
 //     (string magazineClassName) invoke(ReadMagazineType)
 // Returns the type of the magazine slot. Possible types, see above.
-// 
+//
 
 func(ReadMagazineType) = {
     getNumber ( configFile >> "CfgMagazines" >> _this >> "type" )
 };
 
-// 
+//
 // Function func(WeaponInHand)
 // Syntax:
 //     (object soldier) invoke(WeaponInHand)
 // Returns weapons in the hands of soldiers. String type.
-// 
+//
 
 func(WeaponInHand) = {
     private ["_upDegree", "_weapon"];
@@ -620,7 +620,7 @@ func(WeaponInHand) = {
                 };
                 case __WeaponSlotSecondary: {
                     [__ManPosWeapon]
-                };              
+                };
                 case __WeaponSlotGoggle: {
                     [__ManPosBinocLying, __ManPosBinoc, __ManPosBinocStand]
                 };
@@ -636,24 +636,40 @@ func(WeaponInHand) = {
                 };
                 if (_this == __WeaponSlotSecondary) exitwith {
                     [__ManPosWeapon]
-                };              
+                };
                 if (_this == __WeaponSlotGoggle) exitwith {
                     [__ManPosBinocLying, __ManPosBinoc, __ManPosBinocStand]
                 };
                 []
             }
-        )) exitwith { _x }; 
+        )) exitwith { _x };
         ""
     } foreach weapons _this
 };
 
+//
+// Function func(currentMuzzle)
+// Syntax:
+//     (object soldier) invoke(currentMuzzle)
+// Returns current muzzle of weapons in the hands of soldiers. 
+// if current muzzle is void string, returns the first muzzle of the current weapon. String type.
+// This function workaround for currentMuzzle's bug when void string returns for yet no shooted AI
 // 
+
+func(CurrentMuzzle) = {
+    if (currentMuzzle _this != "") exitwith { 
+        currentMuzzle _this;
+    };
+    configName (((_this invoke(WeaponInHand)) invoke(ReadMuzzles)) select 0);
+};
+
+//
 // Function func(GetWeaponByTypes)
 // Syntax:
 //     [array weaponsList, array weaponTypeList] invoke(GetWeaponByTypes)
 //     [object soldier, array weaponTypeList] invoke(GetWeaponByTypes)
 // Returns weapon with the specified weapon type. String type.
-// 
+//
 
 func(GetWeaponByTypes) = {
     private "_types";
@@ -669,7 +685,7 @@ func(GetWeaponByTypes) = {
     });
 };
 
-// 
+//
 // Function func(GetTurretsWeapons)
 // Syntax:
 //     (object vehicle) invoke(GetTurretsWeapons)
@@ -678,16 +694,16 @@ func(GetWeaponByTypes) = {
 //     [
 //         [(string weaponClassName),
 //             [ // magazines list
-//                 (string magazineClassName), 
+//                 (string magazineClassName),
 //                 (string magazineClassName),
 //                 etc.
-//             ], 
+//             ],
 //             (array turretPath),
 //             (config turretClass)
 //         ],
 //         etc.
 //     ]
-// 
+//
 // Example:
 //     // function works with objects
 //     cursorTarget invoke(GetTurretsWeapons)
@@ -704,7 +720,7 @@ func(GetWeaponByTypes) = {
 //     ["SmokeLauncher", ["SmokeLauncherMag"], [0, 0], bin\config.bin/CfgVehicles/M1A2_US_TUSK_MG_EP1/Turrets/MainTurret/Turrets/CommanderOptics],
 //     ["M240_veh_2", ["100Rnd_762x51_M240", "1200Rnd_762x51_M240"], [0, 1], bin\config.bin/CfgVehicles/M1A2_US_TUSK_MG_EP1/Turrets/MainTurret/Turrets/LoaderTurret]
 //   ]
-// 
+//
 
 func(GetTurretsWeapons) = {
     private ["_result", "_findRecurse", "_class"];
@@ -740,7 +756,7 @@ func(GetTurretsWeapons) = {
     _result;
 };
 
-// 
+//
 // Function func(GetTurretPath)
 // Syntax:
 //     [string vehicleClassName, string weaponClassName] invoke(GetTurretPath)
@@ -775,8 +791,8 @@ func(GetTurretPath) = {
             };
         };
     };
-    try { 
-        [configFile >> "CfgVehicles" >> _vehicleClass >> "turrets", []] call _findRecurse; 
+    try {
+        [configFile >> "CfgVehicles" >> _vehicleClass >> "turrets", []] call _findRecurse;
         []; // default
     } catch {
         _exception

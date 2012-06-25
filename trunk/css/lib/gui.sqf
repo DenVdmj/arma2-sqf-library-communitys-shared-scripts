@@ -18,11 +18,11 @@ if (isNil{__getStorage}) then { [] __setStorage };
 // Syntax:
 //   {
 //       _rsc = "RscDisplay";
-//   
+//
 //       // list of local variables which available from the constructor, destructor and event handlers code
 //       _private = ["_list", "_of", "_your", "_local", "_variables"];
-//   
-//       // Event handlers, 
+//
+//       // Event handlers,
 //       _handlers = [
 //           // you can declare them as follows:
 //           "CtrlClassName", "EventName", {
@@ -36,12 +36,12 @@ if (isNil{__getStorage}) then { [] __setStorage };
 //       ];
 //       _constructor = {
 //           // constructor code
-//           
+//
 //       };
 //       _destructor = {
 //            // destructor code
 //       };
-//   
+//
 //   } invoke(CreateDialog);
 //
 

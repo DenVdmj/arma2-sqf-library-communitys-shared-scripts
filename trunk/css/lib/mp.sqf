@@ -14,7 +14,7 @@
 // Syntax:
 //     [<condition>, <argument>, <sqf function>] invoke(BroadcastCall);
 //
-// Arguments: 
+// Arguments:
 //     <condition>
 //         Code or String type.
 //         Condition, such as: {isDedicated}, {local _this && myFlagIsTrue}, etc.
@@ -23,9 +23,9 @@
 //             'isClient'    — clients only;
 //             'isServer'    — server only;
 //             'isDedicated' — dedicated server only.
-//     <argument> 
+//     <argument>
 //         Argument them to pass to the function in the _this variables, any type.
-//     <sqf function> 
+//     <sqf function>
 //         Code to execute
 //
 // Example 1:
@@ -45,12 +45,12 @@
 
 func(BroadcastCall) = {
     try {
-        if (typeName arg(2) != 'CODE') then { 
+        if (typeName arg(2) != 'CODE') then {
             throw false
         };
         _this set [0, switch (typeName arg(0)) do {
-            case 'CODE' : { 
-                arg(0) 
+            case 'CODE' : {
+                arg(0)
             };
             case 'STRING' : {
                 switch toLower arg(0) do {
@@ -59,14 +59,14 @@ func(BroadcastCall) = {
                     default { compile arg(0) };
                 }
             };
-            default { 
-                throw false 
+            default {
+                throw false
             };
         }];
         missionNamespace setVariable ['', _this];
         publicVariable '';
         if (call arg(0)) then {
-            arg(1) call arg(2) 
+            arg(1) call arg(2)
         };
         true
     } catch {
@@ -74,13 +74,26 @@ func(BroadcastCall) = {
     };
 };
 
+/* func(MPSetObjectTexture) = {}; */
+/*
 '' addPublicVariableEventHandler {
     arg(1) call {
-        if (call arg(0)) then { 
-            arg(1) call arg(2) 
+        if (call arg(0)) then {
+            arg(1) call arg(2)
         };
     };
 };
+*/
+/*
+'t' addPublicVariableEventHandler {
+    arg(1) call {
+        _obj = arg(0);
+        _selection = arg(1);
+        _texture = arg(2);
+        if (__isNumber(_texture)) then {
 
-
-
+        };
+        (_this select 0) setObjectTexture [_this select 1, _this select 2];
+    };
+};
+*/

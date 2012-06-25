@@ -1,6 +1,6 @@
 // SQF
 //
-// common macros "\css\profiler"
+// common macros "\css\profiler.macro"
 // Copyright (c) 2009-2012 Denis Usenko (DenVdmj)
 // MIT-style license
 //
@@ -8,8 +8,27 @@
 #ifndef __profiler_macro_present
 #define __profiler_macro_present present
 
-#define __profilerStart private "__PROFILER_LOG__"; __PROFILER_LOG__ = []; private "___profiler_time_point"; ___profiler_time_point = diag_ticktime;
-#define __profiler(message) __PROFILER_LOG__ set [count __PROFILER_LOG__, message + ": " + str (diag_ticktime - ___profiler_time_point)]; ___profiler_time_point = diag_ticktime;
-#define __profilerEnd call { private ["_s1", "_s2", "_n"]; _n = toString [0x0D, 0x0A]; _s1 = ""; _s2 = _n; { _s1 = _s1 + _x + "\n"; _s2 = _s2 + _x + _n } foreach __PROFILER_LOG__; hint _s1; copyToClipboard _s2; diag_log parseText _s2; __PROFILER_LOG__ };
-                                                                                                                                
+#define __profilerStart\
+    private "___profiler_log___";\
+    private "___profiler_time_point___";\
+    ___profiler_log___ = [];\
+    ___profiler_time_point___ = diag_ticktime;
+
+#define __profiler(message)\
+    ___profiler_log___ set [count ___profiler_log___, #message + ": " + str (diag_ticktime - ___profiler_time_point___)];\
+    ___profiler_time_point___ = diag_ticktime;
+
+#define __profilerEnd call {\
+    private ["_message", "_CRLF"];\
+    _CRLF = toString [0x0D, 0x0A];\
+    ___profiler_log___ = ["--- START PROFILER ---"] + ___profiler_log___ + ["--- STOP PROFILER ---"];\
+    _message = _CRLF;\
+    {\
+        _message = _message + _x + "%1";\
+        diag_log parseText _x;\
+    } foreach ___profiler_log___;\
+    copyToClipboard format [_message, _CRLF];\
+    parseText format [_message, "<br />"];\
+};
+
 #endif
