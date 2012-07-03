@@ -68,9 +68,9 @@ rem ============================================================================
     if "%Sign%"=="on" (
         call :ReadBiPrivateKey "biprivatekey.private" "biprivatekey"
 
-        for %%i in ("%TargetAddonDir%\*.pbo") do (
-            echo Sign file "%%~i" by "!biprivatekey!"
-            "%BinPBOPath%\DSSignFile\DSSignFile.exe" "!biprivatekey!" "%%~i"
+        for /D %%i in (%~1) do (
+            echo Sign file "%TargetAddonDir%\%%~ni.pbo" by "!biprivatekey!"
+            "%BinPBOPath%\DSSignFile\DSSignFile.exe" "!biprivatekey!" "%TargetAddonDir%\%%~ni.pbo"
         )
 
         if "!biprivatekey!"=="" (
