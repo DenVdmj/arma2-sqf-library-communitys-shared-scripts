@@ -15,8 +15,10 @@
 //          object, title, function
 //          (, arguments, priority, showWindow, hideOnUse, shortcut, condition)
 //      ] invoke(addAction)
+//
 // Description:
 //     Function func(addAction), it is wrapper over addAction for sqf-function directly usage.
+//
 // Parameters:
 //     0) Object object             — The object which the action is assigned to
 //     1) String (or Text) title    — The action name which is displayed in the action menu.
@@ -43,11 +45,29 @@
 //     8) String   condition  — Code that must return true for action to be shown.
 //        Special variables "_target" (unit to which action is attached to) and "_this" (caller/executing unit)
 //        can be used in the evaluation. Default: true
+//
 // Return value:
 //     Number or Nothing.
 //     The ID of the action is returned, IDs are incrementing. The first given action to each unit has got
 //     the ID 0, the second the ID 1 etc. ID's are also passed to the called script and used
 //     to remove an action with removeAction.
+//
+// Snippet:
+//     _actionID = [
+//         _unit, localize "str/module name/action name", {
+//            // action handler
+//             _target    = arg(0);
+//             _caller    = arg(1);
+//             _actionID  = arg(2);
+//             _arguments = arg(3);
+//         }
+//         //, arguments
+//         //, priority
+//         //, showWindow
+//         //, hideOnUse
+//         //, shortcut
+//         //, condition
+//     ] invoke(addAction);
 //
 
 func(addAction) = {

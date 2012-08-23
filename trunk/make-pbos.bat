@@ -45,10 +45,11 @@ rem ============================================================================
 
     for /D %%i in (%~1) do (
         if exist "%TargetAddonDir%\%%~ni.pbo" (
+            echo del "%TargetAddonDir%\%%~ni.*"
             del "%TargetAddonDir%\%%~ni.*"
         )
         if "%Binarize%"=="on" (
-            "%BinPBOPath%\BinPBO.exe" "%%~i" "%TargetAddonDir%" -BINARIZE -TEMP "%temp_binarize_pbos%" %includeMaskfile%
+            "%BinPBOPath%\BinPBO.exe" "%%~i" "%TargetAddonDir%" -BINARIZE %USEPREFIX% -TEMP "%temp_binarize_pbos%" %includeMaskfile%
         ) else (
             "%BinPBOPath%\BinPBO.exe" "%%~i" "%TargetAddonDir%" %includeMaskfile%
         )
@@ -114,8 +115,13 @@ goto :eof
 goto :eof
 
 :GetRevisionNumber
-    for /F "usebackq tokens=1,2" %%i in ("%~dp0..\.hg\cache\tags") do (
-        set %~1=%%j
+    if exist "%~dp0..\.hg\cache\tags" (
+        for /F "usebackq tokens=1,2" %%i in ("%~dp0..\.hg\cache\tags") do (
+            echo Revision number: %%j
+            set %~1=%%j
+        )
+    ) else (
+        echo Fails to identify the revision number. Folder not found: "%~dp0..\.hg\cache\tags"
     )
 goto :eof
 

@@ -257,7 +257,7 @@ func(GetNearestForest) = {
 //
 
 func(GetNearestTopography) = {
-
+    // TODO!!! Переписать с использованием nearestLocations. Или вообще удалить нафиг эти функции
     private [
         "_cfgRegion",
         "_cfgRegions",

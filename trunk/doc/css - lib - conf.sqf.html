@@ -1,0 +1,1223 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>«Community`s Shared Scripts» SQF-Library - /css/lib/conf.sqf</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<style type="text/css">
+  html {
+    font-family: Helvetica, Arial, sans-serif;
+  }
+  body {
+    margin: auto;
+    width: 50em;
+  }
+  * {
+    cursor: default;
+  }
+  pre {
+    padding: 1em 0;
+  }
+  pre.code,
+  pre.code b,
+  pre.code i,
+  pre.code s,
+  pre.code u,
+  pre.code tt,
+  pre.code em,
+  pre.code var {
+    text-decoration: none;
+    font: normal normal 14px/150% "Consolas", monospace;
+  }
+  pre.code b  { color: #009; }
+  pre.code i  { color: #080; }
+  pre.code s  { color: #BBB; font-style: italic; }
+  pre.code u  { color: #0A0; }
+  pre.code tt { color: #994; }
+  pre.code em { color: #A00; }
+  pre.code var { color: #5E5E5E; }
+
+  hr {
+    margin: 1em 0 1em 0;
+    border: 1px dashed #ccc;
+  }
+  #unfoldcode:hover {
+    cursor: hand;
+    color: red
+  }
+</style></head>
+<body>
+<h1>/css/lib/conf.sqf</h1>
+<p><small><i>This documentation was generated automatically from the source code.</i></small></p>
+<pre class="code">
+<hr />Function func(ReadSlotPrimary)
+Function func(ReadSlotHandGun)
+Function func(ReadSlotSecondary)
+Function func(ReadSlotHandGunMag)
+Function func(ReadSlotMag)
+Function func(ReadSlotGoggle)
+Function func(ReadSlotHardMounted)
+Function func(ReadSlotItem)
+
+Syntax:
+    (string vehicleClassName) invoke(ReadSlot&lt;SlotName&gt;)
+Returns the number of (respectively) slots available vehicleClassName.<hr />Function func(isInheritFrom)
+Syntax:
+    [config someConfHandle, config theParentConfHandle] invoke(isInheritFrom)
+Returns the true if someConfHandle is a subclass of theParentConfHandle.
+
+Example 1:
+    [
+        configFile &gt;&gt; &quot;CfgWeapons&quot; &gt;&gt; primaryWeapon player,
+        configFile &gt;&gt; &quot;CfgWeapons&quot; &gt;&gt; &quot;RifleCore&quot;
+    ] invoke(isInheritFrom);
+
+Example 2:
+    [
+        configFile &gt;&gt; &quot;CfgWeapons&quot; &gt;&gt; primaryWeapon player,
+        configFile &gt;&gt; &quot;CfgWeapons&quot; &gt;&gt; &quot;MissileCore&quot;
+    ] invoke(isInheritFrom)<hr />Function func(ConfigAmmo)
+Syntax:
+    (string magazineClassName) invoke(ConfigAmmo)
+Returns the entrypoint of CfgAmmo for the specified magazine. Config type.<hr />Function func(ReadOverlaying)
+Syntax:
+    [string weaponClassName, overlayingClassName] invoke(ReadOverlaying)
+    [config weaponClassEntryPoint, &quot;modes&quot;] invoke(ReadOverlaying)
+Read overlaying classes. Inside function.<hr />Function func(ReadModes)
+Syntax:
+    (string weaponClassName) invoke(ReadModes)
+    (config weaponClassEntryPoint) invoke(ReadModes)
+Returns an array of entry points into the &quot;modes&quot;. Array of config.<hr />Function func(ReadMuzzles)
+Syntax:
+    (string weaponClassName) invoke(ReadMuzzles)
+    (config weaponClassEntryPoint) invoke(ReadMuzzles)
+Returns an array of entry points into weapon's muzzles. Array of config.
+Example of func(ReadModes) and func(ReadMuzzles):
+    // correct reading of the properties of weapons (it real value of dispersion)
+    hint str getNumber (
+        ((primaryWeapon player invoke(ReadMuzzles) select 0) invoke(ReadModes) select 0) &gt;&gt; &quot;dispersion&quot;
+    );
+
+    // the most accurate of all available muzzles
+    _dispersion = 1e40; // 1.#INF
+    {
+        {
+            _dispersion = _dispersion min getNumber (_x &gt;&gt; &quot;dispersion&quot;)
+        } foreach (_x invoke(ReadModes))
+    } foreach (primaryWeapon player invoke(ReadMuzzles));
+
+    hint str _dispersion;<hr />Function func(FilterWeapon)
+Syntax:
+    [
+        string weaponClassName or
+        array of string listOfWeaponClassNames or
+        object soldier or
+        otherType value,
+        {
+            declarative query
+        }
+    ] invoke(FilterWeapon)
+
+Filters an array of weapons with custom conditions. (for more, see. &quot;en.funcFilterWeapon.readme.txt&quot;)
+First and foremost this function is base for such functions as:
+  func(FilterWeaponSD), func(FilterATGun), func(FilterAAGun)
+Example:
+
+    Search all weapon with ammo with simulation == shotRocket:
+    [player, { _ammoFilter = {
+        getText (_ammo &gt;&gt; &quot;simulation&quot;) == &quot;shotRocket&quot;
+    }}] invoke(FilterWeapon)
+
+    Result:
+    [ // weapon list
+        [&quot;SMAW&quot;, // weapon classname
+            [ // muzzle list
+                [/CfgWeapons/SMAW&quot;, // muzzle
+                    [ // ammolist, list of pairs: magazine configEntry &amp; ammo configEntry
+                        [/CfgMagazines/SMAW_HEAA, /CfgAmmo/R_SMAW_HEAA],
+                        [/CfgMagazines/SMAW_HEDP, /CfgAmmo/R_SMAW_HEDP]
+                    ]
+                ]
+            ]
+        ]
+    ]<hr />Function func(ReadAnyMagazines)
+Syntax:
+    (string weaponClassName) invoke(ReadAnyMagazines)
+Return all compatibles magazines. Array of string.
+Example:
+    &quot;m16a4&quot; invoke(ReadAnyMagazines);
+    result:
+    [
+        &quot;30Rnd_556x45_Stanag&quot;,
+        &quot;30Rnd_556x45_StanagSD&quot;,
+        &quot;20Rnd_556x45_Stanag&quot;,
+        &quot;30Rnd_556x45_G36&quot;,
+        &quot;100Rnd_556x45_BetaCMag&quot;,
+        &quot;30Rnd_556x45_G36SD&quot;
+    ]<hr />Function func(IsMagazineSD)
+Syntax:
+    (string MagazineName) invoke(IsMagazineSD)
+Returns true if the magazine uses noiseless ammo.<hr />Function func(IsWeaponSD)
+Syntax:
+    (string weaponClassName) invoke(IsWeaponSD)
+    (array of string listOfWeaponClassNames) invoke(IsWeaponSD)
+    (object soldier) invoke(IsWeaponSD)
+Returns true if the weapon has a small flash and uses a noiseless ammo.
+Note: If the soldier, there will be a used list of weapons used by the soldier.
+
+Example:
+
+    // true if is the primary weapon with the suppressor
+    primaryWeapon player invoke(IsWeaponSD)
+
+    // true if player has weapon with the suppressor
+    weapons player invoke(IsWeaponSD)<hr />Function func(FilterWeaponSDSense)
+Syntax:
+    (string weaponClassName) invoke(FilterWeaponSDSense)
+    (array of string listOfWeaponClassNames) invoke(FilterWeaponSDSense)
+    (object unit) invoke(FilterWeaponSDSense)
+    (otherType value) invoke(FilterWeaponSDSense)
+Returns are compatible magazines in the form of an array:
+    [ // weaponlist
+        [weapon classname, // pair: weapon &amp; muzzlelist
+            [ // muzzlelist
+                [muzzle configEntry, // pair: muzzle &amp; ammolist
+                    [ // ammolist
+                        [magazine configEntry, ammo configEntry],
+                        [magazine configEntry, ammo configEntry]
+                    ]
+                ]
+            ]
+        ],
+        [weapon classname,
+            [
+                [muzzle configEntry,
+                    [
+                        [magazine configEntry, ammo configEntry],
+                        [magazine configEntry, ammo configEntry]
+                    ]
+                ]
+            ]
+        ],
+        etc.
+    ]
+Note: If the unit, there will be a used list of weapons used by the unit.
+Note: If the &quot;other type value&quot;, there will be a used list of all weapons, that presented in game.
+Note: SD-sensitive, suppressed ammo are returned only for weapons (muzzles) of a small flash, and
+      vice versa â€” for such guns are returned only suppressed ammo.<hr />Function func(FilterWeaponSD)
+Syntax:
+    (string weaponClassName) invoke(FilterWeaponSD)
+    (array of string listOfWeaponClassNames) invoke(FilterWeaponSD)
+    (object soldier) invoke(FilterWeaponSD)
+    (otherType value) invoke(FilterWeaponSD)
+Search (in listOfWeaponClassNames) SD weapons (has a small flash and uses a noiseless ammo), search
+result is returned as an array of formats.
+Note: If the soldier, there will be a used list of weapons used by the soldier.
+Note: If the &quot;other type value&quot;, there will be a used list of all weapons, that presented in game.
+
+Example:
+    player invoke(FilterWeaponSD)
+    Result:
+    [
+        [&quot;M9SD&quot;,
+            [
+                [/CfgWeapons/M9SD,
+                    [
+                        [/CfgMagazines/15Rnd_9x19_M9SD, /CfgAmmo/B_9x19_SD]
+                    ]
+                ]
+            ]
+        ],
+        [&quot;M4A1_AIM_SD_camo&quot;,
+            [
+                [/CfgWeapons/M4A1_AIM_SD_camo,
+                    [
+                        [/CfgMagazines/30Rnd_556x45_StanagSD, /CfgAmmo/B_556x45_SD],
+                        [/CfgMagazines/30Rnd_556x45_G36SD, /CfgAmmo/B_556x45_SD]
+                    ]
+                ]
+            ]
+        ]
+    ]
+    // get all sd-weapons from game config
+    0 invoke(FilterWeaponSD)<hr />Function func(FilterATGun)
+Syntax:
+    (string WeaponClassName) invoke(FilterATGun)
+    (array of string listOfWeaponClassNames) invoke(FilterATGun)
+    (object soldier) invoke(FilterATGun)
+    (otherType value) invoke(FilterATGun)
+Search (in listOfWeaponClassNames) weapons capable of hitting a tank. Output format is similar
+to the output format of the function FilterWeaponSD.
+Note: If the soldier, there will be a used list of weapons used by the soldier.
+Note: If the &quot;other type value&quot;, there will be a used list of all weapons, that presented in game.<hr />Function func(FilterAAGun)
+Syntax:
+    (string WeaponClassName) invoke(FilterAAGun)
+    (array of string listOfWeaponClassNames) invoke(FilterAAGun)
+    (object unit) invoke(FilterAAGun)
+    (otherType value) invoke(FilterAAGun)
+
+Search (in listOfWeaponClassNames) weapons homing (irLock). Output format is
+similar to the output format of the function FilterWeaponSD.
+Note: If the soldier, there will be a used list of weapons used by the soldier.
+Note: If the &quot;other type value&quot;, there will be a used list of all weapons, that presented in game.<hr />Function func(FilterFirearm)
+Syntax:
+    (string WeaponClassName) invoke(FilterFirearm)
+    (array of string listOfWeaponClassNames) invoke(FilterFirearm)
+    (object unit) invoke(FilterFirearm)
+    (otherType value) invoke(FilterFirearm)
+
+Search (in listOfWeaponClassNames) firearm weapons (weapons firing shotBullets). Output
+format is similar to the output format of the function FilterWeaponSD.
+Note: If the soldier, there will be a used list of weapons used by the soldier.
+Note: If the &quot;other type value&quot;, there will be a used list of all weapons, that presented in game.<hr />Function func(ReadActions)
+Syntax:
+    [string unitClassName, string targetAnimation] invoke(ReadActions)
+Return the entrypoint to class Actions (configFile &gt;&gt; _unitClassNameMoves &gt;&gt; &quot;Actions&quot;) for
+specified unitClassName and his targetAnimation.
+Example:
+    player playMove ([typeOf player, animationState player] invoke(ReadActions) &gt;&gt; &quot;reloadMagazine&quot;)
+    // is the same as that:
+    player playAction &quot;reloadMagazine&quot;<hr />Function func(ReadUpDegree)
+Syntax:
+    (object soldier) invoke(ReadUpDegree)
+Returns the value of the property UpDegree (AI Animation State) of the animation for the
+specified unit. Number type.
+Possible values are defined in config game:
+    enum {
+        MANPOSLYINGBINOC = 2,
+        MANPOSSTANDBINOC = 14,
+        MANPOSDEAD = 0,
+        MANPOSLYINGRFL = 4,
+        MANPOSKNEELBINOC = 13,
+        MANPOSLYINGHND = 5,
+        MANPOSKNEELRFL = 6,
+        MANPOSSTANDRFL = 8,
+        MANPOSSTAND = 10,
+        MANPOSSWIMMING = 11,
+        MANPOSWEAPON = 1,
+        MANPOSKNEELHND = 7,
+        MANPOSSTANDHND = 9,
+        MANPOSLYINGCIVIL = 3,
+        MANPOSSTANDCIVIL = 12,
+    };
+
+Note: file &quot;\css\config.macros&quot; contains the following macros:
+    #define __ManPosLyingBinoc 2
+    #define __ManPosStandBinoc 14
+    #define __ManPosDead 0
+    etc.<hr />Function func(ReadAnimType)
+Syntax:
+    (object soldier) invoke(ReadAnimType)
+Returns the type of the current animation. One of the following:
+    &quot;ManPosDead&quot;
+    &quot;ManPosStand&quot;
+    &quot;ManPosCombat&quot;
+    &quot;ManPosCrouch&quot;
+    &quot;ManPosLying&quot;
+    &quot;ManPosHandGunStand&quot;
+    &quot;ManPosHandGunCrouch&quot;
+    &quot;ManPosHandGunLying&quot;
+    &quot;ManPosLyingNoWeapon&quot;
+    &quot;ManPosWeapon&quot;
+    &quot;ManPosNoWeapon&quot;
+    &quot;ManPosSwimming&quot;
+    &quot;ManPosBinoc&quot;
+    &quot;ManPosBinocLying&quot;
+    &quot;ManPosBinocStand&quot;<hr />Function func(ReadWeaponType)
+Syntax:
+    (string weaponClassName) invoke(ReadWeaponType)
+Returns the type of the weapon slot. One of the following:
+    WeaponNoSlot            0   // Dummy weapons
+    WeaponSlotPrimary       1   // Primary weapon
+    WeaponSlotHandGun       2   // Handgun slot
+    WeaponSlotSecondary     4   // Secondary weapon (launcher)
+    WeaponSlotHandGunMag   16   // Handgun magazines (8x)(or grenades for M203/GP-25)
+    WeaponSlotMag         256   // Magazine slots (12x / 8x for medics)
+    WeaponSlotGoggle     4096   // Goggle slot (2x)
+    WeaponHardMounted   65536   // stationary weapons
+
+Note: file &quot;\css\config.macros&quot; contains the following macros:
+    #define __WeaponNoSlot 0
+    #define __WeaponSlotPrimary 1
+    #define __WeaponSlotHandGun 2
+    #define __WeaponSlotSecondary 4
+    etc.<hr />Function func(ReadMagazineType)
+Syntax:
+    (string magazineClassName) invoke(ReadMagazineType)
+Returns the type of the magazine slot. Possible types, see above.<hr />Function func(WeaponInHand)
+Syntax:
+    (object soldier) invoke(WeaponInHand)
+Returns weapons in the hands of soldiers. String type.<hr />Function func(currentMuzzle)
+Syntax:
+    (object soldier) invoke(currentMuzzle)
+Returns current muzzle of weapons in the hands of soldiers. 
+if current muzzle is void string, returns the first muzzle of the current weapon. String type.
+This function workarraund of bis bug currentMuzzle's void string result for AI<hr />Function func(GetWeaponByTypes)
+Syntax:
+    [array weaponsList, array weaponTypeList] invoke(GetWeaponByTypes)
+    [object soldier, array weaponTypeList] invoke(GetWeaponByTypes)
+Returns weapon with the specified weapon type. String type.<hr />Function func(GetTurretsWeapons)
+Syntax:
+    (object vehicle) invoke(GetTurretsWeapons)
+    (string vehicleClass) invoke(GetTurretsWeapons)
+Returns information about all weapons on turrets in an array of the following format:
+    [
+        [(string weaponClassName),
+            [ // magazines list
+                (string magazineClassName),
+                (string magazineClassName),
+                etc.
+            ],
+            (array turretPath),
+            (config turretClass)
+        ],
+        etc.
+    ]
+
+Example:
+    // function works with objects
+    cursorTarget invoke(GetTurretsWeapons)
+
+Example:
+    // works with classnames too
+    &quot;M1A2_US_TUSK_MG_EP1&quot; invoke(GetTurretsWeapons)
+
+Result:
+  [
+    [&quot;M256&quot;, [&quot;20Rnd_120mmSABOT_M1A2&quot;, &quot;20Rnd_120mmHE_M1A2&quot;], [0], bin\config.bin/CfgVehicles/M1A2_US_TUSK_MG_EP1/Turrets/MainTurret],
+    [&quot;M240_veh&quot;, [&quot;100Rnd_762x51_M240&quot;, &quot;1200Rnd_762x51_M240&quot;], [0], bin\config.bin/CfgVehicles/M1A2_US_TUSK_MG_EP1/Turrets/MainTurret],
+    [&quot;M2BC&quot;, [&quot;100Rnd_127x99_M2&quot;], [0, 0], bin\config.bin/CfgVehicles/M1A2_US_TUSK_MG_EP1/Turrets/MainTurret/Turrets/CommanderOptics],
+    [&quot;SmokeLauncher&quot;, [&quot;SmokeLauncherMag&quot;], [0, 0], bin\config.bin/CfgVehicles/M1A2_US_TUSK_MG_EP1/Turrets/MainTurret/Turrets/CommanderOptics],
+    [&quot;M240_veh_2&quot;, [&quot;100Rnd_762x51_M240&quot;, &quot;1200Rnd_762x51_M240&quot;], [0, 1], bin\config.bin/CfgVehicles/M1A2_US_TUSK_MG_EP1/Turrets/MainTurret/Turrets/LoaderTurret]
+  ]<hr />Function func(GetTurretPath)
+Syntax:
+    [string vehicleClassName, string weaponClassName] invoke(GetTurretPath)
+Returns first found turret path for specified weapon.
+example:
+    [&quot;M1A2_US_TUSK_MG_EP1&quot;, &quot;M240_veh_2&quot;] invoke(GetTurretPath)
+result:
+    [0,1]<hr />
+<a
+  href="#unfoldcode"
+  id="unfoldcode"
+  onclick="
+    var el = document.getElementById('sqfsrc');
+    el.style.display = el.style.display == '' ? 'none' : ''
+  "
+>Source of &ldquo;css/lib/conf.sqf&rdquo;</a>
+<div style='display: none' id='sqfsrc'>
+<h2>&ldquo;css/lib/conf.sqf&rdquo;</h2>
+
+
+<s>// SQF
+//
+// sqf-library "\css\lib\conf.sqf"
+// Copyright (c) 2009-2012 Denis Usenko (DenVdmj)
+// MIT-style license
+//</s>
+
+<em>#include "\css\css"</em>
+<em>#include "\css\config.macro"</em>
+
+<em>#define</em><em> __PATH__</em> \css\lib
+
+<em>#define</em><em> __readSlots(class)</em> <b>(</b><em>getNumber</em> <b>(</b><em>configFile</em> >> <i>"CfgVehicles"</i> >> <b>(</b>class<b>)</b> >> <i>"weaponSlots"</i><b>))</b>
+
+<s>//
+// Function func(ReadSlotPrimary)
+// Function func(ReadSlotHandGun)
+// Function func(ReadSlotSecondary)
+// Function func(ReadSlotHandGunMag)
+// Function func(ReadSlotMag)
+// Function func(ReadSlotGoggle)
+// Function func(ReadSlotHardMounted)
+// Function func(ReadSlotItem)
+//
+// Syntax:
+//     (string vehicleClassName) invoke(ReadSlot&lt;SlotName>)
+// Returns the number of (respectively) slots available vehicleClassName.
+//</s>
+
+<var>func(ReadSlotPrimary)</var>     <b>= {</b> <tt>__readSlots</tt><b>(</b><var>_this</var><b>)</b> % 2 <b>};</b>
+<var>func(ReadSlotHandGun)</var>     <b>= {</b> <em>floor</em><b>(</b><tt>__readSlots</tt><b>(</b><var>_this</var><b>)</b> / 2 <b>)</b> % 2 <b>};</b>
+<var>func(ReadSlotSecondary)</var>   <b>= {</b> <em>floor</em><b>(</b><tt>__readSlots</tt><b>(</b><var>_this</var><b>)</b> / 4 <b>)</b> % 2 <b>};</b>
+<var>func(ReadSlotHandGunMag)</var>  <b>= {</b> <em>floor</em><b>(</b><tt>__readSlots</tt><b>(</b><var>_this</var><b>)</b> / 16 <b>)</b> % 16 <b>};</b>
+<var>func(ReadSlotMag)</var>         <b>= {</b> <em>floor</em><b>(</b><tt>__readSlots</tt><b>(</b><var>_this</var><b>)</b> / 256 <b>)</b> % 16 <b>};</b>
+<var>func(ReadSlotGoggle)</var>      <b>= {</b> <em>floor</em><b>(</b><tt>__readSlots</tt><b>(</b><var>_this</var><b>)</b> / 4096 <b>)</b> % 8 <b>};</b>
+<var>func(ReadSlotHardMounted)</var> <b>= {</b> <em>floor</em><b>(</b><tt>__readSlots</tt><b>(</b><var>_this</var><b>)</b> / 65536 <b>)</b> % 2 <b>};</b>
+<var>func(ReadSlotItem)</var>        <b>= {</b> <em>floor</em><b>(</b><tt>__readSlots</tt><b>(</b><var>_this</var><b>)</b> / 131072 <b>)</b> % 16 <b>};</b>
+
+<s>//
+// Function func(isInheritFrom)
+// Syntax:
+//     [config someConfHandle, config theParentConfHandle] invoke(isInheritFrom)
+// Returns the true if someConfHandle is a subclass of theParentConfHandle.
+//
+// Example 1:
+//     [
+//         configFile >> "CfgWeapons" >> primaryWeapon player,
+//         configFile >> "CfgWeapons" >> "RifleCore"
+//     ] invoke(isInheritFrom);
+//
+// Example 2:
+//     [
+//         configFile >> "CfgWeapons" >> primaryWeapon player,
+//         configFile >> "CfgWeapons" >> "MissileCore"
+//     ] invoke(isInheritFrom)
+//</s>
+
+<var>func(isInheritFrom)</var> <b>= {
+    private [</b><i>"_curr"</i><b>,</b> <i>"_parent"</i><b>,</b> <i>"_void"</i><b>];</b>
+    <var>_curr</var> <b>=</b> <var>_this</var> <em>select</em> 0<b>;</b>
+    <var>_parent</var> <b>=</b> <var>_this</var> <em>select</em> 1<b>;</b>
+    <var>_void</var> <b>=</b> <em>configFile</em> >> <i>"*"</i><b>;
+    while { true }  do {
+        if (</b><var>_curr</var> <b>==</b> <var>_void</var><b>) exitwith { false };
+        if (</b><var>_curr</var> <b>==</b> <var>_parent</var><b>) exitwith { true };</b>
+        <var>_curr</var> <b>=</b> <em>inheritsFrom</em> <var>_curr</var><b>;
+    };
+};</b>
+
+<s>//
+// Function func(ConfigAmmo)
+// Syntax:
+//     (string magazineClassName) invoke(ConfigAmmo)
+// Returns the entrypoint of CfgAmmo for the specified magazine. Config type.
+//</s>
+
+<var>func(ConfigAmmo)</var> <b>= {</b>
+    <em>configFile</em> >> <i>"CfgAmmo"</i> >> <b>(</b>
+        <em>getText</em> <b>(</b> <em>configFile</em> >> <i>"CfgMagazines"</i> >> <var>_this</var> >> <i>"ammo"</i> <b>)
+    )
+};</b>
+
+<s>//
+// Function func(ReadOverlaying)
+// Syntax:
+//     [string weaponClassName, overlayingClassName] invoke(ReadOverlaying)
+//     [config weaponClassEntryPoint, "modes"] invoke(ReadOverlaying)
+// Read overlaying classes. Inside function.
+//</s>
+
+<var>func(ReadOverlaying)</var> <b>= {
+    private [</b><i>"_class"</i><b>,</b> <i>"_overlayingClasses"</i><b>];</b>
+    <var>_class</var> <b>= arg(</b>0<b>) call {
+        if (</b><tt>__isConfig</tt><b>(</b><var>_this</var><b>)) then {</b> <var>_this</var> <b>} else {</b> <em>configFile</em> >> <i>"CfgWeapons"</i> >> <var>_this</var> <b>}
+    };</b>
+    <var>_overlayingClasses</var> <b>= [];
+    {</b>
+        <tt>__push</tt><b>(</b><var>_overlayingClasses</var><b>, if (</b><var>_x</var> <b>==</b> <i>"this"</i><b>) then {</b> <var>_class</var> <b>} else {</b> <var>_class</var> >> <var>_x</var> <b>})
+    } foreach</b> <em>getArray</em> <b>(</b><var>_class</var> >> <b>arg(</b>1<b>));</b>
+    <var>_overlayingClasses</var>
+<b>};</b>
+
+<s>//
+// Function func(ReadModes)
+// Syntax:
+//     (string weaponClassName) invoke(ReadModes)
+//     (config weaponClassEntryPoint) invoke(ReadModes)
+// Returns an array of entry points into the "modes". Array of config.
+//</s>
+
+<var>func(ReadModes)</var> <b>= { [</b><var>_this</var><b>,</b> <i>"modes"</i><b>] invoke(</b>ReadOverlaying<b>) };</b>
+
+<s>//
+// Function func(ReadMuzzles)
+// Syntax:
+//     (string weaponClassName) invoke(ReadMuzzles)
+//     (config weaponClassEntryPoint) invoke(ReadMuzzles)
+// Returns an array of entry points into weapon's muzzles. Array of config.
+// Example of func(ReadModes) and func(ReadMuzzles):
+//     // correct reading of the properties of weapons (it real value of dispersion)
+//     hint str getNumber (
+//         ((primaryWeapon player invoke(ReadMuzzles) select 0) invoke(ReadModes) select 0) >> "dispersion"
+//     );
+//
+//     // the most accurate of all available muzzles
+//     _dispersion = 1e40; // 1.#INF
+//     {
+//         {
+//             _dispersion = _dispersion min getNumber (_x >> "dispersion")
+//         } foreach (_x invoke(ReadModes))
+//     } foreach (primaryWeapon player invoke(ReadMuzzles));
+//
+//     hint str _dispersion;
+//</s>
+
+<var>func(ReadMuzzles)</var> <b>= { [</b><var>_this</var><b>,</b> <i>"muzzles"</i><b>] invoke(</b>ReadOverlaying<b>) };</b>
+
+<s>//
+// Function func(FilterWeapon)
+// Syntax:
+//     [
+//         string weaponClassName or
+//         array of string listOfWeaponClassNames or
+//         object soldier or
+//         otherType value,
+//         {
+//             declarative query
+//         }
+//     ] invoke(FilterWeapon)
+//
+// Filters an array of weapons with custom conditions. (for more, see. "en.funcFilterWeapon.readme.txt")
+// First and foremost this function is base for such functions as:
+//   func(FilterWeaponSD), func(FilterATGun), func(FilterAAGun)
+// Example:
+//
+//     Search all weapon with ammo with simulation == shotRocket:
+//     [player, { _ammoFilter = {
+//         getText (_ammo >> "simulation") == "shotRocket"
+//     }}] invoke(FilterWeapon)
+//
+//     Result:
+//     [ // weapon list
+//         ["SMAW", // weapon classname
+//             [ // muzzle list
+//                 [/CfgWeapons/SMAW", // muzzle
+//                     [ // ammolist, list of pairs: magazine configEntry &amp; ammo configEntry
+//                         [/CfgMagazines/SMAW_HEAA, /CfgAmmo/R_SMAW_HEAA],
+//                         [/CfgMagazines/SMAW_HEDP, /CfgAmmo/R_SMAW_HEDP]
+//                     ]
+//                 ]
+//             ]
+//         ]
+//     ]
+//</s>
+
+<var>func(FilterWeapon)</var> <b>= {
+    private [</b>
+        <i>"_weaponFilter"</i><b>,</b> <i>"_weaponFound"</i><b>,</b> <i>"_ammoFilter"</i><b>,</b> <i>"_ammoFound"</i><b>,</b>
+        <i>"_weapon"</i><b>,</b> <i>"_muzzle"</i><b>,</b> <i>"_magazine"</i><b>,</b> <i>"_ammo"</i><b>,</b>
+        <i>"_result"</i><b>,</b> <i>"_muzzles"</i><b>,</b> <i>"_magazines"</i><b>,</b>
+        <i>"_weaponFormat"</i><b>,</b> <i>"_muzzleFormat"</i><b>,</b> <i>"_ammoFormat"</i>
+    <b>];</b>
+
+    <var>_result</var> <b>= [];</b>
+    <var>_weaponFilter</var> <b>= { true };</b>
+    <var>_weaponFormat</var> <b>= { [</b><var>_weapon</var><b>,</b> <var>_muzzles</var><b>] };</b>
+    <var>_muzzleFormat</var> <b>= { [</b><var>_muzzle</var><b>,</b> <var>_magazines</var><b>] };</b>
+    <var>_ammoFormat</var> <b>= { [</b><var>_magazine</var><b>,</b> <var>_ammo</var><b>] };</b>
+    <var>_ammoFound</var> <b>= {</b>
+        <tt>__push</tt><b>(</b><var>_magazines</var><b>, call</b> <var>_ammoFormat</var><b>);
+    };
+    call arg(</b>1<b>);
+
+    if (</b><em>isNil</em> <i>"_weaponFound"</i><b>) then {</b>
+        <var>_weaponFound</var> <b>= (
+            if (</b><em>isNil</em> <i>"_ammoFilter"</i><b>) then {{</b>
+                <tt>__push</tt><b>(</b><var>_muzzles</var><b>, [</b><var>_muzzle</var><b>]);
+            }} else {{</b>
+                <var>_magazines</var> <b>= [];
+                {</b>
+                    <var>_magazine</var> <b>=</b> <em>configFile</em> >> <i>"CfgMagazines"</i> >> <var>_x</var><b>;</b>
+                    <var>_ammo</var> <b>=</b> <var>_x</var> <b>invoke(</b>ConfigAmmo<b>);
+                    if (call</b> <var>_ammoFilter</var><b>) then</b> <var>_ammoFound</var><b>;
+                } foreach</b> <em>getArray</em> <b>(</b> <var>_x</var> >> <i>"magazines"</i> <b>);
+                if (</b><em>count</em> <var>_magazines</var> > 0<b>) then {</b>
+                    <tt>__push</tt><b>(</b><var>_muzzles</var><b>, call</b> <var>_muzzleFormat</var><b>);
+                };
+            }}
+        );
+    };
+
+    try {
+        {</b>
+            <var>_weapon</var> <b>=</b> <var>_x</var><b>;</b>
+            <var>_muzzles</var> <b>= [];
+            {</b>
+                <var>_muzzle</var> <b>=</b> <var>_x</var><b>;
+                if call</b> <var>_weaponFilter</var> <b>then</b> <var>_weaponFound</var><b>;
+            } foreach (</b><var>_weapon</var> <b>invoke(</b>ReadMuzzles<b>));
+            if (</b><em>count</em> <var>_muzzles</var> > 0<b>) then {</b>
+                <tt>__push</tt><b>(</b><var>_result</var><b>, call</b> <var>_weaponFormat</var><b>);
+            };
+        } foreach (
+            arg(</b>0<b>) call {
+                switch (</b><em>typeName</em> <var>_this</var><b>) do {
+                    case</b> <i>"OBJECT"</i> : <var>func(GetUnitWeaponsExt)</var><b>;
+                    case</b> <i>"ARRAY"</i> : <b>{</b> <var>_this</var> <b>};
+                    case</b> <i>"STRING"</i> : <b>{ [</b><var>_this</var><b>] };
+                    default {
+                        [</b><em>configFile</em> >> <i>"CfgWeapons"</i><b>, {
+                            if</b> <em>isClass</em> <var>_x</var> <b>then {</b> <em>configName</em> <var>_x</var> <b>}
+                        }] invoke(</b>MapGrep<b>)
+                    };
+                };
+            }
+        );</b>
+        <var>_result</var>
+    <b>} catch {</b> <var>_exception</var> <b>}
+};</b>
+
+<s>//
+// Function func(ReadAnyMagazines)
+// Syntax:
+//     (string weaponClassName) invoke(ReadAnyMagazines)
+// Return all compatibles magazines. Array of string.
+// Example:
+//     "m16a4" invoke(ReadAnyMagazines);
+//     result:
+//     [
+//         "30Rnd_556x45_Stanag",
+//         "30Rnd_556x45_StanagSD",
+//         "20Rnd_556x45_Stanag",
+//         "30Rnd_556x45_G36",
+//         "100Rnd_556x45_BetaCMag",
+//         "30Rnd_556x45_G36SD"
+//     ]
+//</s>
+
+<var>func(ReadAnyMagazines)</var> <b>= {
+    private</b> <i>"_mags"</i><b>;</b>
+    <var>_mags</var> <b>= [];
+    {</b>
+        <var>_mags</var> <b>=</b> <var>_mags</var> + <em>getArray</em> <b>(</b> <var>_x</var> >> <i>"magazines"</i> <b>)
+    } foreach (</b><var>_this</var> <b>invoke(</b>ReadMuzzles<b>));</b>
+    <var>_mags</var>
+<b>};</b>
+
+<em>#define</em><em> __SDFireLightIntensity</em> .001
+<em>#define</em><em> __SDAudibleFire</em> .1
+<em>#define</em><em> __isWeaponSD(M)</em> <b>(</b><em>getNumber</em><b>((</b>M<b>)</b> >> <i>"fireLightIntensity"</i><b>)</b> &lt; <tt>__SDFireLightIntensity</tt><b>)</b>
+<em>#define</em><em> __isAmmoSD(A)</em> <b>(</b><em>getNumber</em><b>((</b>A<b>)</b> >> <i>"audibleFire"</i><b>)</b> &lt; <tt>__SDAudibleFire</tt><b>)</b>
+
+<s>//
+// Function func(IsMagazineSD)
+// Syntax:
+//     (string MagazineName) invoke(IsMagazineSD)
+// Returns true if the magazine uses noiseless ammo.
+//</s>
+
+<var>func(IsMagazineSD)</var> <b>= {</b>
+    <tt>__isAmmoSD</tt><b>(</b><var>_this</var> <b>invoke(</b>ConfigAmmo<b>))
+};</b>
+
+<s>//
+// Function func(IsWeaponSD)
+// Syntax:
+//     (string weaponClassName) invoke(IsWeaponSD)
+//     (array of string listOfWeaponClassNames) invoke(IsWeaponSD)
+//     (object soldier) invoke(IsWeaponSD)
+// Returns true if the weapon has a small flash and uses a noiseless ammo.
+// Note: If the soldier, there will be a used list of weapons used by the soldier.
+//
+// Example:
+//
+//     // true if is the primary weapon with the suppressor
+//     primaryWeapon player invoke(IsWeaponSD)
+//
+//     // true if player has weapon with the suppressor
+//     weapons player invoke(IsWeaponSD)
+//</s>
+
+<var>func(IsWeaponSD)</var> <b>= {
+    [</b> <var>_this</var><b>, {</b>
+        <var>_result</var> <b>= false;</b>
+        <var>_weaponFilter</var> <b>= {</b> <tt>__isWeaponSD</tt><b>(</b><var>_muzzle</var><b>) };</b>
+        <var>_ammoFilter</var> <b>= {</b> <tt>__isAmmoSD</tt><b>(</b><var>_ammo</var><b>) };</b>
+        <var>_ammoFound</var> <b>= { throw true };
+    }] invoke(</b>FilterWeapon<b>)
+};</b>
+
+<s>//
+// Function func(FilterWeaponSDSense)
+// Syntax:
+//     (string weaponClassName) invoke(FilterWeaponSDSense)
+//     (array of string listOfWeaponClassNames) invoke(FilterWeaponSDSense)
+//     (object unit) invoke(FilterWeaponSDSense)
+//     (otherType value) invoke(FilterWeaponSDSense)
+// Returns are compatible magazines in the form of an array:
+//     [ // weaponlist
+//         [weapon classname, // pair: weapon &amp; muzzlelist
+//             [ // muzzlelist
+//                 [muzzle configEntry, // pair: muzzle &amp; ammolist
+//                     [ // ammolist
+//                         [magazine configEntry, ammo configEntry],
+//                         [magazine configEntry, ammo configEntry]
+//                     ]
+//                 ]
+//             ]
+//         ],
+//         [weapon classname,
+//             [
+//                 [muzzle configEntry,
+//                     [
+//                         [magazine configEntry, ammo configEntry],
+//                         [magazine configEntry, ammo configEntry]
+//                     ]
+//                 ]
+//             ]
+//         ],
+//         etc.
+//     ]
+// Note: If the unit, there will be a used list of weapons used by the unit.
+// Note: If the "other type value", there will be a used list of all weapons, that presented in game.
+// Note: SD-sensitive, suppressed ammo are returned only for weapons (muzzles) of a small flash, and
+//       vice versa â€” for such guns are returned only suppressed ammo.
+//</s>
+
+<var>func(FilterWeaponSDSense)</var> <b>= {
+    private [</b><i>"_weaponSD"</i><b>,</b> <i>"_ammoSD"</i><b>];
+    [</b> <var>_this</var><b>, {</b>
+        <var>_weaponFilter</var> <b>= {</b>
+            <var>_weaponSD</var> <b>=</b> <tt>__isWeaponSD</tt><b>(</b><var>_muzzle</var><b>);
+            true
+        };</b>
+        <var>_ammoFilter</var> <b>= {</b>
+            <var>_ammoSD</var> <b>=</b> <tt>__isAmmoSD</tt><b>(</b><var>_ammo</var><b>);
+            !</b><tt>__xor</tt><b>(</b><var>_weaponSD</var><b>,</b> <var>_ammoSD</var><b>)
+        };
+    }] invoke(</b>FilterWeapon<b>)
+};</b>
+
+<s>//
+// Function func(FilterWeaponSD)
+// Syntax:
+//     (string weaponClassName) invoke(FilterWeaponSD)
+//     (array of string listOfWeaponClassNames) invoke(FilterWeaponSD)
+//     (object soldier) invoke(FilterWeaponSD)
+//     (otherType value) invoke(FilterWeaponSD)
+// Search (in listOfWeaponClassNames) SD weapons (has a small flash and uses a noiseless ammo), search
+// result is returned as an array of formats.
+// Note: If the soldier, there will be a used list of weapons used by the soldier.
+// Note: If the "other type value", there will be a used list of all weapons, that presented in game.
+//
+// Example:
+//     player invoke(FilterWeaponSD)
+//     Result:
+//     [
+//         ["M9SD",
+//             [
+//                 [/CfgWeapons/M9SD,
+//                     [
+//                         [/CfgMagazines/15Rnd_9x19_M9SD, /CfgAmmo/B_9x19_SD]
+//                     ]
+//                 ]
+//             ]
+//         ],
+//         ["M4A1_AIM_SD_camo",
+//             [
+//                 [/CfgWeapons/M4A1_AIM_SD_camo,
+//                     [
+//                         [/CfgMagazines/30Rnd_556x45_StanagSD, /CfgAmmo/B_556x45_SD],
+//                         [/CfgMagazines/30Rnd_556x45_G36SD, /CfgAmmo/B_556x45_SD]
+//                     ]
+//                 ]
+//             ]
+//         ]
+//     ]
+//     // get all sd-weapons from game config
+//     0 invoke(FilterWeaponSD)
+//</s>
+
+<var>func(FilterWeaponSD)</var> <b>= {
+    [</b> <var>_this</var><b>, {</b>
+        <var>_weaponFilter</var> <b>= {</b> <tt>__isWeaponSD</tt><b>(</b><var>_muzzle</var><b>) };</b>
+        <var>_ammoFilter</var> <b>= {</b> <tt>__isAmmoSD</tt><b>(</b><var>_ammo</var><b>) };
+    }] invoke(</b>FilterWeapon<b>)
+};</b>
+
+<s>//
+// Function func(FilterATGun)
+// Syntax:
+//     (string WeaponClassName) invoke(FilterATGun)
+//     (array of string listOfWeaponClassNames) invoke(FilterATGun)
+//     (object soldier) invoke(FilterATGun)
+//     (otherType value) invoke(FilterATGun)
+// Search (in listOfWeaponClassNames) weapons capable of hitting a tank. Output format is similar
+// to the output format of the function FilterWeaponSD.
+// Note: If the soldier, there will be a used list of weapons used by the soldier.
+// Note: If the "other type value", there will be a used list of all weapons, that presented in game.
+//</s>
+
+<var>func(FilterATGun)</var> <b>= {
+    [</b> <var>_this</var><b>, {</b>
+        <var>_ammoFilter</var> <b>= {</b>
+            <em>toLower</em> <em>getText</em> <b>(</b> <var>_ammo</var> >> <i>"simulation"</i> <b>)</b> <em>in</em> <b>[</b>
+                <i>"shotmissile"</i><b>,</b> <i>"shotrocket"</i><b>,</b>
+                <i>"shotbullet"</i><b>,</b> <i>"shotshell"</i>
+            <b>] &amp;&amp;</b>
+            <em>getNumber</em> <b>(</b> <var>_ammo</var> >> <i>"hit"</i> <b>)</b> > 70
+        <b>}
+    }] invoke(</b>FilterWeapon<b>)
+};</b>
+
+<s>//
+// Function func(FilterAAGun)
+// Syntax:
+//     (string WeaponClassName) invoke(FilterAAGun)
+//     (array of string listOfWeaponClassNames) invoke(FilterAAGun)
+//     (object unit) invoke(FilterAAGun)
+//     (otherType value) invoke(FilterAAGun)
+//
+// Search (in listOfWeaponClassNames) weapons homing (irLock). Output format is
+// similar to the output format of the function FilterWeaponSD.
+// Note: If the soldier, there will be a used list of weapons used by the soldier.
+// Note: If the "other type value", there will be a used list of all weapons, that presented in game.
+//</s>
+
+<var>func(FilterAAGun)</var> <b>= {
+    [</b> <var>_this</var><b>, {</b>
+        <var>_ammoFilter</var> <b>= {</b>
+            <em>toLower</em> <em>getText</em> <b>(</b> <var>_ammo</var> >> <i>"simulation"</i> <b>)</b> <em>in</em> <b>[</b><i>"shotmissile"</i><b>,</b> <i>"shotrocket"</i><b>] &amp;&amp;</b>
+            <em>getNumber</em> <b>(</b> <var>_ammo</var> >> <i>"irLock"</i> <b>) ==</b> 1
+        <b>}
+    }] invoke(</b>FilterWeapon<b>)
+};</b>
+
+<s>//
+// Function func(FilterFirearm)
+// Syntax:
+//     (string WeaponClassName) invoke(FilterFirearm)
+//     (array of string listOfWeaponClassNames) invoke(FilterFirearm)
+//     (object unit) invoke(FilterFirearm)
+//     (otherType value) invoke(FilterFirearm)
+//
+// Search (in listOfWeaponClassNames) firearm weapons (weapons firing shotBullets). Output
+// format is similar to the output format of the function FilterWeaponSD.
+// Note: If the soldier, there will be a used list of weapons used by the soldier.
+// Note: If the "other type value", there will be a used list of all weapons, that presented in game.
+//</s>
+
+<var>func(FilterFirearm)</var> <b>= {
+    [</b> <var>_this</var><b>, {</b>
+        <var>_ammoFilter</var> <b>= {</b>
+            <em>getText</em> <b>(</b> <var>_ammo</var> >> <i>"simulation"</i> <b>) ==</b> <i>"shotbullet"</i>
+        <b>}
+    }] invoke(</b>FilterWeapon<b>)
+};</b>
+
+<s>//
+// Function func(ReadActions)
+// Syntax:
+//     [string unitClassName, string targetAnimation] invoke(ReadActions)
+// Return the entrypoint to class Actions (configFile >> _unitClassNameMoves >> "Actions") for
+// specified unitClassName and his targetAnimation.
+// Example:
+//     player playMove ([typeOf player, animationState player] invoke(ReadActions) >> "reloadMagazine")
+//     // is the same as that:
+//     player playAction "reloadMagazine"
+//</s>
+
+<var>func(ReadActions)</var> <b>= {
+    private</b> <i>"_moves"</i><b>;</b>
+    <var>_moves</var> <b>=</b> <em>configFile</em> >> <em>getText</em> <b>(</b> <em>configFile</em> >> <i>"CfgVehicles"</i> >> <b>arg(</b>0<b>)</b> >> <i>"moves"</i> <b>);</b>
+    <var>_moves</var> >> <i>"Actions"</i> >> <em>getText</em> <b>(</b> <var>_moves</var> >> <i>"States"</i> >> <b>arg(</b>1<b>)</b> >> <i>"actions"</i> <b>)
+};</b>
+
+<s>//
+// Function func(ReadUpDegree)
+// Syntax:
+//     (object soldier) invoke(ReadUpDegree)
+// Returns the value of the property UpDegree (AI Animation State) of the animation for the
+// specified unit. Number type.
+// Possible values are defined in config game:
+//     enum {
+//         MANPOSLYINGBINOC = 2,
+//         MANPOSSTANDBINOC = 14,
+//         MANPOSDEAD = 0,
+//         MANPOSLYINGRFL = 4,
+//         MANPOSKNEELBINOC = 13,
+//         MANPOSLYINGHND = 5,
+//         MANPOSKNEELRFL = 6,
+//         MANPOSSTANDRFL = 8,
+//         MANPOSSTAND = 10,
+//         MANPOSSWIMMING = 11,
+//         MANPOSWEAPON = 1,
+//         MANPOSKNEELHND = 7,
+//         MANPOSSTANDHND = 9,
+//         MANPOSLYINGCIVIL = 3,
+//         MANPOSSTANDCIVIL = 12,
+//     };
+//
+// Note: file "\css\config.macros" contains the following macros:
+//     #define __ManPosLyingBinoc 2
+//     #define __ManPosStandBinoc 14
+//     #define __ManPosDead 0
+//     etc.
+//</s>
+
+<var>func(ReadUpDegree)</var> <b>= {</b>
+    <em>getNumber</em> <b>( [</b><em>typeOf</em> <var>_this</var><b>,</b> <em>animationState</em> <var>_this</var><b>] invoke(</b>ReadActions<b>)</b> >> <i>"upDegree"</i> <b>)
+};</b>
+
+<s>//
+// Function func(ReadAnimType)
+// Syntax:
+//     (object soldier) invoke(ReadAnimType)
+// Returns the type of the current animation. One of the following:
+//     "ManPosDead"
+//     "ManPosStand"
+//     "ManPosCombat"
+//     "ManPosCrouch"
+//     "ManPosLying"
+//     "ManPosHandGunStand"
+//     "ManPosHandGunCrouch"
+//     "ManPosHandGunLying"
+//     "ManPosLyingNoWeapon"
+//     "ManPosWeapon"
+//     "ManPosNoWeapon"
+//     "ManPosSwimming"
+//     "ManPosBinoc"
+//     "ManPosBinocLying"
+//     "ManPosBinocStand"
+//</s>
+
+<var>func(ReadAnimType)</var> <b>= {</b>
+    <em>getText</em> <b>( [</b><em>typeOf</em> <var>_this</var><b>,</b> <em>animationState</em> <var>_this</var><b>] invoke(</b>ReadActions<b>)</b> >> <i>"upDegree"</i> <b>)
+};</b>
+
+<s>//
+// Function func(ReadWeaponType)
+// Syntax:
+//     (string weaponClassName) invoke(ReadWeaponType)
+// Returns the type of the weapon slot. One of the following:
+//     WeaponNoSlot            0   // Dummy weapons
+//     WeaponSlotPrimary       1   // Primary weapon
+//     WeaponSlotHandGun       2   // Handgun slot
+//     WeaponSlotSecondary     4   // Secondary weapon (launcher)
+//     WeaponSlotHandGunMag   16   // Handgun magazines (8x)(or grenades for M203/GP-25)
+//     WeaponSlotMag         256   // Magazine slots (12x / 8x for medics)
+//     WeaponSlotGoggle     4096   // Goggle slot (2x)
+//     WeaponHardMounted   65536   // stationary weapons
+//
+// Note: file "\css\config.macros" contains the following macros:
+//     #define __WeaponNoSlot 0
+//     #define __WeaponSlotPrimary 1
+//     #define __WeaponSlotHandGun 2
+//     #define __WeaponSlotSecondary 4
+//     etc.
+//</s>
+
+<var>func(ReadWeaponType)</var> <b>= {</b>
+    <em>getNumber</em> <b>(</b> <em>configFile</em> >> <i>"CfgWeapons"</i> >> <var>_this</var> >> <i>"type"</i> <b>)
+};</b>
+
+<s>//
+// Function func(ReadMagazineType)
+// Syntax:
+//     (string magazineClassName) invoke(ReadMagazineType)
+// Returns the type of the magazine slot. Possible types, see above.
+//</s>
+
+<var>func(ReadMagazineType)</var> <b>= {</b>
+    <em>getNumber</em> <b>(</b> <em>configFile</em> >> <i>"CfgMagazines"</i> >> <var>_this</var> >> <i>"type"</i> <b>)
+};</b>
+
+<s>//
+// Function func(WeaponInHand)
+// Syntax:
+//     (object soldier) invoke(WeaponInHand)
+// Returns weapons in the hands of soldiers. String type.
+//</s>
+
+<var>func(WeaponInHand)</var> <b>= {
+    private [</b><i>"_upDegree"</i><b>,</b> <i>"_weapon"</i><b>];</b>
+    <var>_weapon</var> <b>=</b> <em>currentWeapon</em> <var>_this</var><b>;
+    if (</b><var>_weapon</var> <b>!=</b> <i>""</i><b>) exitwith {</b> <var>_weapon</var> <b>};</b>
+    <var>_upDegree</var> <b>=</b> <var>_this</var> <b>invoke(</b>ReadUpDegree<b>);
+    {
+        if (</b><var>_upDegree</var> <em>in</em> <b>(</b>
+        <s>/*
+            switch (_x invoke(ReadWeaponType)) do {
+                case __WeaponSlotPrimary: {
+                    [__ManPosCrouch, __ManPosCombat, __ManPosStand, __ManPosLying]
+                };
+                case __WeaponSlotMachinegun: {
+                    [__ManPosCrouch, __ManPosCombat, __ManPosStand, __ManPosLying]
+                };
+                case __WeaponSlotHandGun: {
+                    [__ManPosHandGunStand, __ManPosHandGunLying, __ManPosHandGunCrouch]
+                };
+                case __WeaponSlotSecondary: {
+                    [__ManPosWeapon]
+                };
+                case __WeaponSlotGoggle: {
+                    [__ManPosBinocLying, __ManPosBinoc, __ManPosBinocStand]
+                };
+                default {[]};
+            }
+        */</s>
+            <b>(</b><var>_x</var> <b>invoke(</b>ReadWeaponType<b>)) call {
+                if (</b><var>_this</var> <b>==</b> <tt>__WeaponSlotPrimary</tt> <b>||</b> <var>_this</var> <b>==</b> <tt>__WeaponSlotMachinegun</tt><b>) exitwith {
+                    [</b><tt>__ManPosCrouch</tt><b>,</b> <tt>__ManPosCombat</tt><b>,</b> <tt>__ManPosStand</tt><b>,</b> <tt>__ManPosLying</tt><b>]
+                };
+                if (</b><var>_this</var> <b>==</b> <tt>__WeaponSlotHandGun</tt><b>) exitwith {
+                    [</b><tt>__ManPosHandGunStand</tt><b>,</b> <tt>__ManPosHandGunLying</tt><b>,</b> <tt>__ManPosHandGunCrouch</tt><b>]
+                };
+                if (</b><var>_this</var> <b>==</b> <tt>__WeaponSlotSecondary</tt><b>) exitwith {
+                    [</b><tt>__ManPosWeapon</tt><b>]
+                };
+                if (</b><var>_this</var> <b>==</b> <tt>__WeaponSlotGoggle</tt><b>) exitwith {
+                    [</b><tt>__ManPosBinocLying</tt><b>,</b> <tt>__ManPosBinoc</tt><b>,</b> <tt>__ManPosBinocStand</tt><b>]
+                };
+                []
+            }
+        )) exitwith {</b> <var>_x</var> <b>};</b>
+        <i>""</i>
+    <b>} foreach</b> <em>weapons</em> <var>_this</var>
+<b>};</b>
+
+<s>//
+// Function func(currentMuzzle)
+// Syntax:
+//     (object soldier) invoke(currentMuzzle)
+// Returns current muzzle of weapons in the hands of soldiers. 
+// if current muzzle is void string, returns the first muzzle of the current weapon. String type.
+// This function workarraund of bis bug currentMuzzle's void string result for AI
+//</s>
+
+<var>func(CurrentMuzzle)</var> <b>= {
+    if (</b><em>currentMuzzle</em> <var>_this</var> <b>!=</b> <i>""</i><b>) exitwith {</b> 
+        <em>currentMuzzle</em> <var>_this</var><b>;
+    };</b>
+    <em>configName</em> <b>(((</b><var>_this</var> <b>invoke(</b>WeaponInHand<b>)) invoke(</b>ReadMuzzles<b>))</b> <em>select</em> 0<b>);
+};</b>
+
+<s>//
+// Function func(GetWeaponByTypes)
+// Syntax:
+//     [array weaponsList, array weaponTypeList] invoke(GetWeaponByTypes)
+//     [object soldier, array weaponTypeList] invoke(GetWeaponByTypes)
+// Returns weapon with the specified weapon type. String type.
+//</s>
+
+<var>func(GetWeaponByTypes)</var> <b>= {
+    private</b> <i>"_types"</i><b>;</b>
+    <var>_types</var> <b>= arg(</b>1<b>);
+    {
+        if (</b><var>_x</var> <b>invoke(</b>ReadWeaponType<b>)</b> <em>in</em> <var>_types</var><b>) exitwith {</b> <var>_x</var> <b>};</b> <i>""</i><b>;
+    } foreach (arg(</b>0<b>) call {
+        switch (</b><em>typeName</em> <var>_this</var><b>) do {
+            case</b> <i>"ARRAY"</i> : <b>{</b> <var>_this</var> <b>};
+            case</b> <i>"OBJECT"</i> : <var>func(GetUnitWeaponsExt)</var><b>;
+            default { [] };
+        }
+    });
+};</b>
+
+<s>//
+// Function func(GetTurretsWeapons)
+// Syntax:
+//     (object vehicle) invoke(GetTurretsWeapons)
+//     (string vehicleClass) invoke(GetTurretsWeapons)
+// Returns information about all weapons on turrets in an array of the following format:
+//     [
+//         [(string weaponClassName),
+//             [ // magazines list
+//                 (string magazineClassName),
+//                 (string magazineClassName),
+//                 etc.
+//             ],
+//             (array turretPath),
+//             (config turretClass)
+//         ],
+//         etc.
+//     ]
+//
+// Example:
+//     // function works with objects
+//     cursorTarget invoke(GetTurretsWeapons)
+//
+// Example:
+//     // works with classnames too
+//     "M1A2_US_TUSK_MG_EP1" invoke(GetTurretsWeapons)
+//
+// Result:
+//   [
+//     ["M256", ["20Rnd_120mmSABOT_M1A2", "20Rnd_120mmHE_M1A2"], [0], bin\config.bin/CfgVehicles/M1A2_US_TUSK_MG_EP1/Turrets/MainTurret],
+//     ["M240_veh", ["100Rnd_762x51_M240", "1200Rnd_762x51_M240"], [0], bin\config.bin/CfgVehicles/M1A2_US_TUSK_MG_EP1/Turrets/MainTurret],
+//     ["M2BC", ["100Rnd_127x99_M2"], [0, 0], bin\config.bin/CfgVehicles/M1A2_US_TUSK_MG_EP1/Turrets/MainTurret/Turrets/CommanderOptics],
+//     ["SmokeLauncher", ["SmokeLauncherMag"], [0, 0], bin\config.bin/CfgVehicles/M1A2_US_TUSK_MG_EP1/Turrets/MainTurret/Turrets/CommanderOptics],
+//     ["M240_veh_2", ["100Rnd_762x51_M240", "1200Rnd_762x51_M240"], [0, 1], bin\config.bin/CfgVehicles/M1A2_US_TUSK_MG_EP1/Turrets/MainTurret/Turrets/LoaderTurret]
+//   ]
+//</s>
+
+<var>func(GetTurretsWeapons)</var> <b>= {
+    private [</b><i>"_result"</i><b>,</b> <i>"_findRecurse"</i><b>,</b> <i>"_class"</i><b>];</b>
+    <var>_result</var> <b>= [];</b>
+    <var>_findRecurse</var> <b>= {
+        private [</b><i>"_root"</i><b>,</b> <i>"_class"</i><b>,</b> <i>"_path"</i><b>,</b> <i>"_currentPath"</i><b>];</b>
+        <var>_root</var> <b>= arg(</b>0<b>);</b>
+        <var>_path</var> <b>=</b> +<b>arg(</b>1<b>);
+        for</b> <i>"_i"</i> <b>from</b> 0 <b>to</b> <em>count</em> <var>_root</var> -1 <b>do {</b>
+            <var>_class</var> <b>=</b> <var>_root</var> <em>select</em> <var>_i</var><b>;
+            if (</b><em>isClass</em> <var>_class</var><b>) then {</b>
+                <var>_currentPath</var> <b>=</b> <var>_path</var> + <b>[</b><var>_i</var><b>];
+                {
+                    [</b><var>_x</var><b>,</b> <var>_x</var> <b>invoke(</b>ReadAnyMagazines<b>),</b> <var>_currentPath</var><b>,</b> <var>_class</var><b>]</b> <tt>__pushTo</tt><b>(</b><var>_result</var><b>);
+                } foreach</b> <em>getArray</em> <b>(</b><var>_class</var> >> <i>"weapons"</i><b>);</b>
+                <var>_class</var> <b>=</b> <var>_class</var> >> <i>"turrets"</i><b>;
+                if (</b><em>isClass</em> <var>_class</var><b>) then {
+                    [</b><var>_class</var><b>,</b> <var>_currentPath</var><b>] call</b> <var>_findRecurse</var><b>;
+                };
+            };
+        };
+    };</b>
+    <var>_class</var> <b>= (</b>
+        <em>configFile</em> >> <i>"CfgVehicles"</i> >> <b>(
+            switch (</b><em>typeName</em> <var>_this</var><b>) do {
+                case</b> <i>"STRING"</i> : <b>{</b><var>_this</var><b>};
+                case</b> <i>"OBJECT"</i> : <b>{</b><em>typeOf</em> <var>_this</var><b>};
+                default {nil}
+            }
+        )</b> >> <i>"turrets"</i>
+    <b>);
+    [</b><var>_class</var><b>, []] call</b> <var>_findRecurse</var><b>;</b>
+    <var>_result</var><b>;
+};</b>
+
+<s>//
+// Function func(GetTurretPath)
+// Syntax:
+//     [string vehicleClassName, string weaponClassName] invoke(GetTurretPath)
+// Returns first found turret path for specified weapon.
+// example:
+//     ["M1A2_US_TUSK_MG_EP1", "M240_veh_2"] invoke(GetTurretPath)
+// result:
+//     [0,1]
+//</s>
+
+<var>func(GetTurretPath)</var> <b>= {
+    private [</b><i>"_vehicleClass"</i><b>,</b> <i>"_weaponClass"</i><b>,</b> <i>"_findRecurse"</i><b>];</b>
+    <var>_vehicleClass</var> <b>= arg(</b>0<b>);</b>
+    <var>_weaponClass</var> <b>= arg(</b>1<b>);</b>
+    <var>_findRecurse</var> <b>= {
+        private [</b><i>"_root"</i><b>,</b> <i>"_path"</i><b>,</b> <i>"_class"</i><b>,</b> <i>"_currentPath"</i><b>];</b>
+        <var>_root</var> <b>= arg(</b>0<b>);</b>
+        <var>_path</var> <b>=</b> +<b>arg(</b>1<b>);
+        for</b> <i>"_i"</i> <b>from</b> 0 <b>to</b> <em>count</em> <var>_root</var> -1 <b>do {</b>
+            <var>_class</var> <b>=</b> <var>_root</var> <em>select</em> <var>_i</var><b>;
+            if (</b><em>isClass</em> <var>_class</var><b>) then {</b>
+                <var>_currentPath</var> <b>=</b> <var>_path</var> + <b>[</b><var>_i</var><b>];
+                {
+                    if (</b><var>_weaponClass</var> <b>==</b> <var>_x</var><b>) then {
+                        throw</b> <var>_currentPath</var><b>;
+                    };
+                } foreach</b> <em>getArray</em> <b>(</b><var>_class</var> >> <i>"weapons"</i><b>);</b>
+                <var>_class</var> <b>=</b> <var>_class</var> >> <i>"turrets"</i><b>;
+                if (</b><em>isClass</em> <var>_class</var><b>) then {
+                    [</b><var>_class</var><b>,</b> <var>_currentPath</var><b>] call</b> <var>_findRecurse</var><b>;
+                };
+            };
+        };
+    };
+    try {
+        [</b><em>configFile</em> >> <i>"CfgVehicles"</i> >> <var>_vehicleClass</var> >> <i>"turrets"</i><b>, []] call</b> <var>_findRecurse</var><b>;
+        [];</b> <s>// default</s>
+    <b>} catch {</b>
+        <var>_exception</var>
+    <b>};
+};</b>
+
+<var>func(GetUnitWeaponsExt)</var> <b>= if (</b><em>count</em> <em>supportInfo</em> <i>"*:getweaponcargo*"</i> <b>!=</b> 0<b>) then {{
+    (</b><em>weapons</em> <var>_this</var><b>)</b> + <b>(</b><em>getWeaponCargo</em> <var>_this</var> <em>select</em> 0<b>)
+}} else {{
+    (</b><em>weapons</em> <var>_this</var><b>)
+}};</b>
+
+
+<hr />
+</pre>
+<p><small><i>This documentation was generated automatically from the source code.</i></small></p>
+</body>
+</html>

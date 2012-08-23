@@ -1,0 +1,253 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>´Community`s Shared Scriptsª SQF-Library - /css/lib/date.sqf</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<style type="text/css">
+  html {
+    font-family: Helvetica, Arial, sans-serif;
+  }
+  body {
+    margin: auto;
+    width: 50em;
+  }
+  * {
+    cursor: default;
+  }
+  pre {
+    padding: 1em 0;
+  }
+  pre.code,
+  pre.code b,
+  pre.code i,
+  pre.code s,
+  pre.code u,
+  pre.code tt,
+  pre.code em,
+  pre.code var {
+    text-decoration: none;
+    font: normal normal 14px/150% "Consolas", monospace;
+  }
+  pre.code b  { color: #009; }
+  pre.code i  { color: #080; }
+  pre.code s  { color: #BBB; font-style: italic; }
+  pre.code u  { color: #0A0; }
+  pre.code tt { color: #994; }
+  pre.code em { color: #A00; }
+  pre.code var { color: #5E5E5E; }
+
+  hr {
+    margin: 1em 0 1em 0;
+    border: 1px dashed #ccc;
+  }
+  #unfoldcode:hover {
+    cursor: hand;
+    color: red
+  }
+</style></head>
+<body>
+<h1>/css/lib/date.sqf</h1>
+<p><small><i>This documentation was generated automatically from the source code.</i></small></p>
+<pre class="code">
+<hr />Function func(GetDate)
+Syntax:
+    invoke(GetDate)
+Returns the current ingame date up to the
+millisecond, an array in the following format:
+    [year, month, day, hour, minute, second, millisecond]<hr />Function func(SetDate)
+Syntax:
+    (date antDate) invoke(SetDate)
+Sets the current ingame date up to the millisecond.
+Note: date type‚Äîfive- or seven-items array:
+    [year, month, day, hour, minute (, second, millisecond)]<hr />Function func(FormatDate)
+Syntax:
+    [array anyDate, string _format] invoke(SetDate)
+    [number dayTime, string _format] invoke(SetDate)
+    [array anyDate] invoke(SetDate)
+    [number dayTime] invoke(SetDate)
+
+Returns a formatted date-string.
+Note: anyDate can be five- or seven-items array:
+    [year, month, day, hour, minute (, second, millisecond)]
+
+You can use the following placeholders in the format string:
+    %1 ‚Äî year
+    %2 ‚Äî month number
+   %12 ‚Äî month string (localized: &quot;January&quot;, &quot;Leden&quot;, &quot;Januar&quot;,
+          &quot;Styczen&quot;, &quot;–Ø–Ω–≤–∞—Ä—å&quot;, &quot;Janvier&quot;, &quot;Enero&quot;, &quot;Gennaio&quot;)
+   %22 ‚Äî month string, genitive case for slavic languages. (localized: &quot;january&quot;,
+          &quot;ledna&quot;, &quot;januar&quot;, &quot;stycznia&quot;, &quot;—è–Ω–≤–∞—Ä—è&quot;, &quot;janvier&quot;, &quot;enero&quot;, &quot;gennaio&quot;)
+    %3 ‚Äî day
+    %4 ‚Äî hour
+   %44 ‚Äî hour as AM/PM (ante/post meridiem)
+   %54 ‚Äî ante/post meridiem abbr
+    %5 ‚Äî minute
+    %6 ‚Äî second
+    %7 ‚Äî millisecond
+
+Examples:
+
+   [[1967, 4, 12, 16, 10, 20, 30], &quot;%1/%2/%3 %44:%5:%6 %54&quot;] invoke(FormatDate)
+   // returns: &quot;1967/04/12 04:10:20 PM&quot;
+
+   [[1967, 4, 13, 11, 32, 11, 32], &quot;%1/%2/%3 %44:%5:%6 %54&quot;] invoke(FormatDate)
+   // returns: &quot;1967/04/13 11:32:11 AM&quot;
+
+   [invoke(GetDate), &quot;%3 %12 %1&quot;] invoke(FormatDate)
+   // returns: &quot;12 April 1967&quot;<hr />
+<a
+  href="#unfoldcode"
+  id="unfoldcode"
+  onclick="
+    var el = document.getElementById('sqfsrc');
+    el.style.display = el.style.display == '' ? 'none' : ''
+  "
+>Source of &ldquo;css/lib/date.sqf&rdquo;</a>
+<div style='display: none' id='sqfsrc'>
+<h2>&ldquo;css/lib/date.sqf&rdquo;</h2>
+
+
+<s>// SQF
+//
+// sqf-library "\css\lib\date.sqf"
+// Copyright (c) 2009-2012 Denis Usenko (DenVdmj)
+// MIT-style license
+//</s>
+
+<em>#include "\css\css"</em>
+<em>#define</em><em> __PATH__</em> \css\lib
+
+<s>//
+// Function func(GetDate)
+// Syntax:
+//     invoke(GetDate)
+// Returns the current ingame date up to the
+// millisecond, an array in the following format:
+//     [year, month, day, hour, minute, second, millisecond]
+//</s>
+
+<var>func(GetDate)</var> <b>= {</b>
+    <em>date</em> <b>call {</b>
+        <var>_this</var> <em>set</em> <b>[</b>4<b>,</b> <em>floor</em><b>(</b> 60 * <em>dayTime</em> % 60 <b>)];</b>
+        <var>_this</var> <em>set</em> <b>[</b>5<b>,</b> <em>floor</em><b>(</b> 3600 * <em>dayTime</em> % 60 <b>)];</b>
+        <var>_this</var> <em>set</em> <b>[</b>6<b>,</b> <em>floor</em><b>(</b> 216000 * <em>dayTime</em> % 60 <b>)];</b>
+        <var>_this</var><b>;
+    };
+};</b>
+
+<s>//
+// Function func(SetDate)
+// Syntax:
+//     (date antDate) invoke(SetDate)
+// Sets the current ingame date up to the millisecond.
+// Note: date typeófive- or seven-items array:
+//     [year, month, day, hour, minute (, second, millisecond)]
+//</s>
+
+<var>func(SetDate)</var> <b>= {</b>
+    +<var>_this</var> <b>call {</b>
+        <var>_this</var> <em>resize</em> 5<b>;</b>
+        <em>setDate</em> <var>_this</var><b>;
+    };
+    if (</b><em>count</em> <var>_this</var> > 5<b>) then {</b>
+        <em>skipTime</em> <b>((</b><var>_this</var> <em>select</em> 5<b>)</b> / 3600<b>);</b>
+        <em>skipTime</em> <b>((</b><var>_this</var> <em>select</em> 6<b>)</b> / 216000<b>);
+    };
+};</b>
+
+<s>//
+// Function func(FormatDate)
+// Syntax:
+//     [array anyDate, string _format] invoke(SetDate)
+//     [number dayTime, string _format] invoke(SetDate)
+//     [array anyDate] invoke(SetDate)
+//     [number dayTime] invoke(SetDate)
+//
+// Returns a formatted date-string.
+// Note: anyDate can be five- or seven-items array:
+//     [year, month, day, hour, minute (, second, millisecond)]
+//
+// You can use the following placeholders in the format string:
+//     %1 ó year
+//     %2 ó month number
+//    %12 ó month string (localized: "January", "Leden", "Januar",
+//           "Styczen", "ﬂÌ‚‡¸", "Janvier", "Enero", "Gennaio")
+//    %22 ó month string, genitive case for slavic languages. (localized: "january",
+//           "ledna", "januar", "stycznia", "ˇÌ‚‡ˇ", "janvier", "enero", "gennaio")
+//     %3 ó day
+//     %4 ó hour
+//    %44 ó hour as AM/PM (ante/post meridiem)
+//    %54 ó ante/post meridiem abbr
+//     %5 ó minute
+//     %6 ó second
+//     %7 ó millisecond
+//
+// Examples:
+//
+//    [[1967, 4, 12, 16, 10, 20, 30], "%1/%2/%3 %44:%5:%6 %54"] invoke(FormatDate)
+//    // returns: "1967/04/12 04:10:20 PM"
+//
+//    [[1967, 4, 13, 11, 32, 11, 32], "%1/%2/%3 %44:%5:%6 %54"] invoke(FormatDate)
+//    // returns: "1967/04/13 11:32:11 AM"
+//
+//    [invoke(GetDate), "%3 %12 %1"] invoke(FormatDate)
+//    // returns: "12 April 1967"
+//</s>
+
+<var>func(FormatDate)</var> <b>= {
+
+    private [</b><i>"_time"</i><b>,</b> <i>"_format"</i><b>,</b> <i>"_sxd"</i><b>,</b> <i>"_dec"</i><b>,</b> <i>"_month"</i><b>,</b> <i>"_hour"</i><b>];</b>
+
+    <var>_time</var> <b>= arg(</b>0<b>);</b>
+    <var>_format</var> <b>= argOr(</b>1<b>,</b><i>"%3 %12 %1"</i><b>);</b>
+
+    <var>_sxd</var> <b>= {</b> <em>floor</em> <var>_this</var> % 60 <b>};</b>
+    <var>_dec</var> <b>= {</b> <em>format</em> <b>[</b><i>"%1%2"</i><b>,</b> <em>floor</em><b>(</b><var>_this</var> / 10<b>),</b> <var>_this</var> % 10<b>] };</b>
+
+    <var>_time</var> <b>= (switch (</b><em>typeName</em> <var>_time</var><b>) do {
+        case</b> <i>"ARRAY"</i> : <b>{</b>
+            <var>_time</var>
+        <b>};
+        case</b> <i>"SCALAR"</i> : <b>{
+            [</b>
+                0<b>,</b> 0<b>,</b> 0<b>,</b>
+                <var>_time</var> <b>call</b> <var>_sxd</var><b>,</b>
+                60 * <var>_time</var> <b>call</b> <var>_sxd</var><b>,</b>
+                3600 * <var>_time</var> <b>call</b> <var>_sxd</var><b>,</b>
+                216000 * <var>_time</var> <b>call</b> <var>_sxd</var>
+            <b>]
+        };
+        default { nil };
+    });
+
+    if (</b><em>isNil</em> <i>"_time"</i><b>) exitwith {</b> <var>_format</var> <b>};</b>
+
+    <var>_hour</var> <b>=</b> <var>_time</var> <em>select</em> 3<b>;</b>
+    <var>_month</var> <b>=</b> <var>_time</var> <em>select</em> 1<b>;
+
+    for</b> <i>"_i"</i> <b>from</b> 1 <b>to</b> <em>count</em> <var>_time</var> - 1 <b>do {</b>
+        <var>_time</var> <em>set</em> <b>[</b><var>_i</var><b>, (</b><var>_time</var> <em>select</em> <var>_i</var><b>) call</b> <var>_dec</var><b>];
+    };
+
+    if (</b><var>_month</var> > 0 <b>&amp;&amp;</b> <var>_month</var> <b>&lt;=</b> 12<b>) then {</b>
+        <var>_time</var> <em>set</em> <b>[</b>11<b>,</b> <em>localize</em> <em>format</em> <b>[</b><i>"STR/CSS/locale/month %1"</i><b>,</b> <var>_month</var><b>]];</b>
+        <var>_time</var> <em>set</em> <b>[</b>21<b>,</b> <em>localize</em> <em>format</em> <b>[</b><i>"STR/CSS/locale/month %1 (genitive)"</i><b>,</b> <var>_month</var><b>]];
+    };</b>
+
+    <var>_time</var> <em>set</em> <b>[</b>43<b>, (</b><em>floor</em> <b>((</b><var>_hour</var> + 23<b>)</b> % 12<b>)</b> + 1<b>) call</b> <var>_dec</var><b>];</b>
+    <var>_time</var> <em>set</em> <b>[</b>53<b>,
+        [</b>
+            <em>localize</em> <i>"STR/CSS/locale/ante meridiem"</i><b>,</b>
+            <em>localize</em> <i>"STR/CSS/locale/post meridiem"</i>
+        <b>]</b> <em>select</em> <b>(</b><em>floor</em><b>(</b><var>_hour</var><b>) >=</b> 12<b>)
+    ];</b>
+
+    <em>format</em> <b>([</b><var>_format</var><b>]</b> + <var>_time</var> + <var>_time</var><b>);
+};</b>
+
+
+<hr />
+</pre>
+<p><small><i>This documentation was generated automatically from the source code.</i></small></p>
+</body>
+</html>

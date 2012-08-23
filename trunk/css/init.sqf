@@ -19,6 +19,6 @@ if ( isNil {missionNamespace getVariable "/CSS/IsPresent"} ) then {
         "mp.sqf",
         "strings.sqf",
         "vectors.sqf",
-        "vehicles.sqf"        
+        "vehicles.sqf"
     ];
 };

@@ -1,0 +1,352 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>«Community`s Shared Scripts» SQF-Library - /css/lib/arrays.sqf</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<style type="text/css">
+  html {
+    font-family: Helvetica, Arial, sans-serif;
+  }
+  body {
+    margin: auto;
+    width: 50em;
+  }
+  * {
+    cursor: default;
+  }
+  pre {
+    padding: 1em 0;
+  }
+  pre.code,
+  pre.code b,
+  pre.code i,
+  pre.code s,
+  pre.code u,
+  pre.code tt,
+  pre.code em,
+  pre.code var {
+    text-decoration: none;
+    font: normal normal 14px/150% "Consolas", monospace;
+  }
+  pre.code b  { color: #009; }
+  pre.code i  { color: #080; }
+  pre.code s  { color: #BBB; font-style: italic; }
+  pre.code u  { color: #0A0; }
+  pre.code tt { color: #994; }
+  pre.code em { color: #A00; }
+  pre.code var { color: #5E5E5E; }
+
+  hr {
+    margin: 1em 0 1em 0;
+    border: 1px dashed #ccc;
+  }
+  #unfoldcode:hover {
+    cursor: hand;
+    color: red
+  }
+</style></head>
+<body>
+<h1>/css/lib/arrays.sqf</h1>
+<p><small><i>This documentation was generated automatically from the source code.</i></small></p>
+<pre class="code">
+<hr />Function func(List2Set)
+Syntax:
+    (array listOfAnyComparableValues) invoke(List2Set)
+Converts an array-list to array-set. Format of array-set:
+    [
+        [&quot;item 1&quot;, count of these items],
+        [&quot;item 2&quot;, count of these items],
+        ...
+        [&quot;item N&quot;, count of these items]
+    ]
+Example:
+    magazines player invoke(List2Set)
+Result:
+    [
+        [&quot;30Rnd_556x45_Stanag&quot;, 6],
+        [&quot;HandGrenade_West&quot;, 4]
+    ]<hr />Function func(CanonizeSet)
+Syntax:
+    (array listOfAnyComparableValues) invoke(CanonizeSet)
+Function fixes invalid array-set, an example of usage:
+    (
+        (magazines officer1 invoke(List2Set)) +
+        (magazines officer2 invoke(List2Set))
+    ) invoke(CanonizeSet)
+Result:
+    [
+        [&quot;30Rnd_556x45_Stanag&quot;, 6],
+        [&quot;7Rnd_45ACP_1911&quot;, 8]
+    ]<hr />Function func(GetUnduplicatedArray)
+Syntax:
+    _arrayWithDuplicates invoke(UnduplicatedArray)
+Deletes all duplicate entries in array. Returns new array.<hr />Function func(removeItemsFromArray)
+Syntax:
+    [array list, arrayOfAnyValues removedEntries] invoke(removeItemsFromArray)
+Deletes all specified entries from specified array. Returns the same modified array.
+Use for cases where it is important to keep a reference to an array.<hr />Function func(MapGrep)
+Syntax:
+    [array list, code filter] invoke(MapGrep)
+    [config class, code condition] invoke(MapGrep)
+Returns an array for those elements for which the condition evaluates to notNil.
+Examples:
+
+    // Returns all classnames of cars.
+    [configFile &gt;&gt; &quot;CfgVehicles&quot;, {
+        if (isClass _x) then {
+           if (
+               getNumber(_x &gt;&gt; &quot;scope&quot;) &gt; 0 &amp;&amp;
+               getText(_x &gt;&gt; &quot;simulation&quot;) == &quot;car&quot;
+           ) then {
+               configName _x
+           }
+        }
+    }] invoke(MapGrep)
+
+    // names of players' soldiers
+    [units player, { name _x }] invoke(MapGrep)
+
+    // positions of all cars requiring repairs:
+    [allUnits, {
+        if (_x isKindOf &quot;Car&quot; &amp;&amp; ! canMove _x) then { getPosASL2 _x }
+    }] invoke(MapGrep)<hr />Function func(SortArray)
+Syntax:
+    (two parralel arrays) invoke(SortArray)
+Sort two parralel arrays (using a heapsort algorithm, O(n log n)).
+Format of arrays:
+    [
+        [values],
+        [linked data]
+    ]
+Example:
+    [
+        [  32,   43,   12,   3,   6565,   43,   3,   4,   5,   234 ],
+        [&quot;_32&quot;,&quot;_43&quot;,&quot;_12&quot;,&quot;_3&quot;,&quot;_6565&quot;,&quot;_43&quot;,&quot;_3&quot;,&quot;_4&quot;,&quot;_5&quot;,&quot;_234 ]
+    ] invoke(SortArray)
+Result:
+    [
+        [  3,   3,   4,   5,   12,   32,   43,   43,   234,   6565 ],
+        [&quot;_3&quot;,&quot;_3&quot;,&quot;_4&quot;,&quot;_5&quot;,&quot;_12&quot;,&quot;_32&quot;,&quot;_43&quot;,&quot;_43&quot;,&quot;_234&quot;,&quot;_6565&quot;]
+    ]<hr />
+<a
+  href="#unfoldcode"
+  id="unfoldcode"
+  onclick="
+    var el = document.getElementById('sqfsrc');
+    el.style.display = el.style.display == '' ? 'none' : ''
+  "
+>Source of &ldquo;css/lib/arrays.sqf&rdquo;</a>
+<div style='display: none' id='sqfsrc'>
+<h2>&ldquo;css/lib/arrays.sqf&rdquo;</h2>
+
+
+<s>// SQF
+//
+// sqf-library "\css\lib\arrays.sqf"
+// Copyright (c) 2009-2012 Denis Usenko (DenVdmj)
+// MIT-style license
+//</s>
+
+<em>#include "\css\css"</em>
+<em>#define</em><em> __PATH__</em> \css\lib
+
+<s>//
+// Function func(List2Set)
+// Syntax:
+//     (array listOfAnyComparableValues) invoke(List2Set)
+// Converts an array-list to array-set. Format of array-set:
+//     [
+//         ["item 1", count of these items],
+//         ["item 2", count of these items],
+//         ...
+//         ["item N", count of these items]
+//     ]
+// Example:
+//     magazines player invoke(List2Set)
+// Result:
+//     [
+//         ["30Rnd_556x45_Stanag", 6],
+//         ["HandGrenade_West", 4]
+//     ]
+//</s>
+
+<var>func(List2Set)</var> <b>= {
+    private [</b><i>"_col"</i><b>,</b> <i>"_rem"</i><b>];</b>
+    <var>_col</var> <b>= [];
+    for</b> <i>""</i> <b>from</b> 1 <b>to</b> <em>count</em> <var>_this</var> <b>do {
+        if (</b><em>count</em> <var>_this</var> <b>==</b> 0<b>) exitwith {};</b>
+        <var>_rem</var> <b>=</b> <var>_this</var> - <b>[</b><var>_this</var> <em>select</em> 0<b>];</b>
+        <var>_col</var> <em>set</em> <b>[</b><em>count</em> <var>_col</var><b>, [</b><var>_this</var> <em>select</em> 0<b>,</b> <em>count</em> <var>_this</var> - <em>count</em> <var>_rem</var><b>]];</b>
+        <var>_this</var> <b>=</b> <var>_rem</var><b>;
+    };</b>
+    <var>_col</var>
+<b>};</b>
+
+
+<s>//
+// Function func(CanonizeSet)
+// Syntax:
+//     (array listOfAnyComparableValues) invoke(CanonizeSet)
+// Function fixes invalid array-set, an example of usage:
+//     (
+//         (magazines officer1 invoke(List2Set)) +
+//         (magazines officer2 invoke(List2Set))
+//     ) invoke(CanonizeSet)
+// Result:
+//     [
+//         ["30Rnd_556x45_Stanag", 6],
+//         ["7Rnd_45ACP_1911", 8]
+//     ]
+//</s>
+
+<var>func(CanonizeSet)</var> <b>= {
+    private [</b><i>"_set"</i><b>,</b> <i>"_keys"</i><b>,</b> <i>"_pos"</i><b>];</b>
+    <var>_set</var> <b>= [];</b>
+    <var>_keys</var> <b>= [];
+    {</b>
+<em>        #define</em><em> __oldKey</em>    <b>(</b><var>_x</var> <em>select</em> 0<b>)</b>
+<em>        #define</em><em> __oldValue</em>  <b>(</b><var>_x</var> <em>select</em> 1<b>)</b>
+<em>        #define</em><em> __newPair</em>   <b>(</b><var>_set</var> <em>select</em> <var>_pos</var><b>)</b>
+<em>        #define</em><em> __newKey</em>    <b>(</b><tt>__newPair</tt> <em>select</em> 0<b>)</b>
+<em>        #define</em><em> __newValue</em>  <b>(</b><tt>__newPair</tt> <em>select</em> 1<b>)</b>
+        <var>_pos</var> <b>=</b> <var>_keys</var> <em>find</em> <tt>__oldKey</tt><b>;
+        if (</b><var>_pos</var> <b>==</b> -1<b>) then {</b>
+            <tt>__push</tt><b>(</b><var>_set</var><b>,</b> <var>_x</var><b>);</b>
+            <tt>__push</tt><b>(</b><var>_keys</var><b>,</b> <tt>__oldKey</tt><b>);
+        } else {</b>
+            <tt>__newPair</tt> <em>set</em> <b>[</b>1<b>,</b> <tt>__newValue</tt> + <tt>__oldValue</tt><b>]
+        };</b>
+<em>        #undef</em><em> __oldKey</em>
+<em>        #undef</em><em> __oldValue</em>
+<em>        #undef</em><em> __newPair</em>
+<em>        #undef</em><em> __newKey</em>
+<em>        #undef</em><em> __newValue</em>
+    <b>} foreach</b> <var>_this</var><b>;</b>
+    <var>_set</var>
+<b>};</b>
+
+
+<s>//
+// Function func(GetUnduplicatedArray)
+// Syntax:
+//     _arrayWithDuplicates invoke(UnduplicatedArray)
+// Deletes all duplicate entries in array. Returns new array.
+//</s>
+
+<var>func(GetUnduplicatedArray)</var> <b>= {
+    private[</b><i>"_e"</i><b>,</b><i>"_i"</i><b>];</b>
+    <var>_i</var> <b>=</b> 0<b>;
+    while {</b> <em>count</em> <var>_this</var> <b>!=</b> <var>_i</var> <b>} do {</b>
+        <var>_e</var> <b>=</b> <var>_this</var> <em>select</em> <var>_i</var><b>;</b>
+        <var>_this</var> <b>= [</b><var>_e</var><b>]</b> + <b>(</b> <var>_this</var> - <b>[</b><var>_e</var><b>] );</b>
+        <var>_i</var> <b>=</b> <var>_i</var> + 1<b>;
+    };</b>
+    <var>_this</var>
+<b>};</b>
+
+<s>//
+// Function func(removeItemsFromArray)
+// Syntax:
+//     [array list, arrayOfAnyValues removedEntries] invoke(removeItemsFromArray)
+// Deletes all specified entries from specified array. Returns the same modified array.
+// Use for cases where it is important to keep a reference to an array.
+//</s>
+
+<var>func(removeItemsFromArray)</var> <b>= {
+    private [</b><i>"_array"</i><b>,</b> <i>"_items"</i><b>,</b> <i>"_offset"</i><b>,</b> <i>"_item"</i><b>];</b>
+    <var>_array</var> <b>= arg(</b>0<b>);</b>
+    <var>_items</var> <b>= arg(</b>1<b>);</b>
+    <var>_offset</var> <b>=</b> 0<b>;
+    for</b> <i>"_i"</i> <b>from</b> 0 <b>to</b> <em>count</em> <var>_array</var> <b>do {</b>
+        <var>_item</var> <b>=</b> <var>_array</var> <em>select</em> <var>_i</var><b>;
+        if (</b><var>_offset</var> > 0<b>) then {</b>
+            <var>_array</var> <em>set</em> <b>[</b><var>_i</var> - <var>_offset</var><b>,</b> <var>_item</var><b>]
+        };
+        if (</b><var>_item</var> <em>in</em> <var>_items</var><b>) then {</b>
+            <var>_offset</var> <b>=</b> <var>_offset</var> + 1<b>;
+        };
+    };</b>
+    <var>_array</var><b>;
+};</b>
+
+<s>//
+// Function func(MapGrep)
+// Syntax:
+//     [array list, code filter] invoke(MapGrep)
+//     [config class, code condition] invoke(MapGrep)
+// Returns an array for those elements for which the condition evaluates to notNil.
+// Examples:
+//
+//     // Returns all classnames of cars.
+//     [configFile >> "CfgVehicles", {
+//         if (isClass _x) then {
+//            if (
+//                getNumber(_x >> "scope") > 0 &amp;&amp;
+//                getText(_x >> "simulation") == "car"
+//            ) then {
+//                configName _x
+//            }
+//         }
+//     }] invoke(MapGrep)
+//
+//     // names of players' soldiers
+//     [units player, { name _x }] invoke(MapGrep)
+//
+//     // positions of all cars requiring repairs:
+//     [allUnits, {
+//         if (_x isKindOf "Car" &amp;&amp; ! canMove _x) then { getPosASL2 _x }
+//     }] invoke(MapGrep)
+//</s>
+
+<var>func(MapGrep)</var> <b>= {
+    private</b> <i>"_x"</i><b>;</b>
+    <var>_this</var> <em>set</em> <b>[</b>2<b>, []];
+    for</b> <i>"____i"</i> <b>from</b> 0 <b>to</b> <em>count</em> <b>arg(</b>0<b>)</b> -1 <b>do {</b>
+        <var>_x</var> <b>= arg(</b>0<b>)</b> <em>select</em> <tt>____i</tt><b>;</b>
+        <var>_this</var> <em>set</em> <b>[</b>3<b>,</b> <var>_x</var> <b>call arg(</b>1<b>)];
+        if !(</b><em>isNil</em> <b>{arg(</b>3<b>)}) then {</b>
+            <tt>__push</tt><b>(arg(</b>2<b>), arg(</b>3<b>));
+        };
+    };
+    arg(</b>2<b>);
+};</b>
+
+<s>//
+// Function func(SortArray)
+// Syntax:
+//     (two parralel arrays) invoke(SortArray)
+// Sort two parralel arrays (using a heapsort algorithm, O(n log n)).
+// Format of arrays:
+//     [
+//         [values],
+//         [linked data]
+//     ]
+// Example:
+//     [
+//         [  32,   43,   12,   3,   6565,   43,   3,   4,   5,   234 ],
+//         ["_32","_43","_12","_3","_6565","_43","_3","_4","_5","_234 ]
+//     ] invoke(SortArray)
+// Result:
+//     [
+//         [  3,   3,   4,   5,   12,   32,   43,   43,   234,   6565 ],
+//         ["_3","_3","_4","_5","_12","_32","_43","_43","_234","_6565"]
+//     ]
+//</s>
+
+<var>func(SortArray)</var><b>={private[</b><i>"_s"</i><b>,</b><i>"_1"</i><b>,</b><i>"_2"</i><b>,</b><i>"_t"</i><b>,</b><i>"_i"</i><b>,</b><i>"_l"</i><b>,</b><i>"_u"</i><b>,</b><i>"_c"</i><b>,</b><i>"_a"</i><b>,</b><i>"_d"</i><b>];</b><var>_s</var><b>={</b><var>_a</var><b>=</b><var>_1</var> <em>select</em>
+<var>_l</var><b>;</b><var>_d</var><b>=</b><var>_2</var> <em>select</em> <var>_l</var><b>;while{</b><var>_c</var><b>=</b><var>_l</var>+<var>_l</var>+1<b>;if(</b><var>_c</var><b>&lt;=</b><var>_u</var><b>)then{if(</b><var>_c</var>&lt;<var>_u</var><b>)then{if(</b><var>_1</var> <em>select</em> <var>_c</var>+1><var>_1</var> <em>select</em>
+<var>_c</var><b>)then{</b><var>_c</var><b>=</b><var>_c</var>+1<b>}};if(</b><var>_1</var> <em>select</em> <var>_c</var>><var>_a</var><b>)then{</b><var>_1</var> <em>set</em><b>[</b><var>_l</var><b>,</b><var>_1</var> <em>select</em> <var>_c</var><b>];</b><var>_2</var> <em>set</em><b>[</b><var>_l</var><b>,</b><var>_2</var> <em>select</em>
+<var>_c</var><b>];</b><var>_l</var><b>=</b><var>_c</var><b>;true}}}do{};</b><var>_1</var> <em>set</em><b>[</b><var>_l</var><b>,</b><var>_a</var><b>];</b><var>_2</var> <em>set</em><b>[</b><var>_l</var><b>,</b><var>_d</var><b>]};</b><var>_1</var><b>=</b><var>_this</var> <em>select</em> 0<b>;</b><var>_2</var><b>=</b><var>_this</var> <em>select</em>
+1<b>;</b><var>_t</var><b>=</b><em>count</em> <var>_1</var>-1<b>;</b><var>_i</var><b>=</b><em>floor</em><b>(</b><var>_t</var>*.5<b>);while{</b><var>_i</var><b>>=</b>0<b>}do{</b><var>_l</var><b>=</b><var>_i</var><b>;</b><var>_u</var><b>=</b><var>_t</var><b>;call</b>
+<var>_s</var><b>;</b><var>_i</var><b>=</b><var>_i</var>-1<b>};</b><var>_i</var><b>=</b><var>_t</var><b>;while{</b><var>_i</var>>0<b>}do{</b><var>_a</var><b>=</b><var>_1</var> <em>select</em> 0<b>;</b><var>_1</var> <em>set</em><b>[</b>0<b>,</b><var>_1</var> <em>select</em>
+<var>_i</var><b>];</b><var>_1</var> <em>set</em><b>[</b><var>_i</var><b>,</b><var>_a</var><b>];</b><var>_d</var><b>=</b><var>_2</var> <em>select</em> 0<b>;</b><var>_2</var> <em>set</em><b>[</b>0<b>,</b><var>_2</var> <em>select</em>
+<var>_i</var><b>];</b><var>_2</var> <em>set</em><b>[</b><var>_i</var><b>,</b><var>_d</var><b>];</b><var>_l</var><b>=</b>0<b>;</b><var>_u</var><b>=</b><var>_i</var>-1<b>;call</b> <var>_s</var><b>;</b><var>_i</var><b>=</b><var>_i</var>-1<b>};</b><var>_this</var><b>};</b>
+
+
+
+
+<hr />
+</pre>
+<p><small><i>This documentation was generated automatically from the source code.</i></small></p>
+</body>
+</html>

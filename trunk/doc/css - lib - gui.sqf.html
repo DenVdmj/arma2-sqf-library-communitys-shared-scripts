@@ -1,0 +1,404 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>«Community`s Shared Scripts» SQF-Library - /css/lib/gui.sqf</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<style type="text/css">
+  html {
+    font-family: Helvetica, Arial, sans-serif;
+  }
+  body {
+    margin: auto;
+    width: 50em;
+  }
+  * {
+    cursor: default;
+  }
+  pre {
+    padding: 1em 0;
+  }
+  pre.code,
+  pre.code b,
+  pre.code i,
+  pre.code s,
+  pre.code u,
+  pre.code tt,
+  pre.code em,
+  pre.code var {
+    text-decoration: none;
+    font: normal normal 14px/150% "Consolas", monospace;
+  }
+  pre.code b  { color: #009; }
+  pre.code i  { color: #080; }
+  pre.code s  { color: #BBB; font-style: italic; }
+  pre.code u  { color: #0A0; }
+  pre.code tt { color: #994; }
+  pre.code em { color: #A00; }
+  pre.code var { color: #5E5E5E; }
+
+  hr {
+    margin: 1em 0 1em 0;
+    border: 1px dashed #ccc;
+  }
+  #unfoldcode:hover {
+    cursor: hand;
+    color: red
+  }
+</style></head>
+<body>
+<h1>/css/lib/gui.sqf</h1>
+<p><small><i>This documentation was generated automatically from the source code.</i></small></p>
+<pre class="code">
+<hr />Function func(CreateDialog)
+Syntax:
+  {
+      _rsc = &quot;RscDisplay&quot;;
+
+      // list of local variables which available from the constructor, destructor and event handlers code
+      _private = [&quot;_list&quot;, &quot;_of&quot;, &quot;_your&quot;, &quot;_local&quot;, &quot;_variables&quot;];
+
+      // Event handlers,
+      _handlers = [
+          // you can declare them as follows:
+          &quot;CtrlClassName&quot;, &quot;EventName&quot;, {
+              // event handler code
+          },
+          // or as follows:
+          [&quot;CtrlClassName&quot;, &quot;AnotherCtrlClassName&quot;],
+          [&quot;EventName&quot;, &quot;AnotherEventName&quot;], {
+              // event handler code
+          }
+      ];
+      _constructor = {
+          // constructor code
+
+      };
+      _destructor = {
+           // destructor code
+      };
+
+  } invoke(CreateDialog);<hr />
+<a
+  href="#unfoldcode"
+  id="unfoldcode"
+  onclick="
+    var el = document.getElementById('sqfsrc');
+    el.style.display = el.style.display == '' ? 'none' : ''
+  "
+>Source of &ldquo;css/lib/gui.sqf&rdquo;</a>
+<div style='display: none' id='sqfsrc'>
+<h2>&ldquo;css/lib/gui.sqf&rdquo;</h2>
+
+
+<s>// SQF
+//
+// sqf-library "\css\lib\gui.sqf"
+// Copyright (c) 2009-2012 Denis Usenko (DenVdmj)
+// MIT-style license
+//</s>
+
+<em>#include "\css\css"</em>
+<em>#define</em><em> __PATH__</em> \css\lib
+
+<em>#define</em><em> __setStorage</em> <tt>__uiSet</tt><b>(</b><em>CreateDialog</em>/Storage<b>)</b>
+<em>#define</em><em> __getStorage</em> <tt>__uiGet</tt><b>(</b><em>CreateDialog</em>/Storage<b>)
+
+if (</b><em>isNil</em><b>{</b><tt>__getStorage</tt><b>}) then { []</b> <tt>__setStorage</tt> <b>};</b>
+
+<s>//
+// Function func(CreateDialog)
+// Syntax:
+//   {
+//       _rsc = "RscDisplay";
+//
+//       // list of local variables which available from the constructor, destructor and event handlers code
+//       _private = ["_list", "_of", "_your", "_local", "_variables"];
+//
+//       // Event handlers,
+//       _handlers = [
+//           // you can declare them as follows:
+//           "CtrlClassName", "EventName", {
+//               // event handler code
+//           },
+//           // or as follows:
+//           ["CtrlClassName", "AnotherCtrlClassName"],
+//           ["EventName", "AnotherEventName"], {
+//               // event handler code
+//           }
+//       ];
+//       _constructor = {
+//           // constructor code
+//
+//       };
+//       _destructor = {
+//            // destructor code
+//       };
+//
+//   } invoke(CreateDialog);
+//</s>
+
+<var>func(CreateDialog)</var> <b>= {
+
+    private [</b><i>"_rsc"</i><b>,</b> <i>"_display"</i><b>,</b> <i>"_parent"</i><b>,</b> <i>"_private"</i><b>,</b> <i>"_handlers"</i><b>,</b> <i>"_constructor"</i><b>,</b> <i>"_destructor"</i><b>];</b>
+
+    <em>disableSerialization</em><b>;</b>
+
+    <s>// Automatic variables — default values</s>
+    <var>_display</var> <b>=</b> <em>displayNull</em><b>;</b>
+    <var>_parent</var> <b>=</b> <em>objNull</em><b>;</b>
+    <var>_private</var> <b>= [];</b>
+    <var>_handlers</var> <b>= [];</b>
+    <var>_constructor</var> <b>= {};</b>
+    <var>_destructor</var> <b>= {};</b>
+
+    <s>// call user initialization code</s>
+    <b>[] call</b> <var>_this</var><b>;
+
+    try {</b>
+        <s>// type checking</s>
+        <b>{
+            if (</b><em>isNil</em> <b>{</b><var>_x</var> <em>select</em> 0<b>}) then {
+                throw</b> <em>format</em> <b>[</b><i>"Redefined any or undifined parameter: %1"</i><b>,</b> <var>_x</var> <em>select</em> 1<b>];
+            };
+            if (</b><em>typeName</em> <b>(</b><var>_x</var> <em>select</em> 0<b>) !=</b> <var>_x</var> <em>select</em> 2<b>) then {
+                throw</b> <em>format</em> <b>[</b><i>"%1 parameter type mismatch, must be %2"</i><b>,</b> <var>_x</var> <em>select</em> 1<b>,</b> <em>typeName</em> <b>(</b><var>_x</var> <em>select</em> 2<b>)]
+            };
+        } foreach [
+            [</b><var>_rsc</var><b>,</b> <i>"_rsc"</i><b>,</b> <i>"STRING"</i><b>],
+            [</b><var>_display</var><b>,</b> <i>"_display"</i><b>,</b> <i>"DISPLAY"</i><b>],
+            [</b><var>_private</var><b>,</b> <i>"_private"</i><b>,</b> <i>"ARRAY"</i><b>],
+            [</b><var>_handlers</var><b>,</b> <i>"_handlers"</i><b>,</b> <i>"ARRAY"</i><b>],
+            [</b><var>_constructor</var><b>,</b> <i>"_constructor"</i><b>,</b> <i>"CODE"</i><b>],
+            [</b><var>_destructor</var><b>,</b> <i>"_destructor"</i><b>,</b> <i>"CODE"</i><b>]
+        ];</b>
+
+        <s>// hidden in the namespace to not interfere with user code variables</s>
+        <var>_this</var> <b>= call {
+            private</b> <i>"_thisScope"</i><b>;</b>
+            <var>_thisScope</var> <b>= [</b>
+                <i>"_thisScope"</i><b>,</b> <i>"_confDialog"</i><b>,</b> <i>"_idd"</i><b>,</b>
+                <i>"_dsplPrivateValues"</i><b>,</b> <i>"_dsplMapClassnames"</i><b>,</b> <i>"_dsplMapCtrls"</i><b>,</b> <i>"_dsplMapConfs"</i><b>,</b> <i>"_dsplGetConfByCtrl"</i><b>,</b>
+                <i>"_dsplSpawn"</i><b>,</b> <i>"_loadCode"</i><b>,</b> <i>"_saveCode"</i><b>,</b> <i>"_eventHandlerExecutor"</i><b>,</b> <i>"_ehTpl"</i><b>,</b> <i>"_destructorTpl"</i><b>,</b> <i>"_dsplDataIndex"</i><b>,</b>
+                <i>"_handlersList"</i><b>,</b> <i>"_toArray"</i><b>,</b> <i>"_createDisplay"</i><b>,</b> <i>"_storage"</i><b>,</b> <i>"_ehCtrl"</i><b>,</b> <i>"_ehType"</i><b>,</b> <i>"_ehCode"</i>
+            <b>];
+            private</b> <var>_thisScope</var><b>;</b>
+
+            <s>// try to turn the mission config, and game config
+            // if it fails, the user asked the invalid resource name (_rsc)</s>
+            <var>_confDialog</var> <b>= (</b><em>missionConfigFile</em> >> <var>_rsc</var><b>) call {
+                if (</b><em>isClass</em> <var>_this</var><b>) then {</b> <var>_this</var> <b>} else {
+                    (</b><em>configFile</em> >> <var>_rsc</var><b>) call {
+                        if (</b><em>isClass</em> <var>_this</var><b>) then {</b> <var>_this</var> <b>} else {
+                            throw (</b><i>"invalid _rsc: "</i> + <em>str</em> <var>_rsc</var><b>)
+                        };
+                    };
+                };
+            };</b>
+
+            <var>_idd</var> <b>=</b> <em>getNumber</em><b>(</b><var>_confDialog</var> >> <i>"idd"</i><b>);</b>
+
+            <s>// the idd must be valid, creating dialog must be successful, otherwise an error — user asked incorrect resource name (_rsc)</s>
+            <b>if (</b><var>_idd</var> &lt; 0<b>) then {
+                throw (</b><i>"negative idd in resource class "</i> + <em>str</em> <var>_rsc</var><b>)
+            };</b>
+
+            <var>_createDisplay</var> <b>= {
+                (switch (</b><em>typeName</em> <var>_this</var><b>) do {
+                    case</b> <i>"STRING"</i>: <b>{</b> <em>configFile</em> >> <var>_this</var>  <b>};
+                    case</b> <i>"CONFIG"</i>: <b>{</b> <em>getNumber</em><b>(</b><var>_this</var> >> <i>"idd"</i><b>) };
+                    case</b> <i>"SCALAR"</i>: <b>{</b> <em>findDisplay</em> <var>_this</var> <b>};
+                    case</b> <i>"DISPLAY"</i>: <b>{</b> <var>_this</var> <em>createDisplay</em> <var>_rsc</var><b>; nil };
+                    default {</b> <em>createDialog</em> <var>_rsc</var><b>; nil }
+                }) call</b> <var>_createDisplay</var>
+            <b>};
+
+            if (</b><em>isNull</em> <var>_display</var><b>) then {</b>
+                <var>_parent</var> <b>call</b> <var>_createDisplay</var><b>;</b>
+                <var>_display</var> <b>=</b> <em>findDisplay</em> <var>_idd</var><b>;
+            };
+
+            if (</b><em>isNull</em> <var>_display</var><b>) then {
+                throw (</b><i>"null display"</i><b>)
+            };</b>
+
+            <var>_dsplMapClassnames</var> <b>= [];</b>
+            <var>_dsplMapCtrls</var> <b>= [];</b>
+            <var>_dsplMapConfs</var> <b>= [];</b>
+
+            <s>// user-defined variable _private — declare variables private dialogue;
+            // _dsplPrivateValues — keeps the values of these variables</s>
+            <var>_dsplPrivateValues</var> <b>= [];</b>
+            <var>_dsplPrivateValues</var> <em>resize</em> <em>count</em> <var>_private</var><b>;</b> <s>// not initialized variables — nil</s>
+
+            <var>_confDialog</var> <b>call {
+                private [</b><i>"_walk"</i><b>,</b> <i>"_idc"</i><b>];</b>
+                <var>_walk</var> <b>= {
+                    if (</b><em>isClass</em> <var>_this</var><b>) then {</b>
+                        <var>_idc</var> <b>=</b> <em>getNumber</em><b>(</b><var>_this</var> >> <i>"idc"</i><b>);
+                        if (</b><var>_idc</var> > 0<b>) then {</b>
+                            <tt>__push</tt><b>(</b><var>_private</var><b>,</b> <i>"_ctrl"</i> + <em>configName</em> <var>_this</var><b>);</b>          <s>// extend the list of names of private controls</s>
+                            <tt>__push</tt><b>(</b><var>_dsplPrivateValues</var><b>,</b> <var>_display</var> <em>displayCtrl</em> <var>_idc</var><b>);</b> <s>// write down their values</s>
+                            <tt>__push</tt><b>(</b><var>_dsplMapClassnames</var><b>,</b> <em>configName</em> <var>_this</var><b>);</b>
+                            <tt>__push</tt><b>(</b><var>_dsplMapCtrls</var><b>,</b> <var>_display</var> <em>displayCtrl</em> <var>_idc</var><b>);</b>
+                            <tt>__push</tt><b>(</b><var>_dsplMapConfs</var><b>,</b> <var>_this</var><b>);
+                        };
+                        for</b> <i>"_i"</i> <b>from</b> 0 <b>to</b> <em>count</em> <var>_this</var> - 1 <b>do {</b>
+                            <var>_this</var> <em>select</em> <var>_i</var> <b>call</b> <var>_walk</var>
+                        <b>};
+                    }
+                };</b>
+                <var>_this</var> <b>call</b> <var>_walk</var><b>;
+            };</b>
+
+            <var>_dsplGetConfByCtrl</var> <b>= {</b>
+                <var>_dsplMapCtrls</var> <em>find</em> <var>_this</var> <b>call {
+                    if (</b><var>_this</var> <b>>=</b> 0<b>) then {</b>
+                        <var>_dsplMapConfs</var> <em>select</em> <var>_this</var>
+                    <b>} else {</b>
+                        <em>configFile</em> >> <i>";)"</i>
+                    <b>}
+                };
+            };</b>
+
+            <s>// find a free place (nil) in the global storage</s>
+            <var>_storage</var> <b>=</b> <tt>__getStorage</tt><b>;</b> <s>// link on global storage</s>
+            <var>_dsplDataIndex</var> <b>=</b> 0 <b>call {
+                for</b> <i>"_i"</i> <b>from</b> 0 <b>to</b> <em>count</em> <var>_storage</var> <b>do {</b>
+                    <var>_this</var> <b>=</b> <var>_storage</var> <em>select</em> <var>_i</var><b>;
+                    if (</b><em>isNil</em> <i>"_this"</i><b>) exitwith {</b><var>_i</var><b>};
+                }
+            };</b>
+
+            <s>// export into user-code</s>
+<em>            #define</em><em> export(name)</em> <tt>__push</tt><b>(</b><var>_private</var><b>,</b><tt>__q</tt><b>(</b><em>name</em><b>));</b> <tt>__push</tt><b>(</b><var>_dsplPrivateValues</var><b>,</b><em>name</em><b>);</b>
+
+            export<b>(</b><var>_display</var><b>);</b>
+            export<b>(</b><var>_dsplMapCtrls</var><b>);</b>
+            export<b>(</b><var>_dsplMapConfs</var><b>);</b>
+            export<b>(</b><var>_dsplGetConfByCtrl</var><b>);</b>
+
+            <var>_dsplSpawn</var> <b>=</b> <em>compile</em> <em>format</em> <b>[</b><i>'_this spawn { disableSerialization; __1 = __getStorage select %1; [__1 select 1, _this select 0, _this select 1] call (__1 select 0)}'</i><b>,</b> <var>_dsplDataIndex</var><b>];</b>
+
+            export<b>(</b><var>_dsplSpawn</var><b>);</b>
+
+            <var>_loadCode</var> <b>=</b> <i>""</i><b>;</b> <s>// loader of variables</s>
+            <var>_saveCode</var> <b>=</b> <i>""</i><b>;</b> <s>// unloader of variables</s>
+
+            <b>for</b> <i>"_i"</i> <b>from</b> 0 <b>to</b> <em>count</em> <var>_private</var> - 1 <b>do {</b>
+                <var>_loadCode</var> <b>=</b> <var>_loadCode</var> + <em>format</em> <b>[</b><i>"%1 = __2 select %2;"</i><b>,</b> <var>_private</var> <em>select</em> <var>_i</var><b>,</b> <var>_i</var><b>];</b>
+                <var>_saveCode</var> <b>=</b> <var>_saveCode</var> + <em>format</em> <b>[</b><i>"__2 set [%2, %1];"</i><b>,</b> <var>_private</var> <em>select</em> <var>_i</var><b>,</b> <var>_i</var><b>];
+            };</b>
+
+            <s>// create a template of native handlers
+            // %1 — _ehIndex</s>
+            <var>_ehTpl</var> <b>=</b> <i>'__ret = false; __1 = __getStorage select %1; [__1 select 1, _this, (__1 select 2) select %2] call (__1 select 0); __ret;'</i><b>;</b>
+            <var>_destructorTpl</var> <b>=</b> <i>'__1 = __getStorage select %1; [__1 select 1, _this, __1 select 3] call (__1 select 0); __getStorage set [%1, nil]'</i><b>;</b>
+
+            <s>// create a template of common handlers
+            // args: [_dsplPrivateValues, originThis, userEventHandler] call _eventHandlerExecutor</s>
+
+            <var>_eventHandlerExecutor</var> <b>=</b> <em>compile</em> <b>(</b>
+                <i>'private "__1"; __2 = _this select 0; '</i> + <var>_loadCode</var> +
+                <i>'call { private "__2"; (_this select 1) call (_this select 2) }; '</i> + <var>_saveCode</var>
+            <b>);</b>
+
+            <var>_handlersList</var> <b>= [];</b>
+
+            <var>_storage</var> <em>set</em> <b>[</b><var>_dsplDataIndex</var><b>, [</b><var>_eventHandlerExecutor</var><b>,</b> <var>_dsplPrivateValues</var><b>,</b> <var>_handlersList</var><b>,</b> <var>_destructor</var><b>]];</b>
+
+            <var>_toArray</var> <b>= {
+                if (</b><em>typeName</em> <var>_this</var> <b>==</b> <i>"Array"</i><b>) then {</b> <var>_this</var> <b>} else { [</b><var>_this</var><b>] }
+            };
+
+            for</b> <i>"_i"</i> <b>from</b> 0 <b>to</b> <em>count</em> <var>_handlers</var> - 3 <b>step</b> 3 <b>do {</b>
+
+                <var>_ehCode</var> <b>=</b> <var>_handlers</var> <em>select</em> <var>_i</var>+2<b>;
+
+                if (</b><em>typeName</em> <var>_ehCode</var> <b>!=</b> <i>"CODE"</i><b>) then {
+                    throw</b> <em>format</em> <b>[</b><i>"Invalid type of event handler (%1, must be CODE, index: %2)"</i><b>,</b> <em>typeName</em> <var>_ehCode</var><b>,</b> <var>_i</var><b>];
+                };</b>
+
+                <tt>__push</tt><b>(</b><var>_handlersList</var><b>,</b> <var>_ehCode</var><b>);
+
+                {</b>
+                    <var>_ehCtrl</var> <b>=</b> <var>_x</var><b>;
+                    {</b>
+                        <var>_ehType</var> <b>=</b> <var>_x</var><b>;
+                        if (</b><em>typeName</em> <var>_ehType</var> <b>!=</b> <i>"STRING"</i><b>) then {
+                            throw</b> <em>format</em> <b>[</b><i>"Invalid event name (type %1, must be STRING, index: %2)"</i><b>,</b> <em>typeName</em> <var>_ehType</var><b>,</b> <var>_i</var><b>];
+                        };
+                        [</b><var>_ehType</var><b>,</b> <em>format</em> <b>[</b><var>_ehTpl</var><b>,</b> <var>_dsplDataIndex</var><b>,</b> <em>count</em> <var>_handlersList</var> - 1<b>]] call {
+                            switch</b> <em>typeName</em> <var>_ehCtrl</var> <b>do {
+                                case</b> <i>"CODE"</i> : <b>{
+                                    private [</b><i>"_ctrl"</i><b>,</b> <i>"_conf"</i><b>];
+                                    for</b> <i>"_i"</i> <b>from</b> 0 <b>to</b> <em>count</em> <var>_dsplMapCtrls</var> -1 <b>do {</b>
+                                        <var>_ctrl</var> <b>=</b> <var>_dsplMapCtrls</var> <em>select</em> <var>_i</var><b>;</b>
+                                        <var>_conf</var> <b>=</b> <var>_dsplMapConfs</var> <em>select</em> <var>_i</var><b>;
+                                        if (</b><var>_ctrl</var> <b>call</b> <var>_ehCtrl</var><b>) then {
+                                            private</b> <var>_thisScope</var><b>;</b>
+                                            <var>_ctrl</var> <em>ctrlAddEventHandler</em> <var>_this</var><b>;
+                                        };
+                                    };
+                                };
+                                case</b> <i>"DISPLAY"</i> : <b>{</b>
+                                    <var>_display</var> <em>displayAddEventHandler</em> <var>_this</var><b>;
+                                };
+                                case</b> <i>"STRING"</i> : <b>{
+                                    switch</b> <var>_ehCtrl</var> <b>do {
+                                        case</b> <var>_rsc</var> : <b>{</b>
+                                            <var>_display</var> <em>displayAddEventHandler</em> <var>_this</var><b>;
+                                        };
+                                        case</b> <i>"*"</i> : <b>{
+                                            {</b>
+                                                <var>_x</var> <em>ctrlAddEventHandler</em> <var>_this</var><b>;
+                                            } foreach</b> <var>_dsplMapCtrls</var><b>;
+                                        };
+                                        default {
+                                            (
+                                                (</b><var>_dsplMapClassnames</var> <em>find</em> <var>_ehCtrl</var><b>) call {</b> <s>// find control's idc</s>
+                                                    <b>if (</b><var>_this</var> &lt; 0<b>) then {
+                                                        throw</b> <em>format</em> <b>[</b><i>"One of the classes unavailable: %1 %2, index: %3"</i><b>,</b> <em>typeName</em> <var>_ehCtrl</var><b>,</b> <var>_ehCtrl</var><b>,</b> <var>_i</var><b>];
+                                                    } else {</b>
+                                                        <var>_dsplMapCtrls</var> <em>select</em> <var>_this</var><b>;
+                                                    };
+                                                }
+                                            )</b> <em>ctrlAddEventHandler</em> <var>_this</var><b>;
+                                        };
+                                    };
+                                };
+                                default {
+                                    throw</b> <em>format</em> <b>[</b><i>"Invalid control class name or selector (type %1, must be STRING, DISPLAY or CODE, index: %2)"</i><b>,</b> <em>typeName</em> <var>_ehCtrl</var><b>,</b> <var>_i</var><b>];
+                                };
+                            };
+                        };
+                    } foreach (
+                        (</b><var>_handlers</var> <em>select</em> <var>_i</var>+1<b>) call</b> <var>_toArray</var>
+                    <b>);
+                } foreach (
+                    (</b><var>_handlers</var> <em>select</em> <var>_i</var><b>) call</b> <var>_toArray</var>
+                <b>)
+            };</b>
+
+            <var>_display</var> <em>displayAddEventHandler</em> <b>[</b><i>"Unload"</i><b>,</b>
+                <em>format</em> <b>[</b><var>_destructorTpl</var><b>,</b> <var>_dsplDataIndex</var><b>]
+            ];
+
+            [</b><var>_dsplPrivateValues</var><b>,</b> <var>_display</var><b>,</b> <var>_constructor</var><b>,</b> <var>_eventHandlerExecutor</var><b>,</b> <var>_private</var><b>]
+        };</b>
+
+        <s>// call constructor in current namespace (constructor is called from _eventHandlerExecutor)</s>
+        <var>_this</var> <b>call { private (</b><var>_this</var> <em>select</em> 4<b>); call (</b><var>_this</var> <em>select</em> 3<b>); };</b>
+
+        <i>"OK"</i><b>;
+
+    } catch {</b>
+        <i>"Error of initialization.\n"</i> + <var>_exception</var>
+    <b>};
+};</b>
+
+
+<hr />
+</pre>
+<p><small><i>This documentation was generated automatically from the source code.</i></small></p>
+</body>
+</html>

@@ -651,13 +651,13 @@ func(WeaponInHand) = {
 // Function func(currentMuzzle)
 // Syntax:
 //     (object soldier) invoke(currentMuzzle)
-// Returns current muzzle of weapons in the hands of soldiers. 
+// Returns current muzzle of weapons in the hands of soldiers.
 // if current muzzle is void string, returns the first muzzle of the current weapon. String type.
 // This function workaround for currentMuzzle's bug when void string returns for yet no shooted AI
-// 
+//
 
 func(CurrentMuzzle) = {
-    if (currentMuzzle _this != "") exitwith { 
+    if (currentMuzzle _this != "") exitwith {
         currentMuzzle _this;
     };
     configName (((_this invoke(WeaponInHand)) invoke(ReadMuzzles)) select 0);

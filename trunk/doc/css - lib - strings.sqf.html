@@ -1,0 +1,126 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>«Community`s Shared Scripts» SQF-Library - /css/lib/strings.sqf</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<style type="text/css">
+  html {
+    font-family: Helvetica, Arial, sans-serif;
+  }
+  body {
+    margin: auto;
+    width: 50em;
+  }
+  * {
+    cursor: default;
+  }
+  pre {
+    padding: 1em 0;
+  }
+  pre.code,
+  pre.code b,
+  pre.code i,
+  pre.code s,
+  pre.code u,
+  pre.code tt,
+  pre.code em,
+  pre.code var {
+    text-decoration: none;
+    font: normal normal 14px/150% "Consolas", monospace;
+  }
+  pre.code b  { color: #009; }
+  pre.code i  { color: #080; }
+  pre.code s  { color: #BBB; font-style: italic; }
+  pre.code u  { color: #0A0; }
+  pre.code tt { color: #994; }
+  pre.code em { color: #A00; }
+  pre.code var { color: #5E5E5E; }
+
+  hr {
+    margin: 1em 0 1em 0;
+    border: 1px dashed #ccc;
+  }
+  #unfoldcode:hover {
+    cursor: hand;
+    color: red
+  }
+</style></head>
+<body>
+<h1>/css/lib/strings.sqf</h1>
+<p><small><i>This documentation was generated automatically from the source code.</i></small></p>
+<pre class="code">
+<hr />Function func(JoinString)
+
+Syntax:
+    [array listOfStrings] invoke(JoinString)
+    [array listOfStrings, string glue] invoke(JoinString)
+
+Fast string concatenation.
+Example:
+    [magazines player, &quot;, &quot;] invoke(JoinString)<hr />
+<a
+  href="#unfoldcode"
+  id="unfoldcode"
+  onclick="
+    var el = document.getElementById('sqfsrc');
+    el.style.display = el.style.display == '' ? 'none' : ''
+  "
+>Source of &ldquo;css/lib/strings.sqf&rdquo;</a>
+<div style='display: none' id='sqfsrc'>
+<h2>&ldquo;css/lib/strings.sqf&rdquo;</h2>
+
+
+<s>// SQF
+//
+// sqf-library "\css\lib\strings.sqf"
+// Copyright (c) 2009-2012 Denis Usenko (DenVdmj)
+// MIT-style license
+//</s>
+
+<em>#include "\css\css"</em>
+<em>#define</em><em> __PATH__</em> \css\lib
+
+<s>//
+// Function func(JoinString)
+//
+// Syntax:
+//     [array listOfStrings] invoke(JoinString)
+//     [array listOfStrings, string glue] invoke(JoinString)
+//
+// Fast string concatenation.
+// Example:
+//     [magazines player, ", "] invoke(JoinString)
+//</s>
+
+<var>func(JoinString)</var> <b>= {
+
+    private [</b><i>"_list"</i><b>,</b> <i>"_char"</i><b>,</b> <i>"_size"</i><b>,</b> <i>"_subsize"</i><b>,</b> <i>"_oversize"</i><b>,</b> <i>"_j"</i><b>];</b>
+
+    <var>_list</var> <b>= arg(</b>0<b>);</b>
+    <var>_char</var> <b>= argOr(</b>1<b>,</b> <i>""</i><b>);
+
+    if (</b><em>count</em> <var>_list</var> &lt; 1<b>) exitwith {</b><i>""</i><b>};
+
+    for</b> <i>""</i> <b>from</b> 1 <b>to</b> <em>ceil</em> <tt>__log2</tt><b>(</b><em>count</em> <var>_list</var><b>) do {</b>
+        <var>_size</var> <b>=</b> <em>count</em> <var>_list</var> / 2<b>;</b>
+        <var>_subsize</var> <b>=</b> <em>floor</em> <var>_size</var><b>;</b>
+        <var>_oversize</var> <b>=</b> <em>ceil</em> <var>_size</var><b>;</b>
+        <var>_j</var> <b>=</b> 0<b>;
+        for</b> <i>"_i"</i> <b>from</b> 0 <b>to</b> <var>_subsize</var> - 1 <b>do {</b>
+            <var>_list</var> <em>set</em> <b>[</b><var>_i</var><b>, (</b><var>_list</var> <em>select</em> <var>_j</var><b>)</b> + <var>_char</var> + <b>(</b><var>_list</var> <em>select</em> <b>(</b><var>_j</var>+1<b>))];</b>
+            <var>_j</var> <b>=</b> <var>_j</var> + 2<b>;
+        };
+        if (</b><var>_subsize</var> <b>!=</b> <var>_oversize</var><b>) then {</b> <s>// to add a tail</s>
+            <var>_list</var> <em>set</em> <b>[</b><var>_j</var>/2<b>,</b> <var>_list</var> <em>select</em> <var>_j</var><b>];
+        };</b>
+        <var>_list</var> <em>resize</em> <var>_oversize</var><b>;
+    };</b>
+
+    <var>_list</var> <em>select</em> 0<b>;
+};</b>
+
+<hr />
+</pre>
+<p><small><i>This documentation was generated automatically from the source code.</i></small></p>
+</body>
+</html>

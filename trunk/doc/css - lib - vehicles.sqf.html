@@ -1,0 +1,236 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>�Community`s Shared Scripts� SQF-Library - /css/lib/vehicles.sqf</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<style type="text/css">
+  html {
+    font-family: Helvetica, Arial, sans-serif;
+  }
+  body {
+    margin: auto;
+    width: 50em;
+  }
+  * {
+    cursor: default;
+  }
+  pre {
+    padding: 1em 0;
+  }
+  pre.code,
+  pre.code b,
+  pre.code i,
+  pre.code s,
+  pre.code u,
+  pre.code tt,
+  pre.code em,
+  pre.code var {
+    text-decoration: none;
+    font: normal normal 14px/150% "Consolas", monospace;
+  }
+  pre.code b  { color: #009; }
+  pre.code i  { color: #080; }
+  pre.code s  { color: #BBB; font-style: italic; }
+  pre.code u  { color: #0A0; }
+  pre.code tt { color: #994; }
+  pre.code em { color: #A00; }
+  pre.code var { color: #5E5E5E; }
+
+  hr {
+    margin: 1em 0 1em 0;
+    border: 1px dashed #ccc;
+  }
+  #unfoldcode:hover {
+    cursor: hand;
+    color: red
+  }
+</style></head>
+<body>
+<h1>/css/lib/vehicles.sqf</h1>
+<p><small><i>This documentation was generated automatically from the source code.</i></small></p>
+<pre class="code">
+<hr />Function func(CreateCustomVehicle)
+Syntax:
+    [
+        String vehicleType,
+        String special,
+        Position position,
+        Side or Group or Object group,
+        Array of String crewSlots,
+        Array of Soldiers unitList
+    ] invoke(CreateCustomVehicle)
+
+Arguments:
+    vehicleClass  —  the vehicle class.
+    special       —  create vehicle in the air or on the land, possable values: &quot;NONE&quot; (or &quot;&quot;), &quot;FLY&quot;.
+    position      —  position of the vehicle.
+    group         —  group of the vehicle crew,
+                     if the soldier—will be used his group
+                     if the side—will create a new group by this side
+                     if the other value (eg 0 or &quot;&quot; or &quot;default&quot;), will create a new group
+                     owned by a native side of the vehicle.
+    crewSlots     —  bring the crew up to strength. An list containing some of the following
+                     values: &quot;commander&quot;, &quot;driver&quot;, &quot;gunner&quot;, &quot;cargo&quot;.
+    unitList      —  if present—crewmans will be retrieved one by one from this
+                     list, else—crewmans will be created.
+
+Example:
+    [
+        &quot;RHIB&quot;,
+        &quot;none&quot;,
+        screenToWorld [.5, .5],
+        west,
+        [&quot;driver&quot;, &quot;gunner&quot;]
+    ] call css_func_CreateCustomVehicle<hr />
+<a
+  href="#unfoldcode"
+  id="unfoldcode"
+  onclick="
+    var el = document.getElementById('sqfsrc');
+    el.style.display = el.style.display == '' ? 'none' : ''
+  "
+>Source of &ldquo;css/lib/vehicles.sqf&rdquo;</a>
+<div style='display: none' id='sqfsrc'>
+<h2>&ldquo;css/lib/vehicles.sqf&rdquo;</h2>
+
+
+<s>// SQF
+//
+// sqf-library "\css\lib\vehicles.sqf"
+// Copyright (c) 2009-2012 Denis Usenko (DenVdmj)
+// MIT-style license
+//</s>
+
+<em>#include "\css\css"</em>
+<em>#define</em><em> __PATH__</em> \css\lib
+
+<var>func(ArmAs)</var> <b>= {
+    private [</b><i>"_unit"</i><b>,</b> <i>"_donor"</i><b>,</b> <i>"_coef"</i><b>];</b>
+    <var>_unit</var> <b>= arg(</b>0<b>);</b>
+    <var>_coef</var> <b>= argOr(</b>2<b>,</b>1<b>);</b>
+    <var>_donor</var> <b>=</b> <em>configFile</em> >> <i>"CfgVehicles"</i> >> <b>arg(</b>1<b>);</b>
+    <em>removeAllWeapons</em> <var>_unit</var><b>;
+    {
+        for</b> <i>""</i> <b>from</b> 1 <b>to ((</b><var>_x</var> <em>select</em> 1<b>)</b> * <var>_coef</var><b>) do {</b>
+            <var>_unit</var> <em>addMagazine</em> <b>(</b><var>_x</var> <em>select</em> 0<b>)
+        };
+    } foreach (</b><em>getArray</em> <b>(</b><var>_donor</var> >> <i>"magazines"</i><b>) invoke(</b>List2Set<b>));
+    {</b>
+        <var>_unit</var> <em>addWeapon</em> <var>_x</var>
+    <b>} foreach</b> <em>getArray</em> <b>(</b><var>_donor</var> >> <i>"weapons"</i><b>);
+};</b>
+
+<s>//
+// Function func(CreateCustomVehicle)
+// Syntax:
+//     [
+//         String vehicleType,
+//         String special,
+//         Position position,
+//         Side or Group or Object group,
+//         Array of String crewSlots,
+//         Array of Soldiers unitList
+//     ] invoke(CreateCustomVehicle)
+//
+// Arguments:
+//     vehicleClass  —  the vehicle class.
+//     special       —  create vehicle in the air or on the land, possable values: "NONE" (or ""), "FLY".
+//     position      —  position of the vehicle.
+//     group         —  group of the vehicle crew,
+//                      if the soldier—will be used his group
+//                      if the side—will create a new group by this side
+//                      if the other value (eg 0 or "" or "default"), will create a new group
+//                      owned by a native side of the vehicle.
+//     crewSlots     —  bring the crew up to strength. An list containing some of the following
+//                      values: "commander", "driver", "gunner", "cargo".
+//     unitList      —  if present—crewmans will be retrieved one by one from this
+//                      list, else—crewmans will be created.
+//
+// Example:
+//     [
+//         "RHIB",
+//         "none",
+//         screenToWorld [.5, .5],
+//         west,
+//         ["driver", "gunner"]
+//     ] call css_func_CreateCustomVehicle
+//</s>
+
+<var>func(CreateCustomVehicle)</var> <b>= {
+    private [</b>
+        <i>"_vehicleType"</i><b>,</b> <i>"_position"</i><b>,</b> <i>"_vehicleDefaultSide"</i><b>,</b> <i>"_group"</i><b>,</b> <i>"_crewSlots"</i><b>,</b>
+        <i>"_getNextUnit"</i><b>,</b> <i>"_unitList"</i><b>,</b> <i>"_unitIndex"</i><b>,</b> <i>"_crewType"</i><b>,</b> <i>"_vehicle"</i><b>,</b> <i>"_funcMoveIn"</i>
+    <b>];</b>
+
+    <var>_vehicleType</var> <b>= arg(</b>0<b>);</b>
+    <var>_position</var> <b>= arg(</b>2<b>);</b>
+
+    <var>_vehicleDefaultSide</var> <b>= [
+        east, west, resistance, civilian, nil, sideEnemy, sideFriendly, nil
+    ]</b> <em>select</em> <em>getNumber</em> <b>(</b>
+        <em>configFile</em> >> <i>"CfgVehicles"</i> >> <var>_vehicleType</var> >> <i>"side"</i>
+    <b>);</b>
+
+    <var>_group</var> <b>= argOr(</b>3<b>,</b> 0<b>) call {
+        switch (</b><em>typeName</em> <var>_this</var><b>) do {
+            case</b> <i>"GROUP"</i> : <b>{</b> <var>_this</var> <b>};
+            case</b> <i>"OBJECT"</i> : <b>{</b> <em>group</em> <var>_this</var> <b>};
+            case</b> <i>"SIDE"</i> : <b>{</b> <em>createGroup</em> <em>createCenter</em> <var>_this</var> <b>};
+            default {</b> <em>createGroup</em> <em>createCenter</em> <var>_vehicleDefaultSide</var> <b>};
+        }
+    };</b>
+
+    <var>_crewSlots</var> <b>= argIfType(</b>4<b>,</b> <i>"array"</i><b>) else {
+        [</b><i>"commander"</i><b>,</b> <i>"driver"</i><b>,</b> <i>"gunner"</i><b>,</b> <i>"cargo"</i><b>]
+    };</b>
+
+    <var>_getNextUnit</var> <b>=</b> ifExistArg<b>(</b>5<b>) then {</b>
+        <s>// If specified unit list -- gets units from list</s>
+        <var>_unitList</var> <b>= arg(</b>5<b>);</b>
+        <var>_unitIndex</var> <b>=</b> -1<b>;</b>
+        <s>// Returns anonimous function</s>
+        <b>{
+            if (</b><tt>__inc</tt><b>(</b><var>_unitIndex</var><b>)</b> &lt; <em>count</em> <var>_unitList</var><b>) then {</b>
+                <var>_unitList</var> <em>select</em> <var>_unitIndex</var>
+            <b>}
+        }
+    } else {</b>
+        <var>_crewType</var> <b>=</b> <em>getText</em> <b>(</b><em>configFile</em> >> <i>"CfgVehicles"</i> >> <var>_vehicleType</var> >> <i>"crew"</i><b>);</b>
+        <s>// New syntax of createUnit faster, but not able to create units to the other side</s>
+        <b>if (</b><var>_vehicleDefaultSide</var> <b>!=</b> <em>side</em> <var>_group</var><b>) then {</b>
+            <s>// Returns anonimous function</s>
+            <b>{</b>
+                <var>_crewType</var> <em>createUnit</em> <b>[</b><var>_position</var><b>,</b> <var>_group</var><b>,</b> <i>""</i><b>,</b> .7<b>];</b>
+                <em>units</em> <var>_group</var> <em>select</em> <b>((</b><em>count</em> <em>units</em> <var>_group</var><b>)</b>-1<b>)
+            }
+        } else {</b>
+            <s>// Returns anonimous function</s>
+            <b>{</b>
+                <var>_group</var> <em>createUnit</em> <b>[</b><var>_crewType</var><b>,</b> <var>_position</var><b>, [],</b> 0<b>,</b> <i>""</i><b>];
+            }
+        }
+    };</b>
+    <var>_vehicle</var> <b>=</b> <em>createVehicle</em> <b>[</b><var>_vehicleType</var><b>,</b> <var>_position</var><b>, [],</b> 0<b>, arg(</b>1<b>)];
+    {</b>
+        <var>_funcMoveIn</var> <b>= (switch (</b><em>toLower</em><b>(</b><var>_x</var><b>)) do {
+            case</b> <i>"commander"</i> : <b>{{</b> <var>_this</var> <em>moveInCommander</em> <var>_vehicle</var> <b>}};
+            case</b> <i>"driver"</i>    : <b>{{</b> <var>_this</var> <em>moveInDriver</em> <var>_vehicle</var> <b>}};
+            case</b> <i>"gunner"</i>    : <b>{{</b> <var>_this</var> <em>moveInTurret</em> <b>[</b><var>_vehicle</var><b>, [</b><var>_pos</var><b>]] }};
+            case</b> <i>"cargo"</i>     : <b>{{</b> <var>_this</var> <em>moveInCargo</em> <var>_vehicle</var> <b>}};
+            default {</b> <i>"Cargo type mismatch!"</i> <tt>__errorLog</tt><b>; {} }
+        });
+        for</b> <i>"_pos"</i> <b>from</b> 0 <b>to (</b><var>_vehicle</var> <em>emptyPositions</em> <var>_x</var><b>)</b> - 1 <b>do {
+            call</b> <var>_getNextUnit</var> <b>call</b> <var>_funcMoveIn</var>
+        <b>}
+    } foreach</b> <var>_crewSlots</var><b>;</b>
+    <var>_vehicle</var>
+<b>};</b>
+
+
+
+
+<hr />
+</pre>
+<p><small><i>This documentation was generated automatically from the source code.</i></small></p>
+</body>
+</html>
