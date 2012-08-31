@@ -8,11 +8,17 @@
 #include "\css\css"
 #define __PATH__ \css\lib
 
+//
+// Function func(ArmAs)
+// Syntax:
+//     [object soldier, string donorClassName <, number fillCoeff>] invoke(ArmAs)
+//
+
 func(ArmAs) = {
     private ["_unit", "_donor", "_coef"];
     _unit = arg(0);
-    _coef = argOr(2,1);
     _donor = configFile >> "CfgVehicles" >> arg(1);
+    _coef = argOr(2,1);
     removeAllWeapons _unit;
     {
         for "" from 1 to ((_x select 1) * _coef) do {
@@ -22,6 +28,7 @@ func(ArmAs) = {
     {
         _unit addWeapon _x
     } foreach getArray (_donor >> "weapons");
+    _unit selectWeapon primaryWeapon _unit;
 };
 
 //
@@ -129,5 +136,3 @@ func(CreateCustomVehicle) = {
     } foreach _crewSlots;
     _vehicle
 };
-
-

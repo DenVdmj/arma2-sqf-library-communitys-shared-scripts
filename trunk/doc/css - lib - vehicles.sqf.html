@@ -49,7 +49,9 @@
 <h1>/css/lib/vehicles.sqf</h1>
 <p><small><i>This documentation was generated automatically from the source code.</i></small></p>
 <pre class="code">
-<hr />Function func(CreateCustomVehicle)
+<hr />Function func(ArmAs)
+Syntax:
+    [object soldier, string donorClassName &lt;, number fillCoeff&gt;] invoke(ArmAs)<hr />Function func(CreateCustomVehicle)
 Syntax:
     [
         String vehicleType,
@@ -104,11 +106,17 @@ Example:
 <em>#include "\css\css"</em>
 <em>#define</em><em> __PATH__</em> \css\lib
 
+<s>//
+// Function func(ArmAs)
+// Syntax:
+//     [object soldier, string donorClassName &lt;, number fillCoeff>] invoke(ArmAs)
+//</s>
+
 <var>func(ArmAs)</var> <b>= {
     private [</b><i>"_unit"</i><b>,</b> <i>"_donor"</i><b>,</b> <i>"_coef"</i><b>];</b>
     <var>_unit</var> <b>= arg(</b>0<b>);</b>
-    <var>_coef</var> <b>= argOr(</b>2<b>,</b>1<b>);</b>
     <var>_donor</var> <b>=</b> <em>configFile</em> >> <i>"CfgVehicles"</i> >> <b>arg(</b>1<b>);</b>
+    <var>_coef</var> <b>= argOr(</b>2<b>,</b>1<b>);</b>
     <em>removeAllWeapons</em> <var>_unit</var><b>;
     {
         for</b> <i>""</i> <b>from</b> 1 <b>to ((</b><var>_x</var> <em>select</em> 1<b>)</b> * <var>_coef</var><b>) do {</b>
@@ -225,8 +233,6 @@ Example:
     } foreach</b> <var>_crewSlots</var><b>;</b>
     <var>_vehicle</var>
 <b>};</b>
-
-
 
 
 <hr />

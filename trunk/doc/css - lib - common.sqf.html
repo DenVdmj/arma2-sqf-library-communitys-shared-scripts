@@ -55,8 +55,10 @@ Syntax:
          object, title, function
          (, arguments, priority, showWindow, hideOnUse, shortcut, condition)
      ] invoke(addAction)
+
 Description:
     Function func(addAction), it is wrapper over addAction for sqf-function directly usage.
+
 Parameters:
     0) Object object             â€” The object which the action is assigned to
     1) String (or Text) title    â€” The action name which is displayed in the action menu.
@@ -83,11 +85,33 @@ Optional parameters:
     8) String   condition  â€” Code that must return true for action to be shown.
        Special variables &quot;_target&quot; (unit to which action is attached to) and &quot;_this&quot; (caller/executing unit)
        can be used in the evaluation. Default: true
+
 Return value:
     Number or Nothing.
     The ID of the action is returned, IDs are incrementing. The first given action to each unit has got
     the ID 0, the second the ID 1 etc. ID's are also passed to the called script and used
-    to remove an action with removeAction.<hr />
+    to remove an action with removeAction.
+
+Snippet:
+    _actionID = [
+        _unit, localize &quot;str/module name/action name&quot;, {
+           // action handler
+            _target    = arg(0);
+            _caller    = arg(1);
+            _actionID  = arg(2);
+            _arguments = arg(3);
+        }
+        //, arguments
+        //, priority
+        //, showWindow
+        //, hideOnUse
+        //, shortcut
+        //, condition
+    ] invoke(addAction);<hr />Function func(CallOnOneTick)
+Syntax:
+    _result = [_sqfFunction, _arguments] invoke(CallOnOneTick)
+Description:
+    Executes given sqf-code in non scheduling environment.<hr />
 <a
   href="#unfoldcode"
   id="unfoldcode"
@@ -117,8 +141,10 @@ Return value:
 //          object, title, function
 //          (, arguments, priority, showWindow, hideOnUse, shortcut, condition)
 //      ] invoke(addAction)
+//
 // Description:
 //     Function func(addAction), it is wrapper over addAction for sqf-function directly usage.
+//
 // Parameters:
 //     0) Object object             — The object which the action is assigned to
 //     1) String (or Text) title    — The action name which is displayed in the action menu.
@@ -145,11 +171,29 @@ Return value:
 //     8) String   condition  — Code that must return true for action to be shown.
 //        Special variables "_target" (unit to which action is attached to) and "_this" (caller/executing unit)
 //        can be used in the evaluation. Default: true
+//
 // Return value:
 //     Number or Nothing.
 //     The ID of the action is returned, IDs are incrementing. The first given action to each unit has got
 //     the ID 0, the second the ID 1 etc. ID's are also passed to the called script and used
 //     to remove an action with removeAction.
+//
+// Snippet:
+//     _actionID = [
+//         _unit, localize "str/module name/action name", {
+//            // action handler
+//             _target    = arg(0);
+//             _caller    = arg(1);
+//             _actionID  = arg(2);
+//             _arguments = arg(3);
+//         }
+//         //, arguments
+//         //, priority
+//         //, showWindow
+//         //, hideOnUse
+//         //, shortcut
+//         //, condition
+//     ] invoke(addAction);
 //</s>
 
 <var>func(addAction)</var> <b>= {
@@ -170,6 +214,21 @@ Return value:
     <var>_rOperand</var> <em>set</em> <b>[</b>1<b>,</b> <i>'__PATH__\action.sqs'</i><b>];</b>
     <s>// add action</s>
     <var>_lOperand</var> <em>addAction</em> <var>_rOperand</var><b>;
+};</b>
+
+<s>//
+// Function func(CallOnOneTick)
+// Syntax:
+//     _result = [_sqfFunction, _arguments] invoke(CallOnOneTick)
+// Description:
+//     Executes given sqf-code in non scheduling environment.
+//</s>
+
+<var>func(CallOnOneTick)</var> <b>= {</b>
+    <var>_this</var> <b>= [</b><var>_this</var><b>, nil, false];</b>
+    <var>_this</var> <b>exec</b> <i>'__PATH__\executor.sqs'</i><b>;</b>
+    <em>waitUntil</em> <b>{</b><var>_this</var> <em>select</em> 2<b>};</b>
+    <var>_this</var> <em>select</em> 1<b>;
 };</b>
 
 

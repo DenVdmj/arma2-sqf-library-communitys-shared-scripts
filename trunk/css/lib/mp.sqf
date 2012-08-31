@@ -65,7 +65,7 @@ func(BroadcastCall) = {
         }];
         missionNamespace setVariable ['', _this];
         publicVariable '';
-        if (call arg(0)) then {
+        if (arg(1) call arg(0)) then {
             arg(1) call arg(2)
         };
         true
@@ -78,7 +78,7 @@ func(BroadcastCall) = {
 
 '' addPublicVariableEventHandler {
     arg(1) call {
-        if (call arg(0)) then {
+        if (arg(1) call arg(0)) then {
             arg(1) call arg(2)
         };
     };

@@ -349,9 +349,9 @@ Syntax:
 Returns weapons in the hands of soldiers. String type.<hr />Function func(currentMuzzle)
 Syntax:
     (object soldier) invoke(currentMuzzle)
-Returns current muzzle of weapons in the hands of soldiers. 
+Returns current muzzle of weapons in the hands of soldiers.
 if current muzzle is void string, returns the first muzzle of the current weapon. String type.
-This function workarraund of bis bug currentMuzzle's void string result for AI<hr />Function func(GetWeaponByTypes)
+This function workaround for currentMuzzle's bug when void string returns for yet no shooted AI<hr />Function func(GetWeaponByTypes)
 Syntax:
     [array weaponsList, array weaponTypeList] invoke(GetWeaponByTypes)
     [object soldier, array weaponTypeList] invoke(GetWeaponByTypes)
@@ -465,7 +465,7 @@ result:
 //     ] invoke(isInheritFrom)
 //</s>
 
-<var>func(isInheritFrom)</var> <b>= {
+<var>func(IsInheritFrom)</var> <b>= {
     private [</b><i>"_curr"</i><b>,</b> <i>"_parent"</i><b>,</b> <i>"_void"</i><b>];</b>
     <var>_curr</var> <b>=</b> <var>_this</var> <em>select</em> 0<b>;</b>
     <var>_parent</var> <b>=</b> <var>_this</var> <em>select</em> 1<b>;</b>
@@ -1061,13 +1061,13 @@ result:
 // Function func(currentMuzzle)
 // Syntax:
 //     (object soldier) invoke(currentMuzzle)
-// Returns current muzzle of weapons in the hands of soldiers. 
+// Returns current muzzle of weapons in the hands of soldiers.
 // if current muzzle is void string, returns the first muzzle of the current weapon. String type.
-// This function workarraund of bis bug currentMuzzle's void string result for AI
+// This function workaround for currentMuzzle's bug when void string returns for yet no shooted AI
 //</s>
 
 <var>func(CurrentMuzzle)</var> <b>= {
-    if (</b><em>currentMuzzle</em> <var>_this</var> <b>!=</b> <i>""</i><b>) exitwith {</b> 
+    if (</b><em>currentMuzzle</em> <var>_this</var> <b>!=</b> <i>""</i><b>) exitwith {</b>
         <em>currentMuzzle</em> <var>_this</var><b>;
     };</b>
     <em>configName</em> <b>(((</b><var>_this</var> <b>invoke(</b>WeaponInHand<b>)) invoke(</b>ReadMuzzles<b>))</b> <em>select</em> 0<b>);
