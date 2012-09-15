@@ -30,6 +30,31 @@ func(CurrentCameraVector) = {
 
 
 //
+// Function func(SightWorldPosition)
+//
+// Syntax:
+//     invoke(SightWorldPosition)
+// Returns the position of the weapon cursor projection on landscape.
+//
+
+func(SightWorldPosition) = {
+    private ["_boneHeadName", "_headPosition", "_weaponDirection", "_screenPosition"];
+    _boneHeadName = getText (configFile >> "CfgVehicles" >> typeof player >> "boneHead");
+    _headPosition = player modelToWorld (player selectionPosition _boneHeadName);
+    _weaponDirection = player weaponDirection "throw";
+    _screenPosition = worldToScreen [
+        x(_headPosition) + x(_weaponDirection) * 10000,
+        y(_headPosition) + y(_weaponDirection) * 10000,
+        z(_headPosition) + z(_weaponDirection) * 10000
+    ];
+    if (count _screenPosition == 2) then {
+        screenToWorld _screenPosition
+    } else {
+        [1e+39, 1e+39]
+    };
+};
+
+//
 // Function func(CurrentCameraPosition)
 //
 // Syntax:
@@ -51,7 +76,7 @@ func(CurrentCameraPosition) = {
 //
 
 func(GetFOV) = {
-    SafeZoneW * 0.66699 / ((worldToScreen positionCameraToWorld [0, .5, .5]) distance [.5, .5]);
+    safeZoneW * 0.66699 / ((worldToScreen positionCameraToWorld [0, .5, .5]) distance [.5, .5]);
 };
 
 
@@ -329,4 +354,3 @@ func(NearAirport) = {
     );
     _nearest
 };
-

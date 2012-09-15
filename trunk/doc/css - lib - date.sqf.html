@@ -93,8 +93,10 @@ Examples:
    [[1967, 4, 13, 11, 32, 11, 32], &quot;%1/%2/%3 %44:%5:%6 %54&quot;] invoke(FormatDate)
    // returns: &quot;1967/04/13 11:32:11 AM&quot;
 
-   [invoke(GetDate), &quot;%3 %12 %1&quot;] invoke(FormatDate)
-   // returns: &quot;12 April 1967&quot;<hr />
+   [invoke(GetDate), &quot;%3 %22 %1&quot;] invoke(FormatDate)
+   // returns in english: &quot;12 june June&quot;
+   // in russian:         &quot;12 –∏—é–Ω—è 2011&quot;
+   // in serbocroatian:   &quot;12 —ò–∞–Ω—É–∞—Ä–∞ 2011&quot;<hr />
 <a
   href="#unfoldcode"
   id="unfoldcode"
@@ -190,8 +192,10 @@ Examples:
 //    [[1967, 4, 13, 11, 32, 11, 32], "%1/%2/%3 %44:%5:%6 %54"] invoke(FormatDate)
 //    // returns: "1967/04/13 11:32:11 AM"
 //
-//    [invoke(GetDate), "%3 %12 %1"] invoke(FormatDate)
-//    // returns: "12 April 1967"
+//    [invoke(GetDate), "%3 %22 %1"] invoke(FormatDate)
+//    // returns in english: "12 june June"
+//    // in russian:         "12 Ë˛Ìˇ 2011"
+//    // in serbocroatian:   "12 º‡ÌÛ‡‡ 2011"
 //</s>
 
 <var>func(FormatDate)</var> <b>= {
@@ -230,15 +234,15 @@ Examples:
     };
 
     if (</b><var>_month</var> > 0 <b>&amp;&amp;</b> <var>_month</var> <b>&lt;=</b> 12<b>) then {</b>
-        <var>_time</var> <em>set</em> <b>[</b>11<b>,</b> <em>localize</em> <em>format</em> <b>[</b><i>"STR/CSS/locale/month %1"</i><b>,</b> <var>_month</var><b>]];</b>
-        <var>_time</var> <em>set</em> <b>[</b>21<b>,</b> <em>localize</em> <em>format</em> <b>[</b><i>"STR/CSS/locale/month %1 (genitive)"</i><b>,</b> <var>_month</var><b>]];
+        <var>_time</var> <em>set</em> <b>[</b>11<b>,</b> <em>localize</em> <em>format</em> <b>[</b><i>"str/css/locale/month-%1"</i><b>,</b> <var>_month</var><b>]];</b>
+        <var>_time</var> <em>set</em> <b>[</b>21<b>,</b> <em>localize</em> <em>format</em> <b>[</b><i>"str/css/locale/month-%1-genitive"</i><b>,</b> <var>_month</var><b>]];
     };</b>
 
     <var>_time</var> <em>set</em> <b>[</b>43<b>, (</b><em>floor</em> <b>((</b><var>_hour</var> + 23<b>)</b> % 12<b>)</b> + 1<b>) call</b> <var>_dec</var><b>];</b>
     <var>_time</var> <em>set</em> <b>[</b>53<b>,
         [</b>
-            <em>localize</em> <i>"STR/CSS/locale/ante meridiem"</i><b>,</b>
-            <em>localize</em> <i>"STR/CSS/locale/post meridiem"</i>
+            <em>localize</em> <i>"str/css/locale/ante-meridiem"</i><b>,</b>
+            <em>localize</em> <i>"str/css/locale/post-meridiem"</i>
         <b>]</b> <em>select</em> <b>(</b><em>floor</em><b>(</b><var>_hour</var><b>) >=</b> 12<b>)
     ];</b>
 

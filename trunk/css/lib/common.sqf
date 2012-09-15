@@ -12,9 +12,9 @@
 // Function func(addAction)
 // Syntax:
 //     _actionID = [
-//          object, title, function
-//          (, arguments, priority, showWindow, hideOnUse, shortcut, condition)
-//      ] invoke(addAction)
+//         object, title, function
+//         (, arguments, priority, showWindow, hideOnUse, shortcut, condition)
+//     ] invoke(addAction)
 //
 // Description:
 //     Function func(addAction), it is wrapper over addAction for sqf-function directly usage.
@@ -104,4 +104,3 @@ func(CallOnOneTick) = {
     waitUntil {_this select 2};
     _this select 1;
 };
-

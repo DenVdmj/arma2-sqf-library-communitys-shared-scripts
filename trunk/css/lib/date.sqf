@@ -81,8 +81,10 @@ func(SetDate) = {
 //    [[1967, 4, 13, 11, 32, 11, 32], "%1/%2/%3 %44:%5:%6 %54"] invoke(FormatDate)
 //    // returns: "1967/04/13 11:32:11 AM"
 //
-//    [invoke(GetDate), "%3 %12 %1"] invoke(FormatDate)
-//    // returns: "12 April 1967"
+//    [invoke(GetDate), "%3 %22 %1"] invoke(FormatDate)
+//    // returns in english: "12 june June"
+//    // in russian:         "12 июня 2011"
+//    // in serbocroatian:   "12 јануара 2011"
 //
 
 func(FormatDate) = {
@@ -121,15 +123,15 @@ func(FormatDate) = {
     };
 
     if (_month > 0 && _month <= 12) then {
-        _time set [11, localize format ["STR/CSS/locale/month %1", _month]];
-        _time set [21, localize format ["STR/CSS/locale/month %1 (genitive)", _month]];
+        _time set [11, localize format ["str/css/locale/month-%1", _month]];
+        _time set [21, localize format ["str/css/locale/month-%1-genitive", _month]];
     };
 
     _time set [43, (floor ((_hour + 23) % 12) + 1) call _dec];
     _time set [53,
         [
-            localize "STR/CSS/locale/ante meridiem",
-            localize "STR/CSS/locale/post meridiem"
+            localize "str/css/locale/ante-meridiem",
+            localize "str/css/locale/post-meridiem"
         ] select (floor(_hour) >= 12)
     ];
 

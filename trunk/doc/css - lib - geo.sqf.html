@@ -53,7 +53,11 @@
 
 Syntax:
     invoke(ViewportVector)
-Returns the direction vector of the current camera.<hr />Function func(CurrentCameraPosition)
+Returns the direction vector of the current camera.<hr />Function func(SightWorldPosition)
+
+Syntax:
+    invoke(SightWorldPosition)
+Returns the position of the weapon cursor projection on landscape.<hr />Function func(CurrentCameraPosition)
 
 Syntax:
     func(ViewportPosition)
@@ -226,6 +230,31 @@ Example:
 
 
 <s>//
+// Function func(SightWorldPosition)
+//
+// Syntax:
+//     invoke(SightWorldPosition)
+// Returns the position of the weapon cursor projection on landscape.
+//</s>
+
+<var>func(SightWorldPosition)</var> <b>= {
+    private [</b><i>"_boneHeadName"</i><b>,</b> <i>"_headPosition"</i><b>,</b> <i>"_weaponDirection"</i><b>,</b> <i>"_screenPosition"</i><b>];</b>
+    <var>_boneHeadName</var> <b>=</b> <em>getText</em> <b>(</b><em>configFile</em> >> <i>"CfgVehicles"</i> >> <em>typeof</em> <em>player</em> >> <i>"boneHead"</i><b>);</b>
+    <var>_headPosition</var> <b>=</b> <em>player</em> <em>modelToWorld</em> <b>(</b><em>player</em> <em>selectionPosition</em> <var>_boneHeadName</var><b>);</b>
+    <var>_weaponDirection</var> <b>=</b> <em>player</em> <em>weaponDirection</em> <i>"throw"</i><b>;</b>
+    <var>_screenPosition</var> <b>=</b> <em>worldToScreen</em> <b>[
+        x(</b><var>_headPosition</var><b>)</b> + <b>x(</b><var>_weaponDirection</var><b>)</b> * 10000<b>,
+        y(</b><var>_headPosition</var><b>)</b> + <b>y(</b><var>_weaponDirection</var><b>)</b> * 10000<b>,
+        z(</b><var>_headPosition</var><b>)</b> + <b>z(</b><var>_weaponDirection</var><b>)</b> * 10000
+    <b>];
+    if (</b><em>count</em> <var>_screenPosition</var> <b>==</b> 2<b>) then {</b>
+        <em>screenToWorld</em> <var>_screenPosition</var>
+    <b>} else {
+        [</b>1e+39<b>,</b> 1e+39<b>]
+    };
+};</b>
+
+<s>//
 // Function func(CurrentCameraPosition)
 //
 // Syntax:
@@ -247,7 +276,7 @@ Example:
 //</s>
 
 <var>func(GetFOV)</var> <b>= {</b>
-    <em>SafeZoneW</em> * 0.66699 / <b>((</b><em>worldToScreen</em> <em>positionCameraToWorld</em> <b>[</b>0<b>,</b> .5<b>,</b> .5<b>])</b> <em>distance</em> <b>[</b>.5<b>,</b> .5<b>]);
+    <em>safeZoneW</em> * 0.66699 / <b>((</b><em>worldToScreen</em> <em>positionCameraToWorld</em> <b>[</b>0<b>,</b> .5<b>,</b> .5<b>])</b> <em>distance</em> <b>[</b>.5<b>,</b> .5<b>]);
 };</b>
 
 
@@ -525,7 +554,6 @@ Example:
     );</b>
     <var>_nearest</var>
 <b>};</b>
-
 
 
 <hr />

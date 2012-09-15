@@ -10,7 +10,7 @@ class CfgPatches {
 
 class CfgMods {
     class css {
-        dir = "@\CSS";
+        dir = "@\css";
         name = "Community`s shared scripts";
         picture = "";
         hidePicture = "true";
@@ -23,7 +23,7 @@ class CfgMods {
 class CfgVehicles {
     class Logic;
     class css_lib : Logic {
-        displayName = "$STR/CSS/DISPLAY_NAME";
+        displayName = "Community`s shared scripts library";
         icon = "\css\files\ico\icon.paa";
         picture = "\css\files\ico\icon.paa";
         vehicleClass = "Modules";

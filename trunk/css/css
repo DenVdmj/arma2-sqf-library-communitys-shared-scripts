@@ -52,11 +52,11 @@
 #define __compileFile compile preprocessFile
 #define __callFile call __compileFile
 #define __lib __callFile
-#define __localeLangAbbr (localize "STR/CSS/locale/lang abbr")
-#define __localeLang (localize "STR/CSS/locale/lang")
+#define __localeLangAbbr (localize "str/css/locale/lang-abbr")
+#define __localeLang (localize "str/css/locale/lang")
 // __currentLangAbbr and __currentLang -- depricated names
-#define __currentLangAbbr (localize "STR/CSS/locale/lang abbr")
-#define __currentLang (localize "STR/CSS/locale/lang")
+#define __currentLangAbbr (localize "str/css/locale/lang abbr")
+#define __currentLang (localize "str/css/locale/lang")
 #define __sqf2str "call" + str
 
 //
