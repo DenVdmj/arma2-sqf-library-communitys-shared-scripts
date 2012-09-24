@@ -80,7 +80,7 @@ Result:
     ]<hr />Function func(GetUnduplicatedArray)
 Syntax:
     _arrayWithDuplicates invoke(UnduplicatedArray)
-Deletes all duplicate entries in array. Returns new array.<hr />Function func(removeItemsFromArray)
+Deletes all duplicate entries in array. Returns new array.<hr />Function func(RemoveItemsFromArray)
 Syntax:
     [array list, arrayOfAnyValues removedEntries] invoke(removeItemsFromArray)
 Deletes all specified entries from specified array. Returns the same modified array.
@@ -245,14 +245,14 @@ Result:
 <b>};</b>
 
 <s>//
-// Function func(removeItemsFromArray)
+// Function func(RemoveItemsFromArray)
 // Syntax:
 //     [array list, arrayOfAnyValues removedEntries] invoke(removeItemsFromArray)
 // Deletes all specified entries from specified array. Returns the same modified array.
 // Use for cases where it is important to keep a reference to an array.
 //</s>
 
-<var>func(removeItemsFromArray)</var> <b>= {
+<var>func(RemoveItemsFromArray)</var> <b>= {
     private [</b><i>"_array"</i><b>,</b> <i>"_items"</i><b>,</b> <i>"_offset"</i><b>,</b> <i>"_item"</i><b>];</b>
     <var>_array</var> <b>= arg(</b>0<b>);</b>
     <var>_items</var> <b>= arg(</b>1<b>);</b>
@@ -341,8 +341,6 @@ Result:
 <var>_s</var><b>;</b><var>_i</var><b>=</b><var>_i</var>-1<b>};</b><var>_i</var><b>=</b><var>_t</var><b>;while{</b><var>_i</var>>0<b>}do{</b><var>_a</var><b>=</b><var>_1</var> <em>select</em> 0<b>;</b><var>_1</var> <em>set</em><b>[</b>0<b>,</b><var>_1</var> <em>select</em>
 <var>_i</var><b>];</b><var>_1</var> <em>set</em><b>[</b><var>_i</var><b>,</b><var>_a</var><b>];</b><var>_d</var><b>=</b><var>_2</var> <em>select</em> 0<b>;</b><var>_2</var> <em>set</em><b>[</b>0<b>,</b><var>_2</var> <em>select</em>
 <var>_i</var><b>];</b><var>_2</var> <em>set</em><b>[</b><var>_i</var><b>,</b><var>_d</var><b>];</b><var>_l</var><b>=</b>0<b>;</b><var>_u</var><b>=</b><var>_i</var>-1<b>;call</b> <var>_s</var><b>;</b><var>_i</var><b>=</b><var>_i</var>-1<b>};</b><var>_this</var><b>};</b>
-
-
 
 
 <hr />

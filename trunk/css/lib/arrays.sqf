@@ -103,14 +103,14 @@ func(GetUnduplicatedArray) = {
 };
 
 //
-// Function func(removeItemsFromArray)
+// Function func(RemoveItemsFromArray)
 // Syntax:
 //     [array list, arrayOfAnyValues removedEntries] invoke(removeItemsFromArray)
 // Deletes all specified entries from specified array. Returns the same modified array.
 // Use for cases where it is important to keep a reference to an array.
 //
 
-func(removeItemsFromArray) = {
+func(RemoveItemsFromArray) = {
     private ["_array", "_items", "_offset", "_item"];
     _array = arg(0);
     _items = arg(1);
@@ -199,5 +199,3 @@ _c];_l=_c;true}}}do{};_1 set[_l,_a];_2 set[_l,_d]};_1=_this select 0;_2=_this se
 _s;_i=_i-1};_i=_t;while{_i>0}do{_a=_1 select 0;_1 set[0,_1 select
 _i];_1 set[_i,_a];_d=_2 select 0;_2 set[0,_2 select
 _i];_2 set[_i,_d];_l=0;_u=_i-1;call _s;_i=_i-1};_this};
-
-

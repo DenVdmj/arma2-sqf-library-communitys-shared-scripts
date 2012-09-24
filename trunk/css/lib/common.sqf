@@ -104,3 +104,21 @@ func(CallOnOneTick) = {
     waitUntil {_this select 2};
     _this select 1;
 };
+
+//
+// Function func(getAspectRatio)
+// Syntax:
+//     invoke(getAspectRatio)
+// Description:
+//     Get current aspect ratio (coefficient).
+//     For example: 16/9 == 1.(7), 1280/960 or 4/3 == 1.(3)
+//
+
+func(getAspectRatio) = (
+    if (count supportInfo "*:getResolution" != 0) then {{
+        getResolution select 4
+    }} else {{
+        (safeZoneW * 4) /
+        (safeZoneH * 3)
+    }}
+);

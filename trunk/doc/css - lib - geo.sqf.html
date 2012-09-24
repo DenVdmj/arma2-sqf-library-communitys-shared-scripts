@@ -57,14 +57,14 @@ Returns the direction vector of the current camera.<hr />Function func(SightWorl
 
 Syntax:
     invoke(SightWorldPosition)
-Returns the position of the weapon cursor projection on landscape.<hr />Function func(CurrentCameraPosition)
+Returns the position of the weapon cursor projection on landscape.<hr />Function func(ViewportPosition)
 
 Syntax:
-    func(ViewportPosition)
+    invoke(ViewportPosition)
 Returns the position of the current camera.<hr />Function func(GetFOV)
 
 Syntax:
-    func(GetFOV)
+    invoke(GetFOV)
 Returns the FOV of the current camera.<hr />Function func(Vector2Azimuth)
 
 Syntax:
@@ -255,14 +255,14 @@ Example:
 };</b>
 
 <s>//
-// Function func(CurrentCameraPosition)
+// Function func(ViewportPosition)
 //
 // Syntax:
-//     func(ViewportPosition)
+//     invoke(ViewportPosition)
 // Returns the position of the current camera.
 //</s>
 
-<var>func(CurrentCameraPosition)</var> <b>= {</b>
+<var>func(ViewportPosition)</var> <b>= {</b>
     <em>positionCameraToWorld</em> <b>[</b>0<b>,</b> 0<b>,</b> 0<b>];
 };</b>
 
@@ -271,7 +271,7 @@ Example:
 // Function func(GetFOV)
 //
 // Syntax:
-//     func(GetFOV)
+//     invoke(GetFOV)
 // Returns the FOV of the current camera.
 //</s>
 

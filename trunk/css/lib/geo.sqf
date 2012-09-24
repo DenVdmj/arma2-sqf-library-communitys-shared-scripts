@@ -55,14 +55,14 @@ func(SightWorldPosition) = {
 };
 
 //
-// Function func(CurrentCameraPosition)
+// Function func(ViewportPosition)
 //
 // Syntax:
-//     func(ViewportPosition)
+//     invoke(ViewportPosition)
 // Returns the position of the current camera.
 //
 
-func(CurrentCameraPosition) = {
+func(ViewportPosition) = {
     positionCameraToWorld [0, 0, 0];
 };
 
@@ -71,7 +71,7 @@ func(CurrentCameraPosition) = {
 // Function func(GetFOV)
 //
 // Syntax:
-//     func(GetFOV)
+//     invoke(GetFOV)
 // Returns the FOV of the current camera.
 //
 

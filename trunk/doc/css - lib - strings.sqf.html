@@ -57,7 +57,13 @@ Syntax:
 
 Fast string concatenation.
 Example:
-    [magazines player, &quot;, &quot;] invoke(JoinString)<hr />
+    [magazines player, &quot;, &quot;] invoke(JoinString)<hr />Function func(PathInfoGetDirName)
+
+Syntax:
+    (string fullpath) invoke(PathInfoGetDirName)<hr />Function func(PathInfoGetFileName)
+
+Syntax:
+    (string fullpath) invoke(PathInfoGetFileName)<hr />
 <a
   href="#unfoldcode"
   id="unfoldcode"
@@ -118,6 +124,49 @@ Example:
 
     <var>_list</var> <em>select</em> 0<b>;
 };</b>
+
+
+<s>//
+// Function func(PathInfoGetDirName)
+//
+// Syntax:
+//     (string fullpath) invoke(PathInfoGetDirName)
+//</s>
+
+<var>func(PathInfoGetDirName)</var> <b>= {
+    private [</b><i>"_arr"</i><b>,</b> <i>"_pos"</i><b>];</b>
+    <var>_arr</var> <b>=</b> <em>toArray</em> <var>_this</var><b>;</b>
+    <var>_pos</var> <b>= (for</b> <i>"_i"</i> <b>from</b> <em>count</em> <var>_arr</var> - 1 <b>to</b> 0 <b>step</b> -1 <b>do {
+        if ((</b><var>_arr</var> <em>select</em> <var>_i</var><b>) ==</b> 92<b>) exitwith {</b> <var>_i</var> <b>};</b>
+        -1<b>;
+    });
+    if (</b><var>_pos</var> <b>==</b> -1<b>) exitwith {</b> <i>""</i> <b>};</b>
+    <var>_arr</var> <em>resize</em> <var>_pos</var><b>;</b>
+    <em>toString</em> <var>_arr</var><b>;
+};</b>
+
+<s>//
+// Function func(PathInfoGetFileName)
+//
+// Syntax:
+//     (string fullpath) invoke(PathInfoGetFileName)
+//</s>
+
+<var>func(PathInfoGetFileName)</var> <b>= {
+    private [</b><i>"_arr"</i><b>,</b> <i>"_pos"</i><b>,</b> <i>"_name"</i><b>];</b>
+    <var>_arr</var> <b>=</b> <em>toArray</em> <var>_this</var><b>;</b>
+    <var>_pos</var> <b>=</b> 1 + <b>(for</b> <i>"_i"</i> <b>from</b> <em>count</em> <var>_arr</var> - 1 <b>to</b> 0 <b>step</b> -1 <b>do {
+        if ((</b><var>_arr</var> <em>select</em> <var>_i</var><b>) ==</b> 92<b>) exitwith {</b> <var>_i</var> <b>};</b>
+        -1<b>;
+    });
+    if (</b><var>_pos</var> <b>==</b> -1<b>) exitwith {</b> <var>_this</var> <b>};</b>
+    <var>_name</var> <b>= [];
+    for</b> <i>"_i"</i> <b>from</b> <var>_pos</var> <b>to</b> <em>count</em> <var>_arr</var> - 1 <b>do {</b>
+        <var>_name</var> <em>set</em> <b>[</b><em>count</em> <var>_name</var><b>,</b> <var>_arr</var> <em>select</em> <var>_i</var><b>];
+    };</b>
+    <em>toString</em> <var>_name</var><b>;
+};</b>
+
 
 <hr />
 </pre>

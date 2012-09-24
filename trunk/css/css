@@ -55,7 +55,7 @@
 #define __localeLangAbbr (localize "str/css/locale/lang-abbr")
 #define __localeLang (localize "str/css/locale/lang")
 // __currentLangAbbr and __currentLang -- depricated names
-#define __currentLangAbbr (localize "str/css/locale/lang abbr")
+#define __currentLangAbbr (localize "str/css/locale/lang-abbr")
 #define __currentLang (localize "str/css/locale/lang")
 #define __sqf2str "call" + str
 

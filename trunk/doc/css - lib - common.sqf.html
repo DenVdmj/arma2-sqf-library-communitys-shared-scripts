@@ -111,7 +111,12 @@ Snippet:
 Syntax:
     _result = [_sqfFunction, _arguments] invoke(CallOnOneTick)
 Description:
-    Executes given sqf-code in non scheduling environment.<hr />
+    Executes given sqf-code in non scheduling environment.<hr />Function func(getAspectRatio)
+Syntax:
+    invoke(getAspectRatio)
+Description:
+    Get current aspect ratio (coefficient).
+    For example: 16/9 == 1.(7), 1280/960 or 4/3 == 1.(3)<hr />
 <a
   href="#unfoldcode"
   id="unfoldcode"
@@ -230,6 +235,24 @@ Description:
     <em>waitUntil</em> <b>{</b><var>_this</var> <em>select</em> 2<b>};</b>
     <var>_this</var> <em>select</em> 1<b>;
 };</b>
+
+<s>//
+// Function func(getAspectRatio)
+// Syntax:
+//     invoke(getAspectRatio)
+// Description:
+//     Get current aspect ratio (coefficient).
+//     For example: 16/9 == 1.(7), 1280/960 or 4/3 == 1.(3)
+//</s>
+
+<var>func(getAspectRatio)</var> <b>= (
+    if (</b><em>count</em> <em>supportInfo</em> <i>"*:getResolution"</i> <b>!=</b> 0<b>) then {{</b>
+        <em>getResolution</em> <em>select</em> 4
+    <b>}} else {{
+        (</b><em>safeZoneW</em> * 4<b>)</b> /
+        <b>(</b><em>safeZoneH</em> * 3<b>)
+    }}
+);</b>
 
 
 <hr />

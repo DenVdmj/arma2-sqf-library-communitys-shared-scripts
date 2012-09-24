@@ -46,3 +46,45 @@ func(JoinString) = {
 
     _list select 0;
 };
+
+
+//
+// Function func(PathInfoGetDirName)
+//
+// Syntax:
+//     (string fullpath) invoke(PathInfoGetDirName)
+//
+
+func(PathInfoGetDirName) = {
+    private ["_arr", "_pos"];
+    _arr = toArray _this;
+    _pos = (for "_i" from count _arr - 1 to 0 step -1 do {
+        if ((_arr select _i) == 92) exitwith { _i };
+        -1;
+    });
+    if (_pos == -1) exitwith { "" };
+    _arr resize _pos;
+    toString _arr;
+};
+
+//
+// Function func(PathInfoGetFileName)
+//
+// Syntax:
+//     (string fullpath) invoke(PathInfoGetFileName)
+//
+
+func(PathInfoGetFileName) = {
+    private ["_arr", "_pos", "_name"];
+    _arr = toArray _this;
+    _pos = 1 + (for "_i" from count _arr - 1 to 0 step -1 do {
+        if ((_arr select _i) == 92) exitwith { _i };
+        -1;
+    });
+    if (_pos == -1) exitwith { _this };
+    _name = [];
+    for "_i" from _pos to count _arr - 1 do {
+        _name set [count _name, _arr select _i];
+    };
+    toString _name;
+};

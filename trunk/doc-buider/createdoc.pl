@@ -88,8 +88,8 @@ sub parseSqfInlineDocs {
 
     while (
         $sqfFileContent =~ m<
-                (?:\n//([\x20\x09]+)?(?:(?:function)\s+)?((func(?:\w+|\(\w+\))).*?)\n\s*\3\s*\=\s*{) |
-            (?:\*\n*([\x20\x09]+)?(?:(?:function)\s+)?((func(?:\w+|\(\w+\))).*?)\n\*/\s*\6\s*\=\s*{)
+                (?:\n//([\x20\x09]+)?(?:(?:function)\s+)?((func(?:\w+|\(\w+\))).*?)\n\s*\3\s*\=\s*) |
+            (?:\*\n*([\x20\x09]+)?(?:(?:function)\s+)?((func(?:\w+|\(\w+\))).*?)\n\*/\s*\6\s*\=\s*)
         >gcisx
     ) {
         my $padding = $1 | $4;
@@ -236,4 +236,3 @@ BEGIN {
         )
     };
 };
-
