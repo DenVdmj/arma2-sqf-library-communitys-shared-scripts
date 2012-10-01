@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>«Community`s Shared Scripts» SQF-Library - /<!-- INSERT FILENAME --></title>
+<title>«Community`s Shared Scripts» SQF-Library - /css/init.sqf</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <style>
   html {
@@ -55,10 +55,37 @@
 </style>
 </head>
 <body>
-<h1>/<!-- INSERT FILENAME --></h1>
+<h1>/css/init.sqf</h1>
 <p><small><i>This documentation was generated automatically from the source code.</i></small></p>
 <pre class="code">
-<!-- INSERT HERE -->
+
+
+<s>// SQF
+//
+// sqf-library "\css\init.sqf"
+// Copyright (c) 2009-2012 Denis Usenko (DenVdmj)
+// MIT-style license
+//</s>
+
+<b>if (</b> <em>isNil</em> <b>{</b><em>missionNamespace</em> <em>getVariable</em> <i>"/CSS/IsPresent"</i><b>} ) then {</b>
+    <em>missionNamespace</em> <em>setVariable</em> <b>[</b><i>"/CSS/IsPresent"</i><b>,</b> <i>"Áäûùù!"</i><b>];
+    private</b> <i>"_cssLibPath"</i><b>;</b>
+    <var>_cssLibPath</var> <b>= ((if (</b><em>isClass</em> <b>(</b><em>configFile</em> >> <i>"CfgPatches"</i> >> <i>"css_lib"</i><b>)) then {</b><i>"\"</i><b>} else {</b><i>""</i><b>})</b> + <i>"css\lib\"</i><b>);
+    { call</b> <em>compile</em> <em>preprocessFileLineNumbers</em> <b>(</b><var>_cssLibPath</var> + <var>_x</var><b>) } foreach [</b>
+        <i>"arrays.sqf"</i><b>,</b>
+        <i>"common.sqf"</i><b>,</b>
+        <i>"conf.sqf"</i><b>,</b>
+        <i>"date.sqf"</i><b>,</b>
+        <i>"geo.sqf"</i><b>,</b>
+        <i>"gui.sqf"</i><b>,</b>
+        <i>"mp.sqf"</i><b>,</b>
+        <i>"strings.sqf"</i><b>,</b>
+        <i>"vectors.sqf"</i><b>,</b>
+        <i>"vehicles.sqf"</i>
+    <b>];
+};</b>
+
+
 </pre>
 <p><small><i>This documentation was generated automatically from the source code.</i></small></p>
 </body>

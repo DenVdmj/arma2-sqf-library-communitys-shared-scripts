@@ -3,7 +3,7 @@
 <head>
 <title>«Community`s Shared Scripts» SQF-Library - /css/lib/arrays.sqf</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<style type="text/css">
+<style>
   html {
     font-family: Helvetica, Arial, sans-serif;
   }
@@ -37,21 +37,30 @@
   pre.code var { color: #5E5E5E; }
 
   hr {
-    margin: 1em 0 1em 0;
-    border: 1px dashed #ccc;
+    margin: 1em 0 .1em 0;
+    border: 1px dashed #EEE;
   }
   #unfoldcode:hover {
     cursor: hand;
     color: red
   }
-</style></head>
+  h2, h3, h4 {
+    margin: .5em 0;
+  }
+  h2 {
+    margin: 0;
+    padding: .2em .1em;
+    background: #EEE;
+  }
+</style>
+</head>
 <body>
 <h1>/css/lib/arrays.sqf</h1>
 <p><small><i>This documentation was generated automatically from the source code.</i></small></p>
 <pre class="code">
-<hr />Function func(List2Set)
-Syntax:
-    (array listOfAnyComparableValues) invoke(List2Set)
+<hr /><h2>Function func(List2Set)</h2>
+<strong>Syntax:
+</strong>    (array listOfAnyComparableValues) invoke(List2Set)
 Converts an array-list to array-set. Format of array-set:
     [
         [&quot;item 1&quot;, count of these items],
@@ -59,38 +68,38 @@ Converts an array-list to array-set. Format of array-set:
         ...
         [&quot;item N&quot;, count of these items]
     ]
-Example:
-    magazines player invoke(List2Set)
-Result:
-    [
+<strong>Example:
+</strong>    magazines player invoke(List2Set)
+<strong>Result:
+</strong>    [
         [&quot;30Rnd_556x45_Stanag&quot;, 6],
         [&quot;HandGrenade_West&quot;, 4]
-    ]<hr />Function func(CanonizeSet)
-Syntax:
-    (array listOfAnyComparableValues) invoke(CanonizeSet)
+    ]<hr /><h2>Function func(CanonizeSet)</h2>
+<strong>Syntax:
+</strong>    (array listOfAnyComparableValues) invoke(CanonizeSet)
 Function fixes invalid array-set, an example of usage:
     (
         (magazines officer1 invoke(List2Set)) +
         (magazines officer2 invoke(List2Set))
     ) invoke(CanonizeSet)
-Result:
-    [
+<strong>Result:
+</strong>    [
         [&quot;30Rnd_556x45_Stanag&quot;, 6],
         [&quot;7Rnd_45ACP_1911&quot;, 8]
-    ]<hr />Function func(GetUnduplicatedArray)
-Syntax:
-    _arrayWithDuplicates invoke(UnduplicatedArray)
-Deletes all duplicate entries in array. Returns new array.<hr />Function func(RemoveItemsFromArray)
-Syntax:
-    [array list, arrayOfAnyValues removedEntries] invoke(removeItemsFromArray)
+    ]<hr /><h2>Function func(GetUnduplicatedArray)</h2>
+<strong>Syntax:
+</strong>    _arrayWithDuplicates invoke(UnduplicatedArray)
+Deletes all duplicate entries in array. Returns new array.<hr /><h2>Function func(RemoveItemsFromArray)</h2>
+<strong>Syntax:
+</strong>    [array list, arrayOfAnyValues removedEntries] invoke(RemoveItemsFromArray)
 Deletes all specified entries from specified array. Returns the same modified array.
-Use for cases where it is important to keep a reference to an array.<hr />Function func(MapGrep)
-Syntax:
-    [array list, code filter] invoke(MapGrep)
+Use for cases where it is important to keep a reference to an array.<hr /><h2>Function func(MapGrep)</h2>
+<strong>Syntax:
+</strong>    [array list, code filter] invoke(MapGrep)
     [config class, code condition] invoke(MapGrep)
 Returns an array for those elements for which the condition evaluates to notNil.
-Examples:
-
+<strong>Examples:
+</strong>
     // Returns all classnames of cars.
     [configFile &gt;&gt; &quot;CfgVehicles&quot;, {
         if (isClass _x) then {
@@ -109,22 +118,22 @@ Examples:
     // positions of all cars requiring repairs:
     [allUnits, {
         if (_x isKindOf &quot;Car&quot; &amp;&amp; ! canMove _x) then { getPosASL2 _x }
-    }] invoke(MapGrep)<hr />Function func(SortArray)
-Syntax:
-    (two parralel arrays) invoke(SortArray)
+    }] invoke(MapGrep)<hr /><h2>Function func(SortArray)</h2>
+<strong>Syntax:
+</strong>    (two parralel arrays) invoke(SortArray)
 Sort two parralel arrays (using a heapsort algorithm, O(n log n)).
 Format of arrays:
     [
         [values],
         [linked data]
     ]
-Example:
-    [
+<strong>Example:
+</strong>    [
         [  32,   43,   12,   3,   6565,   43,   3,   4,   5,   234 ],
         [&quot;_32&quot;,&quot;_43&quot;,&quot;_12&quot;,&quot;_3&quot;,&quot;_6565&quot;,&quot;_43&quot;,&quot;_3&quot;,&quot;_4&quot;,&quot;_5&quot;,&quot;_234 ]
     ] invoke(SortArray)
-Result:
-    [
+<strong>Result:
+</strong>    [
         [  3,   3,   4,   5,   12,   32,   43,   43,   234,   6565 ],
         [&quot;_3&quot;,&quot;_3&quot;,&quot;_4&quot;,&quot;_5&quot;,&quot;_12&quot;,&quot;_32&quot;,&quot;_43&quot;,&quot;_43&quot;,&quot;_234&quot;,&quot;_6565&quot;]
     ]<hr />
@@ -182,7 +191,6 @@ Result:
     <var>_col</var>
 <b>};</b>
 
-
 <s>//
 // Function func(CanonizeSet)
 // Syntax:
@@ -200,31 +208,25 @@ Result:
 //</s>
 
 <var>func(CanonizeSet)</var> <b>= {
-    private [</b><i>"_set"</i><b>,</b> <i>"_keys"</i><b>,</b> <i>"_pos"</i><b>];</b>
+    private [</b><i>"_set"</i><b>,</b> <i>"_keys"</i><b>,</b> <i>"_pos"</i><b>,</b> <i>"_pairref"</i><b>];</b>
     <var>_set</var> <b>= [];</b>
-    <var>_keys</var> <b>= [];
+    <var>_keys</var> <b>= [];</b>
+<em>    #define</em><em> __key(r)</em>   <b>((</b>r<b>)</b> <em>select</em> 0<b>)</b>
+<em>    #define</em><em> __value(r)</em> <b>((</b>r<b>)</b> <em>select</em> 1<b>)
     {</b>
-<em>        #define</em><em> __oldKey</em>    <b>(</b><var>_x</var> <em>select</em> 0<b>)</b>
-<em>        #define</em><em> __oldValue</em>  <b>(</b><var>_x</var> <em>select</em> 1<b>)</b>
-<em>        #define</em><em> __newPair</em>   <b>(</b><var>_set</var> <em>select</em> <var>_pos</var><b>)</b>
-<em>        #define</em><em> __newKey</em>    <b>(</b><tt>__newPair</tt> <em>select</em> 0<b>)</b>
-<em>        #define</em><em> __newValue</em>  <b>(</b><tt>__newPair</tt> <em>select</em> 1<b>)</b>
-        <var>_pos</var> <b>=</b> <var>_keys</var> <em>find</em> <tt>__oldKey</tt><b>;
+        <var>_pos</var> <b>=</b> <var>_keys</var> <em>find</em> <tt>__key</tt><b>(</b><var>_x</var><b>);
         if (</b><var>_pos</var> <b>==</b> -1<b>) then {</b>
-            <tt>__push</tt><b>(</b><var>_set</var><b>,</b> <var>_x</var><b>);</b>
-            <tt>__push</tt><b>(</b><var>_keys</var><b>,</b> <tt>__oldKey</tt><b>);
+            <tt>__push</tt><b>(</b><var>_set</var><b>,</b><var>_x</var><b>);</b>
+            <tt>__push</tt><b>(</b><var>_keys</var><b>,</b><tt>__key</tt><b>(</b><var>_x</var><b>));
         } else {</b>
-            <tt>__newPair</tt> <em>set</em> <b>[</b>1<b>,</b> <tt>__newValue</tt> + <tt>__oldValue</tt><b>]
-        };</b>
-<em>        #undef</em><em> __oldKey</em>
-<em>        #undef</em><em> __oldValue</em>
-<em>        #undef</em><em> __newPair</em>
-<em>        #undef</em><em> __newKey</em>
-<em>        #undef</em><em> __newValue</em>
-    <b>} foreach</b> <var>_this</var><b>;</b>
+            <var>_pairref</var> <b>=</b> <var>_set</var> <em>select</em> <var>_pos</var><b>;</b>
+            <var>_pairref</var> <em>set</em> <b>[</b>1<b>,</b> <tt>__value</tt><b>(</b><var>_pairref</var><b>)</b> + <tt>__value</tt><b>(</b><var>_x</var><b>)]
+        };
+    } foreach</b> <var>_this</var><b>;</b>
+<em>    #undef</em><em> __key</em>
+<em>    #undef</em><em> __value</em>
     <var>_set</var>
 <b>};</b>
-
 
 <s>//
 // Function func(GetUnduplicatedArray)
@@ -234,7 +236,7 @@ Result:
 //</s>
 
 <var>func(GetUnduplicatedArray)</var> <b>= {
-    private[</b><i>"_e"</i><b>,</b><i>"_i"</i><b>];</b>
+    private [</b><i>"_e"</i><b>,</b> <i>"_i"</i><b>];</b>
     <var>_i</var> <b>=</b> 0<b>;
     while {</b> <em>count</em> <var>_this</var> <b>!=</b> <var>_i</var> <b>} do {</b>
         <var>_e</var> <b>=</b> <var>_this</var> <em>select</em> <var>_i</var><b>;</b>
@@ -247,7 +249,7 @@ Result:
 <s>//
 // Function func(RemoveItemsFromArray)
 // Syntax:
-//     [array list, arrayOfAnyValues removedEntries] invoke(removeItemsFromArray)
+//     [array list, arrayOfAnyValues removedEntries] invoke(RemoveItemsFromArray)
 // Deletes all specified entries from specified array. Returns the same modified array.
 // Use for cases where it is important to keep a reference to an array.
 //</s>

@@ -1,0 +1,154 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>«Community`s Shared Scripts» SQF-Library - /css/config.macro</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<style>
+  html {
+    font-family: Helvetica, Arial, sans-serif;
+  }
+  body {
+    margin: auto;
+    width: 50em;
+  }
+  * {
+    cursor: default;
+  }
+  pre {
+    padding: 1em 0;
+  }
+  pre.code,
+  pre.code b,
+  pre.code i,
+  pre.code s,
+  pre.code u,
+  pre.code tt,
+  pre.code em,
+  pre.code var {
+    text-decoration: none;
+    font: normal normal 14px/150% "Consolas", monospace;
+  }
+  pre.code b  { color: #009; }
+  pre.code i  { color: #080; }
+  pre.code s  { color: #BBB; font-style: italic; }
+  pre.code u  { color: #0A0; }
+  pre.code tt { color: #994; }
+  pre.code em { color: #A00; }
+  pre.code var { color: #5E5E5E; }
+
+  hr {
+    margin: 1em 0 .1em 0;
+    border: 1px dashed #EEE;
+  }
+  #unfoldcode:hover {
+    cursor: hand;
+    color: red
+  }
+  h2, h3, h4 {
+    margin: .5em 0;
+  }
+  h2 {
+    margin: 0;
+    padding: .2em .1em;
+    background: #EEE;
+  }
+</style>
+</head>
+<body>
+<h1>/css/config.macro</h1>
+<p><small><i>This documentation was generated automatically from the source code.</i></small></p>
+<pre class="code">
+
+
+<s>// SQF
+//
+// common macros "\css\config.macro"
+// Copyright (c) 2009-2012 Denis Usenko (DenVdmj)
+// MIT-style license
+//</s>
+
+<em>#ifndef __config_macro_present</em>
+<em>#define</em><em> __config_macro_present</em>
+
+<em>#define</em><em> __true</em> 1
+<em>#define</em><em> __false</em> 0
+
+<s>//
+// Inheritance access specifier
+//</s>
+
+<em>#define</em><em> __ReadAndWrite</em>     0  <s>// any modifications enabled</s>
+<em>#define</em><em> __ReadAndCreate</em>    1  <s>// only adding new class members is allowed</s>
+<em>#define</em><em> __ReadOnly</em>         2  <s>// no modifications enabled</s>
+<em>#define</em><em> __ReadOnlyVerified</em> 3  <s>// no modifications enabled, CRC test applied
+
+//
+// Type scope, used for show entry
+//
+
+// private item is never visible</s>
+<em>#define</em><em> __private</em> 0
+<s>// protected item "advanced designer" switch must be activated to use it</s>
+<em>#define</em><em> __protected</em> 1
+<s>// public item anyone can see/use it</s>
+<em>#define</em><em> __public</em> 2
+
+<s>//
+// Sides
+//</s>
+
+<em>#define</em><em> __TEast</em> 0
+<em>#define</em><em> __TWest</em> 1
+<em>#define</em><em> __TGuerrila</em> 2
+<em>#define</em><em> __TCivilian</em> 3
+<em>#define</em><em> __TSideUnknown</em> 4
+<em>#define</em><em> __TEnemy</em> 5
+<em>#define</em><em> __TFriendly</em> 6
+<em>#define</em><em> __TLogic</em> 7
+
+<s>//
+// Man's positions, possible values for property CfgMovesBasic/Actions/*/UpDegree
+// that used in animation graph in game config.
+//</s>
+
+<em>#define</em><em> __ManPosNoActions</em> -1
+<em>#define</em><em> __ManPosDead</em> 0
+<em>#define</em><em> __ManPosWeapon</em> 1
+<em>#define</em><em> __ManPosBinocLying</em> 2
+<em>#define</em><em> __ManPosLyingNoWeapon</em> 3
+<em>#define</em><em> __ManPosLying</em> 4
+<em>#define</em><em> __ManPosHandGunLying</em> 5
+<em>#define</em><em> __ManPosCrouch</em> 6
+<em>#define</em><em> __ManPosHandGunCrouch</em> 7
+<em>#define</em><em> __ManPosCombat</em> 8
+<em>#define</em><em> __ManPosHandGunStand</em> 9
+<em>#define</em><em> __ManPosStand</em> 10
+<em>#define</em><em> __ManPosSwimming</em> 11
+<em>#define</em><em> __ManPosNoWeapon</em> 12
+<em>#define</em><em> __ManPosBinoc</em> 13
+<em>#define</em><em> __ManPosBinocStand</em> 14
+
+<s>//
+// Weapons slot types
+//</s>
+
+<em>#define</em><em> __WeaponNoSlot</em>             0 <s>// dummy weapons</s>
+<em>#define</em><em> __WeaponSlotPrimary</em>        1 <s>// primary weapons</s>
+<em>#define</em><em> __WeaponSlotSecondary</em>      4 <s>// secondary weapons</s>
+<em>#define</em><em> __WeaponSlotMachinegun</em>     5 <s>// primary + secondary</s>
+<em>#define</em><em> __WeaponSlotHandGun</em>        2 <s>// HandGun</s>
+<em>#define</em><em> __WeaponSlotHandGunItem</em>   16 <s>// HandGun magazines</s>
+<em>#define</em><em> __WeaponSlotHandGunMag</em>    16 <s>// HandGun magazines</s>
+<em>#define</em><em> __WeaponSlotItem</em>         256 <s>// items</s>
+<em>#define</em><em> __WeaponSlotMag</em>          256 <s>// items</s>
+<em>#define</em><em> __WeaponSlotBinocular</em>   4096 <s>// binocular</s>
+<em>#define</em><em> __WeaponHardMounted</em>    65536
+<em>#define</em><em> __WeaponSlotInventory</em> 131072 <s>// inventory items</s>
+
+<em>#endif</em>
+
+
+</pre>
+<p><small><i>This documentation was generated automatically from the source code.</i></small></p>
+</body>
+</html>

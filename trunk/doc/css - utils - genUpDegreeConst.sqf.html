@@ -1,0 +1,104 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>«Community`s Shared Scripts» SQF-Library - /css/utils/genUpDegreeConst.sqf</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<style>
+  html {
+    font-family: Helvetica, Arial, sans-serif;
+  }
+  body {
+    margin: auto;
+    width: 50em;
+  }
+  * {
+    cursor: default;
+  }
+  pre {
+    padding: 1em 0;
+  }
+  pre.code,
+  pre.code b,
+  pre.code i,
+  pre.code s,
+  pre.code u,
+  pre.code tt,
+  pre.code em,
+  pre.code var {
+    text-decoration: none;
+    font: normal normal 14px/150% "Consolas", monospace;
+  }
+  pre.code b  { color: #009; }
+  pre.code i  { color: #080; }
+  pre.code s  { color: #BBB; font-style: italic; }
+  pre.code u  { color: #0A0; }
+  pre.code tt { color: #994; }
+  pre.code em { color: #A00; }
+  pre.code var { color: #5E5E5E; }
+
+  hr {
+    margin: 1em 0 .1em 0;
+    border: 1px dashed #EEE;
+  }
+  #unfoldcode:hover {
+    cursor: hand;
+    color: red
+  }
+  h2, h3, h4 {
+    margin: .5em 0;
+  }
+  h2 {
+    margin: 0;
+    padding: .2em .1em;
+    background: #EEE;
+  }
+</style>
+</head>
+<body>
+<h1>/css/utils/genUpDegreeConst.sqf</h1>
+<p><small><i>This documentation was generated automatically from the source code.</i></small></p>
+<pre class="code">
+
+
+<em>#include "\css\css"</em>
+
+<b>private</b> <i>"_hash"</i><b>;
+private</b> <i>"_list"</i><b>;</b>
+
+<var>_hash</var> <b>=</b> <i>"logic"</i> <em>createVehicleLocal</em> <b>[</b>0<b>,</b>0<b>,</b>0<b>];</b>
+
+<var>_list</var> <b>= [</b>
+    <em>configFile</em> >> <i>"CfgMovesBasic"</i> >> <i>"Actions"</i><b>,
+    {
+        if (</b><em>isNil</em> <b>{</b><var>_hash</var> <em>getVariable</em> <em>getText</em><b>(</b><var>_x</var> >> <i>"upDegree"</i><b>)}) then {</b>
+            <var>_hash</var> <em>setVariable</em> <b>[</b><em>getText</em><b>(</b><var>_x</var> >> <i>"upDegree"</i><b>), true];
+            private [</b><i>"_name"</i><b>,</b> <i>"_value"</i><b>];</b>
+            <var>_value</var> <b>=</b> <em>getNumber</em><b>(</b><var>_x</var> >> <i>"upDegree"</i><b>);</b>
+            <var>_name</var> <b>= if (</b><var>_value</var> &lt; 0<b>) then {</b> <i>"ManPosNoActions"</i> <b>} else {</b> <em>getText</em><b>(</b><var>_x</var> >> <i>"upDegree"</i><b>) };
+            [</b><i>"#define __"</i> + <var>_name</var> + <i>" "</i> + <em>str</em> <var>_value</var><b>,</b> <var>_value</var><b>];
+        };
+    }
+] invoke(</b>MapGrep<b>);</b>
+
+<em>deleteVehicle</em> <var>_hash</var><b>;
+
+private</b> <i>"_posList"</i><b>;
+private</b> <i>"_numList"</i><b>;
+private</b> <i>"_result"</i><b>;</b>
+
+<var>_posList</var> <b>= {</b> <var>_x</var> <em>select</em> 0 <b>}</b> <tt>__map</tt><b>(</b><var>_list</var><b>);</b>
+<var>_numList</var> <b>= {</b> <var>_x</var> <em>select</em> 1 <b>}</b> <tt>__map</tt><b>(</b><var>_list</var><b>);
+
+[</b><var>_numList</var><b>,</b> <var>_posList</var><b>] invoke(</b>SortArray<b>);</b>
+
+<var>_result</var> <b>= [</b><var>_posList</var><b>,</b> <em>toString</em> <b>[</b>0x0D<b>,</b> 0x0A<b>]] invoke(</b>JoinString<b>);</b>
+
+<em>copyToClipboard</em> <var>_result</var><b>;</b>
+
+<var>_result</var>
+
+
+</pre>
+<p><small><i>This documentation was generated automatically from the source code.</i></small></p>
+</body>
+</html>

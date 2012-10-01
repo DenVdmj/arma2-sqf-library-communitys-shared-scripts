@@ -3,7 +3,7 @@
 <head>
 <title>«Community`s Shared Scripts» SQF-Library - /css/lib/conf.sqf</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<style type="text/css">
+<style>
   html {
     font-family: Helvetica, Arial, sans-serif;
   }
@@ -37,19 +37,28 @@
   pre.code var { color: #5E5E5E; }
 
   hr {
-    margin: 1em 0 1em 0;
-    border: 1px dashed #ccc;
+    margin: 1em 0 .1em 0;
+    border: 1px dashed #EEE;
   }
   #unfoldcode:hover {
     cursor: hand;
     color: red
   }
-</style></head>
+  h2, h3, h4 {
+    margin: .5em 0;
+  }
+  h2 {
+    margin: 0;
+    padding: .2em .1em;
+    background: #EEE;
+  }
+</style>
+</head>
 <body>
 <h1>/css/lib/conf.sqf</h1>
 <p><small><i>This documentation was generated automatically from the source code.</i></small></p>
 <pre class="code">
-<hr />Function func(ReadSlotPrimary)
+<hr /><h2>Function func(ReadSlotPrimary)</h2>
 Function func(ReadSlotHandGun)
 Function func(ReadSlotSecondary)
 Function func(ReadSlotHandGunMag)
@@ -58,37 +67,37 @@ Function func(ReadSlotGoggle)
 Function func(ReadSlotHardMounted)
 Function func(ReadSlotItem)
 
-Syntax:
-    (string vehicleClassName) invoke(ReadSlot&lt;SlotName&gt;)
-Returns the number of (respectively) slots available vehicleClassName.<hr />Function func(isInheritFrom)
-Syntax:
-    [config someConfHandle, config theParentConfHandle] invoke(isInheritFrom)
+<strong>Syntax:
+</strong>    (string vehicleClassName) invoke(ReadSlot&lt;SlotName&gt;)
+Returns the number of (respectively) slots available vehicleClassName.<hr /><h2>Function func(IsInheritFrom)</h2>
+<strong>Syntax:
+</strong>    [config someConfHandle, config theParentConfHandle] invoke(IsInheritFrom)
 Returns the true if someConfHandle is a subclass of theParentConfHandle.
 
-Example 1:
-    [
+<strong>Example 1:
+</strong>    [
         configFile &gt;&gt; &quot;CfgWeapons&quot; &gt;&gt; primaryWeapon player,
         configFile &gt;&gt; &quot;CfgWeapons&quot; &gt;&gt; &quot;RifleCore&quot;
-    ] invoke(isInheritFrom);
+    ] invoke(IsInheritFrom);
 
-Example 2:
-    [
+<strong>Example 2:
+</strong>    [
         configFile &gt;&gt; &quot;CfgWeapons&quot; &gt;&gt; primaryWeapon player,
         configFile &gt;&gt; &quot;CfgWeapons&quot; &gt;&gt; &quot;MissileCore&quot;
-    ] invoke(isInheritFrom)<hr />Function func(ConfigAmmo)
-Syntax:
-    (string magazineClassName) invoke(ConfigAmmo)
-Returns the entrypoint of CfgAmmo for the specified magazine. Config type.<hr />Function func(ReadOverlaying)
-Syntax:
-    [string weaponClassName, overlayingClassName] invoke(ReadOverlaying)
+    ] invoke(IsInheritFrom)<hr /><h2>Function func(ConfigAmmo)</h2>
+<strong>Syntax:
+</strong>    (string magazineClassName) invoke(ConfigAmmo)
+Returns the entrypoint of CfgAmmo for the specified magazine. Config type.<hr /><h2>Function func(ReadOverlaying)</h2>
+<strong>Syntax:
+</strong>    [string weaponClassName, overlayingClassName] invoke(ReadOverlaying)
     [config weaponClassEntryPoint, &quot;modes&quot;] invoke(ReadOverlaying)
-Read overlaying classes. Inside function.<hr />Function func(ReadModes)
-Syntax:
-    (string weaponClassName) invoke(ReadModes)
+Read overlaying classes. Inside function.<hr /><h2>Function func(ReadModes)</h2>
+<strong>Syntax:
+</strong>    (string weaponClassName) invoke(ReadModes)
     (config weaponClassEntryPoint) invoke(ReadModes)
-Returns an array of entry points into the &quot;modes&quot;. Array of config.<hr />Function func(ReadMuzzles)
-Syntax:
-    (string weaponClassName) invoke(ReadMuzzles)
+Returns an array of entry points into the &quot;modes&quot;. Array of config.<hr /><h2>Function func(ReadMuzzles)</h2>
+<strong>Syntax:
+</strong>    (string weaponClassName) invoke(ReadMuzzles)
     (config weaponClassEntryPoint) invoke(ReadMuzzles)
 Returns an array of entry points into weapon's muzzles. Array of config.
 Example of func(ReadModes) and func(ReadMuzzles):
@@ -105,9 +114,9 @@ Example of func(ReadModes) and func(ReadMuzzles):
         } foreach (_x invoke(ReadModes))
     } foreach (primaryWeapon player invoke(ReadMuzzles));
 
-    hint str _dispersion;<hr />Function func(FilterWeapon)
-Syntax:
-    [
+    hint str _dispersion;<hr /><h2>Function func(FilterWeapon)</h2>
+<strong>Syntax:
+</strong>    [
         string weaponClassName or
         array of string listOfWeaponClassNames or
         object soldier or
@@ -120,8 +129,8 @@ Syntax:
 Filters an array of weapons with custom conditions. (for more, see. &quot;en.funcFilterWeapon.readme.txt&quot;)
 First and foremost this function is base for such functions as:
   func(FilterWeaponSD), func(FilterATGun), func(FilterAAGun)
-Example:
-
+<strong>Example:
+</strong>
     Search all weapon with ammo with simulation == shotRocket:
     [player, { _ammoFilter = {
         getText (_ammo &gt;&gt; &quot;simulation&quot;) == &quot;shotRocket&quot;
@@ -139,12 +148,12 @@ Example:
                 ]
             ]
         ]
-    ]<hr />Function func(ReadAnyMagazines)
-Syntax:
-    (string weaponClassName) invoke(ReadAnyMagazines)
+    ]<hr /><h2>Function func(ReadAnyMagazines)</h2>
+<strong>Syntax:
+</strong>    (string weaponClassName) invoke(ReadAnyMagazines)
 Return all compatibles magazines. Array of string.
-Example:
-    &quot;m16a4&quot; invoke(ReadAnyMagazines);
+<strong>Example:
+</strong>    &quot;m16a4&quot; invoke(ReadAnyMagazines);
     result:
     [
         &quot;30Rnd_556x45_Stanag&quot;,
@@ -153,26 +162,26 @@ Example:
         &quot;30Rnd_556x45_G36&quot;,
         &quot;100Rnd_556x45_BetaCMag&quot;,
         &quot;30Rnd_556x45_G36SD&quot;
-    ]<hr />Function func(IsMagazineSD)
-Syntax:
-    (string MagazineName) invoke(IsMagazineSD)
-Returns true if the magazine uses noiseless ammo.<hr />Function func(IsWeaponSD)
-Syntax:
-    (string weaponClassName) invoke(IsWeaponSD)
+    ]<hr /><h2>Function func(IsMagazineSD)</h2>
+<strong>Syntax:
+</strong>    (string MagazineName) invoke(IsMagazineSD)
+Returns true if the magazine uses noiseless ammo.<hr /><h2>Function func(IsWeaponSD)</h2>
+<strong>Syntax:
+</strong>    (string weaponClassName) invoke(IsWeaponSD)
     (array of string listOfWeaponClassNames) invoke(IsWeaponSD)
     (object soldier) invoke(IsWeaponSD)
 Returns true if the weapon has a small flash and uses a noiseless ammo.
-Note: If the soldier, there will be a used list of weapons used by the soldier.
+<strong>Note:</strong> If the soldier, there will be a used list of weapons used by the soldier.
 
-Example:
-
+<strong>Example:
+</strong>
     // true if is the primary weapon with the suppressor
     primaryWeapon player invoke(IsWeaponSD)
 
     // true if player has weapon with the suppressor
-    weapons player invoke(IsWeaponSD)<hr />Function func(FilterWeaponSDSense)
-Syntax:
-    (string weaponClassName) invoke(FilterWeaponSDSense)
+    weapons player invoke(IsWeaponSD)<hr /><h2>Function func(FilterWeaponSDSense)</h2>
+<strong>Syntax:
+</strong>    (string weaponClassName) invoke(FilterWeaponSDSense)
     (array of string listOfWeaponClassNames) invoke(FilterWeaponSDSense)
     (object unit) invoke(FilterWeaponSDSense)
     (otherType value) invoke(FilterWeaponSDSense)
@@ -200,22 +209,22 @@ Returns are compatible magazines in the form of an array:
         ],
         etc.
     ]
-Note: If the unit, there will be a used list of weapons used by the unit.
-Note: If the &quot;other type value&quot;, there will be a used list of all weapons, that presented in game.
-Note: SD-sensitive, suppressed ammo are returned only for weapons (muzzles) of a small flash, and
-      vice versa â€” for such guns are returned only suppressed ammo.<hr />Function func(FilterWeaponSD)
-Syntax:
-    (string weaponClassName) invoke(FilterWeaponSD)
+<strong>Note:</strong> If the unit, there will be a used list of weapons used by the unit.
+<strong>Note:</strong> If the &quot;other type value&quot;, there will be a used list of all weapons, that presented in game.
+<strong>Note:</strong> SD-sensitive, suppressed ammo are returned only for weapons (muzzles) of a small flash, and
+      vice versa â€” for such guns are returned only suppressed ammo.<hr /><h2>Function func(FilterWeaponSD)</h2>
+<strong>Syntax:
+</strong>    (string weaponClassName) invoke(FilterWeaponSD)
     (array of string listOfWeaponClassNames) invoke(FilterWeaponSD)
     (object soldier) invoke(FilterWeaponSD)
     (otherType value) invoke(FilterWeaponSD)
 Search (in listOfWeaponClassNames) SD weapons (has a small flash and uses a noiseless ammo), search
 result is returned as an array of formats.
-Note: If the soldier, there will be a used list of weapons used by the soldier.
-Note: If the &quot;other type value&quot;, there will be a used list of all weapons, that presented in game.
+<strong>Note:</strong> If the soldier, there will be a used list of weapons used by the soldier.
+<strong>Note:</strong> If the &quot;other type value&quot;, there will be a used list of all weapons, that presented in game.
 
-Example:
-    player invoke(FilterWeaponSD)
+<strong>Example:
+</strong>    player invoke(FilterWeaponSD)
     Result:
     [
         [&quot;M9SD&quot;,
@@ -239,46 +248,46 @@ Example:
         ]
     ]
     // get all sd-weapons from game config
-    0 invoke(FilterWeaponSD)<hr />Function func(FilterATGun)
-Syntax:
-    (string WeaponClassName) invoke(FilterATGun)
+    0 invoke(FilterWeaponSD)<hr /><h2>Function func(FilterATGun)</h2>
+<strong>Syntax:
+</strong>    (string WeaponClassName) invoke(FilterATGun)
     (array of string listOfWeaponClassNames) invoke(FilterATGun)
     (object soldier) invoke(FilterATGun)
     (otherType value) invoke(FilterATGun)
 Search (in listOfWeaponClassNames) weapons capable of hitting a tank. Output format is similar
 to the output format of the function FilterWeaponSD.
-Note: If the soldier, there will be a used list of weapons used by the soldier.
-Note: If the &quot;other type value&quot;, there will be a used list of all weapons, that presented in game.<hr />Function func(FilterAAGun)
-Syntax:
-    (string WeaponClassName) invoke(FilterAAGun)
+<strong>Note:</strong> If the soldier, there will be a used list of weapons used by the soldier.
+<strong>Note:</strong> If the &quot;other type value&quot;, there will be a used list of all weapons, that presented in game.<hr /><h2>Function func(FilterAAGun)</h2>
+<strong>Syntax:
+</strong>    (string WeaponClassName) invoke(FilterAAGun)
     (array of string listOfWeaponClassNames) invoke(FilterAAGun)
     (object unit) invoke(FilterAAGun)
     (otherType value) invoke(FilterAAGun)
 
 Search (in listOfWeaponClassNames) weapons homing (irLock). Output format is
 similar to the output format of the function FilterWeaponSD.
-Note: If the soldier, there will be a used list of weapons used by the soldier.
-Note: If the &quot;other type value&quot;, there will be a used list of all weapons, that presented in game.<hr />Function func(FilterFirearm)
-Syntax:
-    (string WeaponClassName) invoke(FilterFirearm)
+<strong>Note:</strong> If the soldier, there will be a used list of weapons used by the soldier.
+<strong>Note:</strong> If the &quot;other type value&quot;, there will be a used list of all weapons, that presented in game.<hr /><h2>Function func(FilterFirearm)</h2>
+<strong>Syntax:
+</strong>    (string WeaponClassName) invoke(FilterFirearm)
     (array of string listOfWeaponClassNames) invoke(FilterFirearm)
     (object unit) invoke(FilterFirearm)
     (otherType value) invoke(FilterFirearm)
 
 Search (in listOfWeaponClassNames) firearm weapons (weapons firing shotBullets). Output
 format is similar to the output format of the function FilterWeaponSD.
-Note: If the soldier, there will be a used list of weapons used by the soldier.
-Note: If the &quot;other type value&quot;, there will be a used list of all weapons, that presented in game.<hr />Function func(ReadActions)
-Syntax:
-    [string unitClassName, string targetAnimation] invoke(ReadActions)
+<strong>Note:</strong> If the soldier, there will be a used list of weapons used by the soldier.
+<strong>Note:</strong> If the &quot;other type value&quot;, there will be a used list of all weapons, that presented in game.<hr /><h2>Function func(ReadActions)</h2>
+<strong>Syntax:
+</strong>    [string unitClassName, string targetAnimation] invoke(ReadActions)
 Return the entrypoint to class Actions (configFile &gt;&gt; _unitClassNameMoves &gt;&gt; &quot;Actions&quot;) for
 specified unitClassName and his targetAnimation.
-Example:
-    player playMove ([typeOf player, animationState player] invoke(ReadActions) &gt;&gt; &quot;reloadMagazine&quot;)
+<strong>Example:
+</strong>    player playMove ([typeOf player, animationState player] invoke(ReadActions) &gt;&gt; &quot;reloadMagazine&quot;)
     // is the same as that:
-    player playAction &quot;reloadMagazine&quot;<hr />Function func(ReadUpDegree)
-Syntax:
-    (object soldier) invoke(ReadUpDegree)
+    player playAction &quot;reloadMagazine&quot;<hr /><h2>Function func(ReadUpDegree)</h2>
+<strong>Syntax:
+</strong>    (object soldier) invoke(ReadUpDegree)
 Returns the value of the property UpDegree (AI Animation State) of the animation for the
 specified unit. Number type.
 Possible values are defined in config game:
@@ -300,13 +309,13 @@ Possible values are defined in config game:
         MANPOSSTANDCIVIL = 12,
     };
 
-Note: file &quot;\css\config.macros&quot; contains the following macros:
+<strong>Note:</strong> file &quot;\css\config.macros&quot; contains the following macros:
     #define __ManPosLyingBinoc 2
     #define __ManPosStandBinoc 14
     #define __ManPosDead 0
-    etc.<hr />Function func(ReadAnimType)
-Syntax:
-    (object soldier) invoke(ReadAnimType)
+    etc.<hr /><h2>Function func(ReadAnimType)</h2>
+<strong>Syntax:
+</strong>    (object soldier) invoke(ReadAnimType)
 Returns the type of the current animation. One of the following:
     &quot;ManPosDead&quot;
     &quot;ManPosStand&quot;
@@ -322,9 +331,9 @@ Returns the type of the current animation. One of the following:
     &quot;ManPosSwimming&quot;
     &quot;ManPosBinoc&quot;
     &quot;ManPosBinocLying&quot;
-    &quot;ManPosBinocStand&quot;<hr />Function func(ReadWeaponType)
-Syntax:
-    (string weaponClassName) invoke(ReadWeaponType)
+    &quot;ManPosBinocStand&quot;<hr /><h2>Function func(ReadWeaponType)</h2>
+<strong>Syntax:
+</strong>    (string weaponClassName) invoke(ReadWeaponType)
 Returns the type of the weapon slot. One of the following:
     WeaponNoSlot            0   // Dummy weapons
     WeaponSlotPrimary       1   // Primary weapon
@@ -335,29 +344,29 @@ Returns the type of the weapon slot. One of the following:
     WeaponSlotGoggle     4096   // Goggle slot (2x)
     WeaponHardMounted   65536   // stationary weapons
 
-Note: file &quot;\css\config.macros&quot; contains the following macros:
+<strong>Note:</strong> file &quot;\css\config.macros&quot; contains the following macros:
     #define __WeaponNoSlot 0
     #define __WeaponSlotPrimary 1
     #define __WeaponSlotHandGun 2
     #define __WeaponSlotSecondary 4
-    etc.<hr />Function func(ReadMagazineType)
-Syntax:
-    (string magazineClassName) invoke(ReadMagazineType)
-Returns the type of the magazine slot. Possible types, see above.<hr />Function func(WeaponInHand)
-Syntax:
-    (object soldier) invoke(WeaponInHand)
-Returns weapons in the hands of soldiers. String type.<hr />Function func(currentMuzzle)
-Syntax:
-    (object soldier) invoke(currentMuzzle)
+    etc.<hr /><h2>Function func(ReadMagazineType)</h2>
+<strong>Syntax:
+</strong>    (string magazineClassName) invoke(ReadMagazineType)
+Returns the type of the magazine slot. Possible types, see above.<hr /><h2>Function func(WeaponInHand)</h2>
+<strong>Syntax:
+</strong>    (object soldier) invoke(WeaponInHand)
+Returns weapons in the hands of soldiers. String type.<hr /><h2>Function func(CurrentMuzzle)</h2>
+<strong>Syntax:
+</strong>    (object soldier) invoke(CurrentMuzzle)
 Returns current muzzle of weapons in the hands of soldiers.
 if current muzzle is void string, returns the first muzzle of the current weapon. String type.
-This function workaround for currentMuzzle's bug when void string returns for yet no shooted AI<hr />Function func(GetWeaponByTypes)
-Syntax:
-    [array weaponsList, array weaponTypeList] invoke(GetWeaponByTypes)
+This function workaround for currentMuzzle's bug when void string returns for yet no shooted AI<hr /><h2>Function func(GetWeaponByTypes)</h2>
+<strong>Syntax:
+</strong>    [array weaponsList, array weaponTypeList] invoke(GetWeaponByTypes)
     [object soldier, array weaponTypeList] invoke(GetWeaponByTypes)
-Returns weapon with the specified weapon type. String type.<hr />Function func(GetTurretsWeapons)
-Syntax:
-    (object vehicle) invoke(GetTurretsWeapons)
+Returns weapon with the specified weapon type. String type.<hr /><h2>Function func(GetTurretsWeapons)</h2>
+<strong>Syntax:
+</strong>    (object vehicle) invoke(GetTurretsWeapons)
     (string vehicleClass) invoke(GetTurretsWeapons)
 Returns information about all weapons on turrets in an array of the following format:
     [
@@ -373,29 +382,29 @@ Returns information about all weapons on turrets in an array of the following fo
         etc.
     ]
 
-Example:
-    // function works with objects
+<strong>Example:
+</strong>    // function works with objects
     cursorTarget invoke(GetTurretsWeapons)
 
-Example:
-    // works with classnames too
+<strong>Example:
+</strong>    // works with classnames too
     &quot;M1A2_US_TUSK_MG_EP1&quot; invoke(GetTurretsWeapons)
 
-Result:
-  [
+<strong>Result:
+</strong>  [
     [&quot;M256&quot;, [&quot;20Rnd_120mmSABOT_M1A2&quot;, &quot;20Rnd_120mmHE_M1A2&quot;], [0], bin\config.bin/CfgVehicles/M1A2_US_TUSK_MG_EP1/Turrets/MainTurret],
     [&quot;M240_veh&quot;, [&quot;100Rnd_762x51_M240&quot;, &quot;1200Rnd_762x51_M240&quot;], [0], bin\config.bin/CfgVehicles/M1A2_US_TUSK_MG_EP1/Turrets/MainTurret],
     [&quot;M2BC&quot;, [&quot;100Rnd_127x99_M2&quot;], [0, 0], bin\config.bin/CfgVehicles/M1A2_US_TUSK_MG_EP1/Turrets/MainTurret/Turrets/CommanderOptics],
     [&quot;SmokeLauncher&quot;, [&quot;SmokeLauncherMag&quot;], [0, 0], bin\config.bin/CfgVehicles/M1A2_US_TUSK_MG_EP1/Turrets/MainTurret/Turrets/CommanderOptics],
     [&quot;M240_veh_2&quot;, [&quot;100Rnd_762x51_M240&quot;, &quot;1200Rnd_762x51_M240&quot;], [0, 1], bin\config.bin/CfgVehicles/M1A2_US_TUSK_MG_EP1/Turrets/MainTurret/Turrets/LoaderTurret]
-  ]<hr />Function func(GetTurretPath)
-Syntax:
-    [string vehicleClassName, string weaponClassName] invoke(GetTurretPath)
+  ]<hr /><h2>Function func(GetTurretPath)</h2>
+<strong>Syntax:
+</strong>    [string vehicleClassName, string weaponClassName] invoke(GetTurretPath)
 Returns first found turret path for specified weapon.
-example:
-    [&quot;M1A2_US_TUSK_MG_EP1&quot;, &quot;M240_veh_2&quot;] invoke(GetTurretPath)
-result:
-    [0,1]<hr />
+<strong>example:
+</strong>    [&quot;M1A2_US_TUSK_MG_EP1&quot;, &quot;M240_veh_2&quot;] invoke(GetTurretPath)
+<strong>result:
+</strong>    [0,1]<hr />
 <a
   href="#unfoldcode"
   id="unfoldcode"
@@ -447,22 +456,22 @@ result:
 <var>func(ReadSlotItem)</var>        <b>= {</b> <em>floor</em><b>(</b><tt>__readSlots</tt><b>(</b><var>_this</var><b>)</b> / 131072 <b>)</b> % 16 <b>};</b>
 
 <s>//
-// Function func(isInheritFrom)
+// Function func(IsInheritFrom)
 // Syntax:
-//     [config someConfHandle, config theParentConfHandle] invoke(isInheritFrom)
+//     [config someConfHandle, config theParentConfHandle] invoke(IsInheritFrom)
 // Returns the true if someConfHandle is a subclass of theParentConfHandle.
 //
 // Example 1:
 //     [
 //         configFile >> "CfgWeapons" >> primaryWeapon player,
 //         configFile >> "CfgWeapons" >> "RifleCore"
-//     ] invoke(isInheritFrom);
+//     ] invoke(IsInheritFrom);
 //
 // Example 2:
 //     [
 //         configFile >> "CfgWeapons" >> primaryWeapon player,
 //         configFile >> "CfgWeapons" >> "MissileCore"
-//     ] invoke(isInheritFrom)
+//     ] invoke(IsInheritFrom)
 //</s>
 
 <var>func(IsInheritFrom)</var> <b>= {
@@ -1058,9 +1067,9 @@ result:
 <b>};</b>
 
 <s>//
-// Function func(currentMuzzle)
+// Function func(CurrentMuzzle)
 // Syntax:
-//     (object soldier) invoke(currentMuzzle)
+//     (object soldier) invoke(CurrentMuzzle)
 // Returns current muzzle of weapons in the hands of soldiers.
 // if current muzzle is void string, returns the first muzzle of the current weapon. String type.
 // This function workaround for currentMuzzle's bug when void string returns for yet no shooted AI

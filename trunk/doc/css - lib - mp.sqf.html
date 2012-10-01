@@ -3,7 +3,7 @@
 <head>
 <title>«Community`s Shared Scripts» SQF-Library - /css/lib/mp.sqf</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<style type="text/css">
+<style>
   html {
     font-family: Helvetica, Arial, sans-serif;
   }
@@ -37,25 +37,34 @@
   pre.code var { color: #5E5E5E; }
 
   hr {
-    margin: 1em 0 1em 0;
-    border: 1px dashed #ccc;
+    margin: 1em 0 .1em 0;
+    border: 1px dashed #EEE;
   }
   #unfoldcode:hover {
     cursor: hand;
     color: red
   }
-</style></head>
+  h2, h3, h4 {
+    margin: .5em 0;
+  }
+  h2 {
+    margin: 0;
+    padding: .2em .1em;
+    background: #EEE;
+  }
+</style>
+</head>
 <body>
 <h1>/css/lib/mp.sqf</h1>
 <p><small><i>This documentation was generated automatically from the source code.</i></small></p>
 <pre class="code">
-<hr />Function func(BroadcastCall)
+<hr /><h2>Function func(BroadcastCall)</h2>
 
-Syntax:
-    [&lt;condition&gt;, &lt;argument&gt;, &lt;sqf function&gt;] invoke(BroadcastCall);
+<strong>Syntax:
+</strong>    [&lt;condition&gt;, &lt;argument&gt;, &lt;sqf function&gt;] invoke(BroadcastCall);
 
-Arguments:
-    &lt;condition&gt;
+<strong>Arguments:
+</strong>    &lt;condition&gt;
         Code or String type.
         Condition, such as: {isDedicated}, {local _this &amp;&amp; myFlagIsTrue}, etc.
         Also, &lt;condition&gt; can be a string value:
@@ -68,16 +77,16 @@ Arguments:
     &lt;sqf function&gt;
         Code to execute
 
-Example 1:
-    [{isServer}, player, {
+<strong>Example 1:
+</strong>    [{isServer}, player, {
         group _this createUnit [typeOf _this, getPos _this, [], 4, 'none']
     }] invoke(BroadcastCall);
 
-Example 2:
-    ['all', player, {diag_log _this}] invoke(BroadcastCall);
+<strong>Example 2:
+</strong>    ['all', player, {diag_log _this}] invoke(BroadcastCall);
 
-Example 3:
-    [{local _this}, cursorTarget, {
+<strong>Example 3:
+</strong>    [{local _this}, cursorTarget, {
         _this playAction 'ReloadMagazine'
     }] invoke(BroadcastCall);<hr />
 <a

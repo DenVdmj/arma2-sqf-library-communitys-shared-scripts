@@ -3,7 +3,7 @@
 <head>
 <title>�Community`s Shared Scripts� SQF-Library - /css/lib/vectors.sqf</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<style type="text/css">
+<style>
   html {
     font-family: Helvetica, Arial, sans-serif;
   }
@@ -37,60 +37,69 @@
   pre.code var { color: #5E5E5E; }
 
   hr {
-    margin: 1em 0 1em 0;
-    border: 1px dashed #ccc;
+    margin: 1em 0 .1em 0;
+    border: 1px dashed #EEE;
   }
   #unfoldcode:hover {
     cursor: hand;
     color: red
   }
-</style></head>
+  h2, h3, h4 {
+    margin: .5em 0;
+  }
+  h2 {
+    margin: 0;
+    padding: .2em .1em;
+    background: #EEE;
+  }
+</style>
+</head>
 <body>
 <h1>/css/lib/vectors.sqf</h1>
 <p><small><i>This documentation was generated automatically from the source code.</i></small></p>
 <pre class="code">
-<hr />Function func(VectorAdd)
-Syntax:
-    [vector v1, vector v2] invoke(VectorAdd)
+<hr /><h2>Function func(VectorAdd)</h2>
+<strong>Syntax:
+</strong>    [vector v1, vector v2] invoke(VectorAdd)
 
 Returns the sum of the vectors v1 and v2.
-Note: vector type—is a vector3D, array of three number.
-Return value: Vector<hr />Function func(VectorSubstract)
-Syntax:
-    [vector v1, vector v2] invoke(VectorSubstract)
+<strong>Note:</strong> vector type—is a vector3D, array of three number.
+Return value: Vector<hr /><h2>Function func(VectorSubstract)</h2>
+<strong>Syntax:
+</strong>    [vector v1, vector v2] invoke(VectorSubstract)
 
 Subtracts two vectors (v1-v2) and returns the difference.
-Note: vector type—is a 3D vector, array of three number.
-Return value: vector<hr />Function func(VectorMagnitude)
-Syntax:
-    (vector v) invoke(VectorMagnitude)
+<strong>Note:</strong> vector type—is a 3D vector, array of three number.
+Return value: vector<hr /><h2>Function func(VectorMagnitude)</h2>
+<strong>Syntax:
+</strong>    (vector v) invoke(VectorMagnitude)
 
 Returns the magnitude (vector length) of a given 3D vector.
-Return value: scalar<hr />Function func(VectorNormalize)
-Syntax:
-    [] invoke(VectorNormalize)
+Return value: scalar<hr /><h2>Function func(VectorNormalize)</h2>
+<strong>Syntax:
+</strong>    [] invoke(VectorNormalize)
 
 Returns the normalized version of a vector (each entry of the vector
 divided by its magnitude). A normalized vector has a magnitude of 1.
-Return value: vector<hr />Function func(VectorTo)
-Syntax:
-    [vector v, vector p] invoke(VectorTo)
+Return value: vector<hr /><h2>Function func(VectorTo)</h2>
+<strong>Syntax:
+</strong>    [vector v, vector p] invoke(VectorTo)
 
 Returns the vector v from this point to the given point p.
-Return value: vector<hr />Function func(VectorProduct)
-Syntax:
-    [vector v1, vector v2] invoke(VectorProduct)
+Return value: vector<hr /><h2>Function func(VectorProduct)</h2>
+<strong>Syntax:
+</strong>    [vector v1, vector v2] invoke(VectorProduct)
     [scalar s, vector v] invoke(VectorProduct)
 
 Returns vector product of two vectors.
-Return value: vector<hr />Function func(VectorScalarProduct)
-Syntax:
-    [vector v1, vector v2] invoke(VectorScalarProduct)
+Return value: vector<hr /><h2>Function func(VectorScalarProduct)</h2>
+<strong>Syntax:
+</strong>    [vector v1, vector v2] invoke(VectorScalarProduct)
 
 Returns the vector resulting from scalar multiplication.
-Return value: scalar<hr />Function func(VectorAngle)
-Syntax:
-    (vector v) invoke(VectorAngle)
+Return value: scalar<hr /><h2>Function func(VectorAngle)</h2>
+<strong>Syntax:
+</strong>    (vector v) invoke(VectorAngle)
     [vector v1, vector v2] invoke(VectorAngle)
 
 When one argument: returns angle between Ox axis and vector direction, in Counter
@@ -98,9 +107,9 @@ clockwise orientation. The result is normalised between 0 and 2*PI.
 When two arguments: Returns the angle from vector V1 to vector V2,
 in counter-clockwise order, and in degrees.
 
-Return value: scalar, angle in degrees<hr />Function func(VectorSide)
-Syntax:
-    [number vectorDir, number vectorUp] invoke(VectorSide)
+Return value: scalar, angle in degrees<hr /><h2>Function func(VectorSide)</h2>
+<strong>Syntax:
+</strong>    [number vectorDir, number vectorUp] invoke(VectorSide)
     (object vehicle) invoke(VectorSide)
 When two arguments: calculates vector side from given vectorDir and vectorUp and returns it.
 When one argument: calculates vector side of object and returns it.

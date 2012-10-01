@@ -3,7 +3,7 @@
 <head>
 <title>«Community`s Shared Scripts» SQF-Library - /css/lib/geo.sqf</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<style type="text/css">
+<style>
   html {
     font-family: Helvetica, Arial, sans-serif;
   }
@@ -37,50 +37,61 @@
   pre.code var { color: #5E5E5E; }
 
   hr {
-    margin: 1em 0 1em 0;
-    border: 1px dashed #ccc;
+    margin: 1em 0 .1em 0;
+    border: 1px dashed #EEE;
   }
   #unfoldcode:hover {
     cursor: hand;
     color: red
   }
-</style></head>
+  h2, h3, h4 {
+    margin: .5em 0;
+  }
+  h2 {
+    margin: 0;
+    padding: .2em .1em;
+    background: #EEE;
+  }
+</style>
+</head>
 <body>
 <h1>/css/lib/geo.sqf</h1>
 <p><small><i>This documentation was generated automatically from the source code.</i></small></p>
 <pre class="code">
-<hr />Function func(CurrentCameraVector)
+<hr /><h2>Function func(ViewportVector)</h2>
 
-Syntax:
-    invoke(ViewportVector)
-Returns the direction vector of the current camera.<hr />Function func(SightWorldPosition)
+<strong>Syntax:
+</strong>    invoke(ViewportVector)
+Returns the direction vector of the current camera.<hr /><h2>Function func(SightWorldPosition)</h2>
 
-Syntax:
-    invoke(SightWorldPosition)
-Returns the position of the weapon cursor projection on landscape.<hr />Function func(ViewportPosition)
+<strong>Syntax:
+</strong>    invoke(SightWorldPosition)
+Returns the position of the weapon cursor projection on landscape.<hr /><h2>Function func(ViewportPosition)</h2>
 
-Syntax:
-    invoke(ViewportPosition)
-Returns the position of the current camera.<hr />Function func(GetFOV)
+<strong>Syntax:
+</strong>    invoke(ViewportPosition)
+Returns the position of the current camera.<hr /><h2>Function func(GetFOV)</h2>
 
-Syntax:
-    invoke(GetFOV)
-Returns the FOV of the current camera.<hr />Function func(Vector2Azimuth)
+<strong>Syntax:
+</strong>    invoke(GetFOV)
+Returns the FOV of the current camera.<hr /><h2>Function func(Vector2Azimuth)</h2>
 
-Syntax:
-    (Position unitVector) invoke(Vector2Azimuth)
+<strong>Syntax:
+</strong>    (Position unitVector) invoke(Vector2Azimuth)
 
-Returns the angle (Number) in the center of the coordinate system between the Y axis and the point unitVector.
+Returns the angle (Number) in the center of the coordinate system
+between the Y axis and the point unitVector.
 If the angle is impossible (zero vector)â€”returns a negative value.
-Example: player weaponDirection currentWeapon player invoke(Vector2Azimuth)<hr />Function func(Azimuth)
+<strong>Example:</strong> player weaponDirection currentWeapon player invoke(Vector2Azimuth)<hr /><h2>Function func(Azimuth)</h2>
 
-Syntax:
-    [Position A, Position B] invoke(Azimuth)
-Returns the azimuth (Number 0 .. 360), the angle at point A between the direction to the north and the direction to point B,
-If the angle is impossible (same position)â€”returns a negative value.<hr />Function func(CompassPoint)
+<strong>Syntax:
+</strong>    [Position A, Position B] invoke(Azimuth)
+Returns the azimuth (Number 0 .. 360), the angle at point A between the
+direction to the north and the direction to point B.
+If the angle is impossible (same position)â€”returns a negative value.<hr /><h2>Function func(CompassPoint)</h2>
 
-Syntax:
-   [
+<strong>Syntax:
+</strong>   [
        (Number or Vector or two Positions) direction,
        (Number) limit,
        (String) format,
@@ -89,9 +100,10 @@ Syntax:
        ...
        (String) localization_n
    ] invoke(CompassPoint)
-Arguments:
-
-   direction    â€” Source angle (Number) or a direction vector (Vector Array) or an two items array: [from_position, to_position]
+<strong>Arguments:
+</strong>
+   direction    â€” Source angle (Number) or a direction vector (Vector Array) or
+                  an two items array: [from_position, to_position]
    limit        â€” The number of compass points (4, 8, 16, 32). Default: 16.
    format       â€” Format string, where:
                     %1 â€” Abbreviation of the compass points (the Dutch term (old international term)):
@@ -106,20 +118,20 @@ Arguments:
                             0 .. 90 (N -&gt; O, S -&gt; W)
                             90 .. 0 (O -&gt; S, W -&gt; N)
                     %5..%19 â€” reserved
-                    %20 and more â€” localize strings (require the &lt;localization&gt; argument(s)), optional argument,
-                                    if isn't present, then by default uses a localizing string &quot;%1&quot;
+                    %20 and more â€” localize strings (require the &lt;localization&gt; argument(s)), optional
+                              argument, if isn't present, then by default uses a localizing string &quot;%1&quot;
 
    localization  â€” Template of the localization string, such as &quot;STR_COMPASS_POINT_%1_SHORTNAME&quot;,
                    where %1 â€” acronym of a compass point.
                    Within the templates are all of the above wildcards: %1 %2 %3 %4
 
 The function returns a format string filled with actual data.
-Example:
-
+<strong>Example:
+</strong>
    hint ( [ getdir player, 16 ] invoke(CompassPoint) )
 
-Example:
-
+<strong>Example:
+</strong>
    hint (
        [
            [getpos player, getpos SomeObject],
@@ -129,63 +141,63 @@ Example:
            &quot;STR/RHUMB/DUTCH/%1:SN&quot;,
            &quot;STR/RHUMB/EN/%1:SN&quot;
        ] invoke(CompassPoint)
-   )<hr />Function func(GetNearestTown)
+   )<hr /><h2>Function func(GetNearestTown)</h2>
 
-Syntax:
-    (Position position) invoke(GetNearestTown)
+<strong>Syntax:
+</strong>    (Position position) invoke(GetNearestTown)
     (Object position) invoke(GetNearestTown)
 
 Returns the nearest town (config entry, or void config entry, if nothing is found).
-Example:
-    getText (player invoke(GetNearestTown) &gt;&gt; &quot;name&quot;);
-    getArray (player invoke(GetNearestTown) &gt;&gt; &quot;position&quot;);<hr />Function func(GetNearestLocal)
+<strong>Example:
+</strong>    getText (player invoke(GetNearestTown) &gt;&gt; &quot;name&quot;);
+    getArray (player invoke(GetNearestTown) &gt;&gt; &quot;position&quot;);<hr /><h2>Function func(GetNearestLocal)</h2>
 
-Syntax:
-    (Position position) invoke(GetNearestLocal)
+<strong>Syntax:
+</strong>    (Position position) invoke(GetNearestLocal)
     (Object position) invoke(GetNearestLocal)
 
 Returns the nearest settlement, including the places &quot;NameLocal&quot; also.
 If nothing is found, then returns void config entry.
 Return value: config
-Example:
-    getText (player invoke(GetNearestLocal) &gt;&gt; &quot;name&quot;);
-    getArray (player invoke(GetNearestLocal) &gt;&gt; &quot;position&quot;);<hr />Function func(GetNearestForest)
+<strong>Example:
+</strong>    getText (player invoke(GetNearestLocal) &gt;&gt; &quot;name&quot;);
+    getArray (player invoke(GetNearestLocal) &gt;&gt; &quot;position&quot;);<hr /><h2>Function func(GetNearestForest)</h2>
 
-Syntax:
-    (Position position) invoke(GetNearestForest)
+<strong>Syntax:
+</strong>    (Position position) invoke(GetNearestForest)
     (Object position) invoke(GetNearestForest)
 
 Returns the nearest forest (config entry, or void config entry, if nothing is found).
-Example:
-    getText (player invoke(GetNearestForest) &gt;&gt; &quot;name&quot;);
-    getArray (player invoke(GetNearestForest) &gt;&gt; &quot;position&quot;);<hr />Function func(GetNearestTopography)
+<strong>Example:
+</strong>    getText (player invoke(GetNearestForest) &gt;&gt; &quot;name&quot;);
+    getArray (player invoke(GetNearestForest) &gt;&gt; &quot;position&quot;);<hr /><h2>Function func(GetNearestTopography)</h2>
 
-Syntax:
-    [PositionOrObject position, ArrayOrString regionTypes] invoke(GetNearestTopography)
+<strong>Syntax:
+</strong>    [PositionOrObject position, ArrayOrString regionTypes] invoke(GetNearestTopography)
 
 Returns the nearest topographic region.
 If nothing is found, then returns void config entry.
 Return value: config
 
-Example:
-    getText ([player, &quot;Hill&quot;] invoke(GetNearestTopography) &gt;&gt; &quot;name&quot;);
+<strong>Example:
+</strong>    getText ([player, &quot;Hill&quot;] invoke(GetNearestTopography) &gt;&gt; &quot;name&quot;);
     getArray ([player, &quot;Hill&quot;] invoke(GetNearestForest) &gt;&gt; &quot;position&quot;);
     getText ([player, [&quot;VegetationVineyard&quot;, &quot;VegetationPalm&quot;]] invoke(GetNearestTopography) &gt;&gt; &quot;name&quot;);
 
 Available regions types:
    &quot;NameCityCapital&quot;, &quot;NameVillage&quot;, &quot;NameCity&quot;,
    &quot;VegetationFir&quot;, &quot;VegetationBroadleaf&quot;, &quot;VegetationVineyard&quot;, &quot;VegetationPalm&quot;,
-   &quot;Hill&quot;, &quot;NameMarine&quot;, &quot;NameLocal&quot;, &quot;ViewPoint&quot;, &quot;BorderCrossing&quot;, &quot;RockArea&quot;<hr />Function func(NearAirport)
+   &quot;Hill&quot;, &quot;NameMarine&quot;, &quot;NameLocal&quot;, &quot;ViewPoint&quot;, &quot;BorderCrossing&quot;, &quot;RockArea&quot;<hr /><h2>Function func(NearAirport)</h2>
 
-Syntax:
-    (Position position) invoke(NearAirport)
+<strong>Syntax:
+</strong>    (Position position) invoke(NearAirport)
     (Object position) invoke(NearAirport)
 
 Returns the nearest airport (configEntry, or void configEntry, if nothing is found).
 If nothing is found, then returns void config entry.
 Return value: config
-Example:
-    getArray (player invoke(NearAirport) &gt;&gt; &quot;ilsPosition&quot;);<hr />
+<strong>Example:
+</strong>    getArray (player invoke(NearAirport) &gt;&gt; &quot;ilsPosition&quot;);<hr />
 <a
   href="#unfoldcode"
   id="unfoldcode"
@@ -209,14 +221,14 @@ Example:
 <em>#define</em><em> __PATH__</em> \css\lib
 
 <s>//
-// Function func(CurrentCameraVector)
+// Function func(ViewportVector)
 //
 // Syntax:
 //     invoke(ViewportVector)
 // Returns the direction vector of the current camera.
 //</s>
 
-<var>func(CurrentCameraVector)</var> <b>= {</b>
+<var>func(ViewportVector)</var> <b>= {</b>
     <s>// Author of this way—Spooner (http://www.ofpec.com/forum/index.php?topic=31686.0)</s>
     <b>private [</b><i>"_viewport"</i><b>,</b> <i>"_target"</i><b>];</b>
     <var>_viewport</var> <b>=</b> <em>positionCameraToWorld</em> <b>[</b>0<b>,</b> 0<b>,</b> 0<b>];</b>
@@ -286,7 +298,8 @@ Example:
 // Syntax:
 //     (Position unitVector) invoke(Vector2Azimuth)
 //
-// Returns the angle (Number) in the center of the coordinate system between the Y axis and the point unitVector.
+// Returns the angle (Number) in the center of the coordinate system
+// between the Y axis and the point unitVector.
 // If the angle is impossible (zero vector)—returns a negative value.
 // Example: player weaponDirection currentWeapon player invoke(Vector2Azimuth)
 //</s>
@@ -304,7 +317,8 @@ Example:
 //
 // Syntax:
 //     [Position A, Position B] invoke(Azimuth)
-// Returns the azimuth (Number 0 .. 360), the angle at point A between the direction to the north and the direction to point B,
+// Returns the azimuth (Number 0 .. 360), the angle at point A between the
+// direction to the north and the direction to point B.
 // If the angle is impossible (same position)—returns a negative value.
 //</s>
 
@@ -333,7 +347,8 @@ Example:
 //    ] invoke(CompassPoint)
 // Arguments:
 //
-//    direction    — Source angle (Number) or a direction vector (Vector Array) or an two items array: [from_position, to_position]
+//    direction    — Source angle (Number) or a direction vector (Vector Array) or
+//                   an two items array: [from_position, to_position]
 //    limit        — The number of compass points (4, 8, 16, 32). Default: 16.
 //    format       — Format string, where:
 //                     %1 — Abbreviation of the compass points (the Dutch term (old international term)):
@@ -348,8 +363,8 @@ Example:
 //                             0 .. 90 (N -> O, S -> W)
 //                             90 .. 0 (O -> S, W -> N)
 //                     %5..%19 — reserved
-//                     %20 and more — localize strings (require the &lt;localization> argument(s)), optional argument,
-//                                     if isn't present, then by default uses a localizing string "%1"
+//                     %20 and more — localize strings (require the &lt;localization> argument(s)), optional
+//                               argument, if isn't present, then by default uses a localizing string "%1"
 //
 //    localization  — Template of the localization string, such as "STR_COMPASS_POINT_%1_SHORTNAME",
 //                    where %1 — acronym of a compass point.

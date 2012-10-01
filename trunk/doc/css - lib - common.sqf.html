@@ -3,7 +3,7 @@
 <head>
 <title>«Community`s Shared Scripts» SQF-Library - /css/lib/common.sqf</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<style type="text/css">
+<style>
   html {
     font-family: Helvetica, Arial, sans-serif;
   }
@@ -37,30 +37,39 @@
   pre.code var { color: #5E5E5E; }
 
   hr {
-    margin: 1em 0 1em 0;
-    border: 1px dashed #ccc;
+    margin: 1em 0 .1em 0;
+    border: 1px dashed #EEE;
   }
   #unfoldcode:hover {
     cursor: hand;
     color: red
   }
-</style></head>
+  h2, h3, h4 {
+    margin: .5em 0;
+  }
+  h2 {
+    margin: 0;
+    padding: .2em .1em;
+    background: #EEE;
+  }
+</style>
+</head>
 <body>
 <h1>/css/lib/common.sqf</h1>
 <p><small><i>This documentation was generated automatically from the source code.</i></small></p>
 <pre class="code">
-<hr />Function func(addAction)
-Syntax:
-    _actionID = [
+<hr /><h2>Function func(AddAction)</h2>
+<strong>Syntax:
+</strong>    _actionID = [
         object, title, function
         (, arguments, priority, showWindow, hideOnUse, shortcut, condition)
-    ] invoke(addAction)
+    ] invoke(AddAction)
 
-Description:
-    Function func(addAction), it is wrapper over addAction for sqf-function directly usage.
+<strong>Description:
+</strong>    Function func(AddAction), it is wrapper over addAction for sqf-function directly usage.
 
-Parameters:
-    0) Object object             â€” The object which the action is assigned to
+<strong>Parameters:
+</strong>    0) Object object             â€” The object which the action is assigned to
     1) String (or Text) title    â€” The action name which is displayed in the action menu.
     2) Code (or String) function â€” sqf-function (or sqf-file) that is called when the action is activated.
        Parameters of the called script upon activation:
@@ -92,8 +101,8 @@ Return value:
     the ID 0, the second the ID 1 etc. ID's are also passed to the called script and used
     to remove an action with removeAction.
 
-Snippet:
-    _actionID = [
+<strong>Snippet:
+</strong>    _actionID = [
         _unit, localize &quot;str/module name/action name&quot;, {
            // action handler
             _target    = arg(0);
@@ -107,16 +116,21 @@ Snippet:
         //, hideOnUse
         //, shortcut
         //, condition
-    ] invoke(addAction);<hr />Function func(CallOnOneTick)
-Syntax:
-    _result = [_sqfFunction, _arguments] invoke(CallOnOneTick)
-Description:
-    Executes given sqf-code in non scheduling environment.<hr />Function func(getAspectRatio)
-Syntax:
-    invoke(getAspectRatio)
-Description:
-    Get current aspect ratio (coefficient).
-    For example: 16/9 == 1.(7), 1280/960 or 4/3 == 1.(3)<hr />
+    ] invoke(AddAction);<hr /><h2>Function func(CallOnOneTick)</h2>
+<strong>Syntax:
+</strong>    _result = [_sqfFunction, _arguments] invoke(CallOnOneTick)
+<strong>Description:
+</strong>    Executes given sqf-code in non scheduling environment.<hr /><h2>Function func(GetAspectRatio)</h2>
+<strong>Syntax:
+</strong>    invoke(GetAspectRatio)
+<strong>Description:
+</strong>    Get current aspect ratio (coefficient).
+    For example: 16/9 == 1.(7), 1280/960 or 4/3 == 1.(3)<hr /><h2>Function func(NumToRadix)</h2>
+<strong>Syntax:
+</strong>     [number (, radix (, minwidth (, maxwidth))))] invoke(NumToRadix)<hr /><h2>Function func(RGB2HTMLColor)</h2>
+<strong>Syntax:
+</strong>     [number red, number green, number blue] invoke(RGB2HTMLColor)
+Returns html-style color string<hr />
 <a
   href="#unfoldcode"
   id="unfoldcode"
@@ -140,15 +154,15 @@ Description:
 <em>#define</em><em> __PATH__</em> \css\lib
 
 <s>//
-// Function func(addAction)
+// Function func(AddAction)
 // Syntax:
 //     _actionID = [
 //         object, title, function
 //         (, arguments, priority, showWindow, hideOnUse, shortcut, condition)
-//     ] invoke(addAction)
+//     ] invoke(AddAction)
 //
 // Description:
-//     Function func(addAction), it is wrapper over addAction for sqf-function directly usage.
+//     Function func(AddAction), it is wrapper over addAction for sqf-function directly usage.
 //
 // Parameters:
 //     0) Object object             — The object which the action is assigned to
@@ -198,10 +212,10 @@ Description:
 //         //, hideOnUse
 //         //, shortcut
 //         //, condition
-//     ] invoke(addAction);
+//     ] invoke(AddAction);
 //</s>
 
-<var>func(addAction)</var> <b>= {
+<var>func(AddAction)</var> <b>= {
     private [</b><i>"_lOperand"</i><b>,</b> <i>"_rOperand"</i><b>,</b> <i>"_function"</i><b>];</b>
     <var>_lOperand</var> <b>=</b> <var>_this</var> <em>select</em> 0<b>;</b>
     <var>_rOperand</var> <b>= [];</b>
@@ -237,15 +251,15 @@ Description:
 };</b>
 
 <s>//
-// Function func(getAspectRatio)
+// Function func(GetAspectRatio)
 // Syntax:
-//     invoke(getAspectRatio)
+//     invoke(GetAspectRatio)
 // Description:
 //     Get current aspect ratio (coefficient).
 //     For example: 16/9 == 1.(7), 1280/960 or 4/3 == 1.(3)
 //</s>
 
-<var>func(getAspectRatio)</var> <b>= (
+<var>func(GetAspectRatio)</var> <b>= (
     if (</b><em>count</em> <em>supportInfo</em> <i>"*:getResolution"</i> <b>!=</b> 0<b>) then {{</b>
         <em>getResolution</em> <em>select</em> 4
     <b>}} else {{
@@ -253,6 +267,50 @@ Description:
         <b>(</b><em>safeZoneH</em> * 3<b>)
     }}
 );</b>
+
+<s>//
+// Function func(NumToRadix)
+// Syntax:
+//      [number (, radix (, minwidth (, maxwidth))))] invoke(NumToRadix)
+//</s>
+
+<var>func(NumToRadix)</var> <b>= {
+    private [</b><i>'_base36chars'</i><b>,</b> <i>'_number'</i><b>,</b> <i>'_radix'</i><b>,</b> <i>'_minwidth'</i><b>,</b> <i>'_maxwidth'</i><b>,</b> <i>'_string'</i><b>];</b>
+    <var>_base36chars</var> <b>=</b> <em>toArray</em> <i>'0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'</i><b>;</b>
+    <var>_number</var> <b>= arg(</b>0<b>);</b>
+    <var>_radix</var> <b>= argOr(</b>1<b>,</b>16<b>);</b>
+    <em>assert</em> <b>(</b><var>_radix</var> <b>>=</b> 2 <b>&amp;&amp;</b> <var>_radix</var> <b>&lt;=</b> 36<b>);
+    if (</b><var>_radix</var> &lt; 2 <b>||</b> <var>_radix</var> > 36<b>) exitwith {</b> <i>"illegal radix"</i> <b>};</b>
+    <var>_minwidth</var> <b>= argOr(</b>2<b>,</b>1<b>);</b>
+    <var>_maxwidth</var> <b>= argOr(</b>3<b>,</b><tt>__mathInf</tt><b>);</b>
+    <var>_string</var> <b>=</b> <i>''</i><b>;
+    for</b> <i>""</i> <b>from</b> 1 <b>to</b> 10000 <b>do {
+        if (</b><var>_maxwidth</var> <b>&lt;=</b> 0<b>) exitwith {};
+        if (</b><var>_number</var> <b>&lt;=</b> 0 <b>&amp;&amp;</b> <var>_minwidth</var> <b>&lt;=</b> 0<b>) exitwith {};</b>
+        <var>_string</var> <b>=</b> <em>toString</em> <b>[</b><var>_base36chars</var> <em>select</em> <b>(</b><var>_number</var> % <var>_radix</var><b>)]</b> + <var>_string</var><b>;</b>
+        <var>_number</var> <b>=</b> <em>floor</em> <b>(</b><var>_number</var>/<var>_radix</var><b>);
+        _(</b>minwidth<b>)</b>-1<b>;
+        _(</b>maxwidth<b>)</b>-1<b>;
+    };</b>
+    <var>_string</var>
+<b>};</b>
+
+<s>//
+// Function func(RGB2HTMLColor)
+// Syntax:
+//      [number red, number green, number blue] invoke(RGB2HTMLColor)
+// Returns html-style color string
+//</s>
+
+<var>func(RGB2HTMLColor)</var> <b>= {</b>
+    <i>"#"</i> +
+    <b>([
+        (((</b><em>round</em> <b>arg(</b>0<b>))</b> <em>min</em> 0xff<b>)</b> <em>max</em> 0<b>)</b> * 0x10000 +
+        <b>(((</b><em>round</em> <b>arg(</b>1<b>))</b> <em>min</em> 0xff<b>)</b> <em>max</em> 0<b>)</b> * 0x100 +
+        <b>(((</b><em>round</em> <b>arg(</b>2<b>))</b> <em>min</em> 0xff<b>)</b> <em>max</em> 0<b>),</b>
+        16<b>,</b> 6<b>,</b> 6
+    <b>] invoke(</b>NumToRadix<b>))
+};</b>
 
 
 <hr />

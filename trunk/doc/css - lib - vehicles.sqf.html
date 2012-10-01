@@ -3,7 +3,7 @@
 <head>
 <title>�Community`s Shared Scripts� SQF-Library - /css/lib/vehicles.sqf</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<style type="text/css">
+<style>
   html {
     font-family: Helvetica, Arial, sans-serif;
   }
@@ -37,23 +37,32 @@
   pre.code var { color: #5E5E5E; }
 
   hr {
-    margin: 1em 0 1em 0;
-    border: 1px dashed #ccc;
+    margin: 1em 0 .1em 0;
+    border: 1px dashed #EEE;
   }
   #unfoldcode:hover {
     cursor: hand;
     color: red
   }
-</style></head>
+  h2, h3, h4 {
+    margin: .5em 0;
+  }
+  h2 {
+    margin: 0;
+    padding: .2em .1em;
+    background: #EEE;
+  }
+</style>
+</head>
 <body>
 <h1>/css/lib/vehicles.sqf</h1>
 <p><small><i>This documentation was generated automatically from the source code.</i></small></p>
 <pre class="code">
-<hr />Function func(ArmAs)
-Syntax:
-    [object soldier, string donorClassName &lt;, number fillCoeff&gt;] invoke(ArmAs)<hr />Function func(CreateCustomVehicle)
-Syntax:
-    [
+<hr /><h2>Function func(ArmAs)</h2>
+<strong>Syntax:
+</strong>    [object soldier, string donorClassName &lt;, number fillCoeff&gt;] invoke(ArmAs)<hr /><h2>Function func(CreateCustomVehicle)</h2>
+<strong>Syntax:
+</strong>    [
         String vehicleType,
         String special,
         Position position,
@@ -62,8 +71,8 @@ Syntax:
         Array of Soldiers unitList
     ] invoke(CreateCustomVehicle)
 
-Arguments:
-    vehicleClass  —  the vehicle class.
+<strong>Arguments:
+</strong>    vehicleClass  —  the vehicle class.
     special       —  create vehicle in the air or on the land, possable values: &quot;NONE&quot; (or &quot;&quot;), &quot;FLY&quot;.
     position      —  position of the vehicle.
     group         —  group of the vehicle crew,
@@ -76,8 +85,8 @@ Arguments:
     unitList      —  if present—crewmans will be retrieved one by one from this
                      list, else—crewmans will be created.
 
-Example:
-    [
+<strong>Example:
+</strong>    [
         &quot;RHIB&quot;,
         &quot;none&quot;,
         screenToWorld [.5, .5],

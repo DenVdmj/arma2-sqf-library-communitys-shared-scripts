@@ -9,15 +9,15 @@
 #define __PATH__ \css\lib
 
 //
-// Function func(addAction)
+// Function func(AddAction)
 // Syntax:
 //     _actionID = [
 //         object, title, function
 //         (, arguments, priority, showWindow, hideOnUse, shortcut, condition)
-//     ] invoke(addAction)
+//     ] invoke(AddAction)
 //
 // Description:
-//     Function func(addAction), it is wrapper over addAction for sqf-function directly usage.
+//     Function func(AddAction), it is wrapper over addAction for sqf-function directly usage.
 //
 // Parameters:
 //     0) Object object             — The object which the action is assigned to
@@ -67,10 +67,10 @@
 //         //, hideOnUse
 //         //, shortcut
 //         //, condition
-//     ] invoke(addAction);
+//     ] invoke(AddAction);
 //
 
-func(addAction) = {
+func(AddAction) = {
     private ["_lOperand", "_rOperand", "_function"];
     _lOperand = _this select 0;
     _rOperand = [];
@@ -106,15 +106,15 @@ func(CallOnOneTick) = {
 };
 
 //
-// Function func(getAspectRatio)
+// Function func(GetAspectRatio)
 // Syntax:
-//     invoke(getAspectRatio)
+//     invoke(GetAspectRatio)
 // Description:
 //     Get current aspect ratio (coefficient).
 //     For example: 16/9 == 1.(7), 1280/960 or 4/3 == 1.(3)
 //
 
-func(getAspectRatio) = (
+func(GetAspectRatio) = (
     if (count supportInfo "*:getResolution" != 0) then {{
         getResolution select 4
     }} else {{
@@ -122,3 +122,47 @@ func(getAspectRatio) = (
         (safeZoneH * 3)
     }}
 );
+
+//
+// Function func(NumToRadix)
+// Syntax:
+//      [number (, radix (, minwidth (, maxwidth))))] invoke(NumToRadix)
+//
+
+func(NumToRadix) = {
+    private ['_base36chars', '_number', '_radix', '_minwidth', '_maxwidth', '_string'];
+    _base36chars = toArray '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    _number = arg(0);
+    _radix = argOr(1,16);
+    assert (_radix >= 2 && _radix <= 36);
+    if (_radix < 2 || _radix > 36) exitwith { "illegal radix" };
+    _minwidth = argOr(2,1);
+    _maxwidth = argOr(3,__mathInf);
+    _string = '';
+    for "" from 1 to 10000 do {
+        if (_maxwidth <= 0) exitwith {};
+        if (_number <= 0 && _minwidth <= 0) exitwith {};
+        _string = toString [_base36chars select (_number % _radix)] + _string;
+        _number = floor (_number/_radix);
+        _(minwidth)-1;
+        _(maxwidth)-1;
+    };
+    _string
+};
+
+//
+// Function func(RGB2HTMLColor)
+// Syntax:
+//      [number red, number green, number blue] invoke(RGB2HTMLColor)
+// Returns html-style color string
+//
+
+func(RGB2HTMLColor) = {
+    "#" +
+    ([
+        (((round arg(0)) min 0xff) max 0) * 0x10000 +
+        (((round arg(1)) min 0xff) max 0) * 0x100 +
+        (((round arg(2)) min 0xff) max 0),
+        16, 6, 6
+    ] invoke(NumToRadix))
+};

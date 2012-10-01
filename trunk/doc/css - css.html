@@ -1,0 +1,227 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>«Community`s Shared Scripts» SQF-Library - /css/css</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<style>
+  html {
+    font-family: Helvetica, Arial, sans-serif;
+  }
+  body {
+    margin: auto;
+    width: 50em;
+  }
+  * {
+    cursor: default;
+  }
+  pre {
+    padding: 1em 0;
+  }
+  pre.code,
+  pre.code b,
+  pre.code i,
+  pre.code s,
+  pre.code u,
+  pre.code tt,
+  pre.code em,
+  pre.code var {
+    text-decoration: none;
+    font: normal normal 14px/150% "Consolas", monospace;
+  }
+  pre.code b  { color: #009; }
+  pre.code i  { color: #080; }
+  pre.code s  { color: #BBB; font-style: italic; }
+  pre.code u  { color: #0A0; }
+  pre.code tt { color: #994; }
+  pre.code em { color: #A00; }
+  pre.code var { color: #5E5E5E; }
+
+  hr {
+    margin: 1em 0 .1em 0;
+    border: 1px dashed #EEE;
+  }
+  #unfoldcode:hover {
+    cursor: hand;
+    color: red
+  }
+  h2, h3, h4 {
+    margin: .5em 0;
+  }
+  h2 {
+    margin: 0;
+    padding: .2em .1em;
+    background: #EEE;
+  }
+</style>
+</head>
+<body>
+<h1>/css/css</h1>
+<p><small><i>This documentation was generated automatically from the source code.</i></small></p>
+<pre class="code">
+
+
+<s>// SQF
+//
+// common macros "\css\css"
+// Copyright (c) 2009-2012 Denis Usenko (DenVdmj)
+// MIT-style license
+//</s>
+
+<em>#ifndef __common_macro_present</em>
+<em>#define</em><em> __common_macro_present</em> present
+
+<em>#ifndef __project_name</em>
+<em>#define</em><em> __project_name</em> css
+<em>#endif</em>
+
+<em>#ifndef __module_name</em>
+<em>#define</em><em> __module_name</em> -
+<em>#endif</em>
+
+<em>#define</em><em> __ns_prefix</em> /<tt>__project_name</tt>/<tt>__module_name</tt>
+<em>#define</em><em> __q(str)</em> #<em>str</em>
+
+<em>#define</em><em> __nsSet(ns,varname)</em> <b>call { (</b>ns<b>)</b> <em>setVariable</em> <b>[</b><tt>__q</tt><b>(</b>/<tt>__ns_prefix</tt>/varname<b>),</b> <var>_this</var><b>] }</b>
+<em>#define</em><em> __nsGet(ns,varname)</em> <b>((</b>ns<b>)</b> <em>getVariable</em> <tt>__q</tt><b>(</b>/<tt>__ns_prefix</tt>/varname<b>))</b>
+
+<em>#define</em><em> __nsSetGlobal(ns,varname)</em> <b>call { (</b>ns<b>)</b> <em>setVariable</em> <b>[</b><tt>__q</tt><b>(</b>/<tt>__ns_prefix</tt>/varname<b>),</b> <var>_this</var><b>, true] }</b>
+<em>#define</em><em> __nsGetDefault(ns,varname,default)</em> <b>call { (</b>ns<b>)</b> <em>getVariable</em> <b>[</b><tt>__q</tt><b>(</b>/<tt>__ns_prefix</tt>/varname<b>), default] }</b>
+
+<em>#define</em><em> __uiSet(varname)</em> <tt>__nsSet</tt><b>(</b><em>uiNamespace</em><b>,</b>varname<b>)</b>
+<em>#define</em><em> __uiGet(varname)</em> <tt>__nsGet</tt><b>(</b><em>uiNamespace</em><b>,</b>varname<b>)</b>
+
+<em>#define</em><em> __mSet(varname)</em> <tt>__nsSet</tt><b>(</b><em>missionNamespace</em><b>,</b>varname<b>)</b>
+<em>#define</em><em> __mGet(varname)</em> <tt>__nsGet</tt><b>(</b><em>missionNamespace</em><b>,</b>varname<b>)</b>
+
+<em>#define</em><em> __pSet(varname)</em> <tt>__nsSet</tt><b>(</b><em>parsingNamespace</em><b>,</b>varname<b>)</b>
+<em>#define</em><em> __pGet(varname)</em> <tt>__nsGet</tt><b>(</b><em>parsingNamespace</em><b>,</b>varname<b>)</b>
+
+<s>// Example: "The first argument type must be of type string!" __errorLog</s>
+<em>#define</em><em> __errorLog</em> <b>call {</b> <em>diag_log</em> <em>parseText</em> <em>format</em> <b>[</b><i>'Error! File "%1" on line %2: %3'</i><b>,</b> <tt>__FILE__</tt><b>,</b> <tt>__LINE__</tt><b>,</b> <var>_this</var><b>]; };</b>
+<em>#define</em><em> __messageLog</em> <b>call {</b> <em>diag_log</em> <em>parseText</em> <em>format</em> <b>[</b><i>'Message! File "%1" on line %2): %3'</i><b>,</b> <tt>__FILE__</tt><b>,</b> <tt>__LINE__</tt><b>,</b> <var>_this</var><b>]; };</b>
+
+<s>// Example: diag_log ("The first argument type must be of type string!" __makeErrorText)</s>
+<em>#define</em><em> __makeErrorText</em> <b>call {</b> <em>parseText</em> <em>format</em> <b>[</b><i>'Error! File "%1" on line %2: %3'</i><b>,</b> <tt>__FILE__</tt><b>,</b> <tt>__LINE__</tt><b>,</b> <var>_this</var><b>]; };</b>
+<em>#define</em><em> __makeMessageText</em> <b>call {</b> <em>parseText</em> <em>format</em> <b>[</b><i>'Message! File "%1" on line %2: %3'</i><b>,</b> <tt>__FILE__</tt><b>,</b> <tt>__LINE__</tt><b>,</b> <var>_this</var><b>]; };</b>
+
+<em>#define</em><em> def(name)</em> <b>private</b> #<em>name</em><b>;</b> <em>name</em>
+<em>#define</em><em> var(name)</em> <tt>__project_name</tt>##<var>_var_</var>##<em>name</em>
+<em>#define</em><em> func(name)</em> <tt>__project_name</tt>##<var>_func_</var>##<em>name</em>
+<em>#define</em><em> invoke(name)</em> <b>call</b> <var>func(name)</var>
+
+<s>// redefine name preprocessFile</s>
+<em>#define</em><em> preprocessFile</em> <em>preprocessFileLineNumbers</em>
+<em>#define</em><em> __compileFile</em> <em>compile</em> <em>preprocessFile</em>
+<em>#define</em><em> __callFile</em> <b>call</b> <tt>__compileFile</tt>
+<em>#define</em><em> __lib</em> <tt>__callFile</tt>
+<em>#define</em><em> __localeLangAbbr</em> <b>(</b><em>localize</em> <i>"str/css/locale/lang-abbr"</i><b>)</b>
+<em>#define</em><em> __localeLang</em> <b>(</b><em>localize</em> <i>"str/css/locale/lang"</i><b>)</b>
+<s>// __currentLangAbbr and __currentLang -- depricated names</s>
+<em>#define</em><em> __currentLangAbbr</em> <b>(</b><em>localize</em> <i>"str/css/locale/lang-abbr"</i><b>)</b>
+<em>#define</em><em> __currentLang</em> <b>(</b><em>localize</em> <i>"str/css/locale/lang"</i><b>)</b>
+<em>#define</em><em> __sqf2str</em> <i>"call"</i> + <em>str</em>
+
+<s>//
+// Arguments macro
+//</s>
+
+<em>#define</em><em> arg(i)</em>          <b>(</b><var>_this</var> <em>select</em> <b>(</b>i<b>))</b>
+<em>#define</em><em> ifExistArg(i)</em>   <b>if (</b><em>count</em> <var>_this</var> > <b>(</b>i<b>))</b>
+<em>#define</em><em> ifArgType(i,t)</em>  <b>if (</b>ifExistArg<b>(</b>i<b>) then {</b> <em>typeName</em> <b>arg(</b>i<b>) == (</b>t<b>) } else { false })</b>
+<em>#define</em><em> argIfExist(i)</em>   ifExistArg<b>(</b>i<b>) then { arg(</b>i<b>) }</b>
+<em>#define</em><em> argIfType(i,t)</em>  ifArgType<b>(</b>i<b>,</b>t<b>) then { arg(</b>i<b>) }</b>
+<em>#define</em><em> argOr(i,v)</em>      argIfExist<b>(</b>i<b>) else {</b> v <b>}</b>
+
+<em>#define</em><em> private1(a)</em> <b>private</b> <tt>__q</tt><b>(</b>a<b>)</b>
+<em>#define</em><em> private2(a,b)</em> <b>private [</b><tt>__q</tt><b>(</b>a<b>),</b><tt>__q</tt><b>(</b>b<b>)]</b>
+<em>#define</em><em> private3(a,b,c)</em> <b>private [</b><tt>__q</tt><b>(</b>a<b>),</b><tt>__q</tt><b>(</b>b<b>),</b><tt>__q</tt><b>(</b>c<b>)]</b>
+<em>#define</em><em> private4(a,b,c,d)</em> <b>private [</b><tt>__q</tt><b>(</b>a<b>),</b><tt>__q</tt><b>(</b>b<b>),</b><tt>__q</tt><b>(</b>c<b>),</b><tt>__q</tt><b>(</b>d<b>)]</b>
+<em>#define</em><em> private5(a,b,c,d,e)</em> <b>private [</b><tt>__q</tt><b>(</b>a<b>),</b><tt>__q</tt><b>(</b>b<b>),</b><tt>__q</tt><b>(</b>c<b>),</b><tt>__q</tt><b>(</b>d<b>),</b><tt>__q</tt><b>(</b>e<b>)]</b>
+<em>#define</em><em> private6(a,b,c,d,e,f)</em> <b>private [</b><tt>__q</tt><b>(</b>a<b>),</b><tt>__q</tt><b>(</b>b<b>),</b><tt>__q</tt><b>(</b>c<b>),</b><tt>__q</tt><b>(</b>d<b>),</b><tt>__q</tt><b>(</b>e<b>),</b><tt>__q</tt><b>(</b>f<b>)]</b>
+<em>#define</em><em> private7(a,b,c,d,e,f,g)</em> <b>private [</b><tt>__q</tt><b>(</b>a<b>),</b><tt>__q</tt><b>(</b>b<b>),</b><tt>__q</tt><b>(</b>c<b>),</b><tt>__q</tt><b>(</b>d<b>),</b><tt>__q</tt><b>(</b>e<b>),</b><tt>__q</tt><b>(</b>f<b>),</b><tt>__q</tt><b>(</b>g<b>)]</b>
+<em>#define</em><em> private8(a,b,c,d,e,f,g,h)</em> <b>private [</b><tt>__q</tt><b>(</b>a<b>),</b><tt>__q</tt><b>(</b>b<b>),</b><tt>__q</tt><b>(</b>c<b>),</b><tt>__q</tt><b>(</b>d<b>),</b><tt>__q</tt><b>(</b>e<b>),</b><tt>__q</tt><b>(</b>f<b>),</b><tt>__q</tt><b>(</b>g<b>),</b><tt>__q</tt><b>(h)]</b>
+<em>#define</em><em> private9(a,b,c,d,e,f,g,h,i)</em> <b>private [</b><tt>__q</tt><b>(</b>a<b>),</b><tt>__q</tt><b>(</b>b<b>),</b><tt>__q</tt><b>(</b>c<b>),</b><tt>__q</tt><b>(</b>d<b>),</b><tt>__q</tt><b>(</b>e<b>),</b><tt>__q</tt><b>(</b>f<b>),</b><tt>__q</tt><b>(</b>g<b>),</b><tt>__q</tt><b>(h),</b><tt>__q</tt><b>(</b>i<b>)]</b>
+
+<s>//
+// Position macro
+//</s>
+
+<em>#define</em><em> x(a)</em> <b>((</b>a<b>)</b> <em>select</em> 0<b>)</b>
+<em>#define</em><em> y(a)</em> <b>((</b>a<b>)</b> <em>select</em> 1<b>)</b>
+<em>#define</em><em> z(a)</em> <b>((</b>a<b>)</b> <em>select</em> 2<b>)</b>
+<em>#define</em><em> w(a)</em> <b>((</b>a<b>)</b> <em>select</em> 2<b>)</b>
+<em>#define</em><em> h(a)</em> <b>((</b>a<b>)</b> <em>select</em> 3<b>)</b>
+
+<s>//
+// Array macro
+//</s>
+
+<em>#define</em><em> __item(a,v)</em> <b>((</b>a<b>)</b><em>select</em><b>(((</b>v<b>)</b><em>min</em><b>(</b><em>count</em><b>(</b>a<b>)</b>-1<b>))</b><em>max</em> 0<b>))</b>
+<em>#define</em><em> __itemr(a,v)</em> <b>(</b><tt>__item</tt><b>((</b>a<b>),if((</b>v<b>)</b>&lt;0<b>)then{</b><em>count</em><b>(</b>a<b>)</b>+<b>(</b>v<b>)}else{</b>v<b>}))</b>
+<em>#define</em><em> __push(a,v)</em> <b>(</b>a<b>)</b><em>set</em><b>[</b><em>count</em><b>(</b>a<b>),(</b>v<b>)]</b>
+<em>#define</em><em> __pushTo(a)</em> <b>call{(</b>a<b>)</b><em>set</em><b>[</b><em>count</em><b>(</b>a<b>),</b><var>_this</var><b>]}</b>
+<em>#define</em><em> __top(a)</em> <b>((</b>a<b>)</b><em>select</em><b>((</b><em>count</em><b>(</b>a<b>)</b>-1<b>)</b><em>max</em> 0<b>))</b>
+<em>#define</em><em> __pop(a)</em> <b>(</b>0 <b>call{</b><var>_this</var><b>=</b><tt>__top</tt><b>(</b>a<b>);(</b>a<b>)</b><em>resize</em><b>((</b><em>count</em><b>(</b>a<b>)</b>-1<b>)</b><em>max</em> 0<b>);</b><var>_this</var><b>})</b>
+<em>#define</em><em> __writeTop(a,v)</em> <b>(</b>a<b>)</b><em>set</em><b>[</b><em>count</em><b>(</b>a<b>)</b>-1<b>,</b>v<b>]</b>
+<em>#define</em><em> __randomSelect(a)</em> <b>((</b>a<b>)</b><em>select</em> <em>floor</em> <em>random</em> <em>count</em><b>(</b>a<b>))</b>
+
+<s>//
+// Math macro
+//</s>
+
+<em>#define</em><em> __mathInf</em> 1e9999
+<em>#define</em><em> __logN(pow,num)</em> <b>((</b><em>log</em><b>(</b>num<b>))</b>/<b>(</b><em>log</em><b>(</b>pow<b>)))</b>
+<em>#define</em><em> __log2(num)</em> <b>((</b><em>log</em><b>(</b>num<b>))</b>/.3010299956639812<b>)</b>
+<em>#define</em><em> __toRange(left,right)</em> <b>call{((</b>left<b>)</b><em>max</em> <var>_this</var><b>)</b><em>min</em><b>(</b>right<b>)}</b>
+<em>#define</em><em> __int(v)</em> <b>(if((</b>v<b>)</b>&lt;0<b>)then{</b><em>ceil</em><b>(</b>v<b>)}else{</b><em>floor</em><b>(</b>v<b>)})</b>
+<em>#define</em><em> __frac(v)</em> <b>((</b>v<b>)</b>-<tt>__int</tt><b>(</b>v<b>))</b>
+<em>#define</em><em> __getBit(num,bit)</em> <b>(</b><em>floor</em><b>(((</b>num<b>)</b>/<b>(</b>2^bit<b>))</b>%2<b>))</b>
+<em>#define</em><em> __checkBit(num,bit)</em> <b>(</b><tt>__getBit</tt><b>(</b>num<b>,</b>bit<b>)==</b>1<b>)</b>
+<em>#define</em><em> __xor(a,b)</em> <b>(!((</b>a<b>)&amp;&amp;(</b>b<b>))&amp;&amp;((</b>a<b>)||(</b>b<b>)))</b>
+<em>#define</em><em> __inc(n)</em> <b>(call{</b>n<b>=</b>n+1<b>;</b>n<b>})</b>
+<em>#define</em><em> __dec(n)</em> <b>(call{</b>n<b>=</b>n-1<b>;</b>n<b>})</b>
+<em>#define</em><em> __change(v)</em> v <b>=</b> v
+<em>#define</em><em> _(v)</em> <b>_</b>##v <b>= _</b>##v
+
+<s>//
+// for, map, grep
+//</s>
+
+<em>#define</em><em> __forConf(list)</em> <b>call{private</b><i>"_0n_"</i><b>;</b><var>_0n_</var><b>=</b><em>list</em><b>;for</b><i>"_i"</i><b>from(</b>0<b>)to(</b><em>count</em> <var>_0n_</var>-1<b>)do{private</b><i>"_x"</i><b>;</b><var>_x</var><b>=</b><var>_0n_</var> <em>select</em> <var>_i</var><b>;private</b><i>"_0n_"</i><b>;</b><var>_x</var> <b>call</b> <var>_this</var><b>}}</b>
+<em>#define</em><em> __mapArray(list)</em> <b>call{private</b><i>"_0r_"</i><b>;</b><var>_0r_</var><b>=[];{</b><var>_0r_</var> <em>set</em><b>[</b><em>count</em> <var>_0r_</var><b>,call{private</b><i>"_0r_"</i><b>;</b><var>_x</var> <b>call</b> <var>_this</var><b>}]}foreach(</b><em>list</em><b>);</b><var>_0r_</var><b>}</b>
+<em>#define</em><em> __grepArray(list)</em> <b>call{private</b><i>"_0r_"</i><b>;</b><var>_0r_</var><b>=[];{if(call{private</b><i>"_0r_"</i><b>;</b><var>_x</var> <b>call</b> <var>_this</var><b>})then{</b><tt>__push</tt><b>(</b><var>_0r_</var><b>,</b><var>_x</var><b>)}}foreach(</b><em>list</em><b>);</b><var>_0r_</var><b>}</b>
+<em>#define</em><em> __map(list)</em> <b>call{private[</b><i>"_0r_"</i><b>,</b><i>"_0n_"</i><b>];</b><var>_0r_</var><b>=[];</b><var>_0n_</var><b>=</b><em>list</em><b>;for</b><i>"_i"</i><b>from(</b>0<b>)to(</b><em>count</em> <var>_0n_</var>-1<b>)do{private</b><i>"_x"</i><b>;</b><var>_x</var><b>=</b><var>_0n_</var> <em>select</em> <var>_i</var><b>;</b><var>_0r_</var> <em>set</em><b>[</b><em>count</em> <var>_0r_</var><b>,call{private[</b><i>"_0r_"</i><b>,</b><i>"_0n_"</i><b>];call</b> <var>_this</var><b>}]};</b><var>_0r_</var><b>}</b>
+<em>#define</em><em> __grep(list)</em> <b>call{private[</b><i>"_0r_"</i><b>,</b><i>"_0n_"</i><b>];</b><var>_0r_</var><b>=[];</b><var>_0n_</var><b>=</b><em>list</em><b>;for</b><i>"_i"</i><b>from(</b>0<b>)to(</b><em>count</em> <var>_0n_</var>-1<b>)do{private</b><i>"_x"</i><b>;</b><var>_x</var><b>=</b><var>_0n_</var> <em>select</em> <var>_i</var><b>;if(call{private[</b><i>"_0r_"</i><b>,</b><i>"_0n_"</i><b>];</b><var>_x</var> <b>call</b> <var>_this</var><b>})then{</b><tt>__push</tt><b>(</b><var>_0r_</var><b>,</b><var>_x</var><b>)}};</b><var>_0r_</var><b>}</b>
+
+<s>//
+// Type checking
+//</s>
+
+<em>#define</em><em> __isArray(v)</em>    <b>(</b><em>typeName</em><b>(</b>v<b>) ==</b> <i>"ARRAY"</i><b>)</b>
+<em>#define</em><em> __isBool(v)</em>     <b>(</b><em>typeName</em><b>(</b>v<b>) ==</b> <i>"BOOL"</i><b>)</b>
+<em>#define</em><em> __isCode(v)</em>     <b>(</b><em>typeName</em><b>(</b>v<b>) ==</b> <i>"CODE"</i><b>)</b>
+<em>#define</em><em> __isConfig(v)</em>   <b>(</b><em>typeName</em><b>(</b>v<b>) ==</b> <i>"CONFIG"</i><b>)</b>
+<em>#define</em><em> __isControl(v)</em>  <b>(</b><em>typeName</em><b>(</b>v<b>) ==</b> <i>"CONTROL"</i><b>)</b>
+<em>#define</em><em> __isDiary(v)</em>    <b>(</b><em>typeName</em><b>(</b>v<b>) ==</b> <i>"DIARY_RECORD"</i><b>)</b>
+<em>#define</em><em> __isDisplay(v)</em>  <b>(</b><em>typeName</em><b>(</b>v<b>) ==</b> <i>"DISPLAY"</i><b>)</b>
+<em>#define</em><em> __isGroup(v)</em>    <b>(</b><em>typeName</em><b>(</b>v<b>) ==</b> <i>"GROUP"</i><b>)</b>
+<em>#define</em><em> __isObject(v)</em>   <b>(</b><em>typeName</em><b>(</b>v<b>) ==</b> <i>"OBJECT"</i><b>)</b>
+<em>#define</em><em> __isScalar(v)</em>   <b>(</b><em>typeName</em><b>(</b>v<b>) ==</b> <i>"SCALAR"</i><b>)</b>
+<em>#define</em><em> __isScript(v)</em>   <b>(</b><em>typeName</em><b>(</b>v<b>) ==</b> <i>"SCRIPT"</i><b>)</b>
+<em>#define</em><em> __isSide(v)</em>     <b>(</b><em>typeName</em><b>(</b>v<b>) ==</b> <i>"SIDE"</i><b>)</b>
+<em>#define</em><em> __isString(v)</em>   <b>(</b><em>typeName</em><b>(</b>v<b>) ==</b> <i>"STRING"</i><b>)</b>
+<em>#define</em><em> __isTask(v)</em>     <b>(</b><em>typeName</em><b>(</b>v<b>) ==</b> <i>"TASK"</i><b>)</b>
+<em>#define</em><em> __isText(v)</em>     <b>(</b><em>typeName</em><b>(</b>v<b>) ==</b> <i>"TEXT"</i><b>)</b>
+
+<em>#define</em><em> __isBoolean(v)</em>  <tt>__isBool</tt><b>(</b>v<b>)</b>
+<em>#define</em><em> __isFunction(v)</em> <tt>__isCode</tt><b>(</b>v<b>)</b>
+<em>#define</em><em> __isHandle(v)</em>   <tt>__isScript</tt><b>(</b>v<b>)</b>
+<em>#define</em><em> __isNumber(v)</em>   <tt>__isScalar</tt><b>(</b>v<b>)</b>
+<em>#define</em><em> __isSGML(v)</em>     <tt>__isText</tt><b>(</b>v<b>)</b>
+
+<em>#endif</em>
+
+</pre>
+<p><small><i>This documentation was generated automatically from the source code.</i></small></p>
+</body>
+</html>

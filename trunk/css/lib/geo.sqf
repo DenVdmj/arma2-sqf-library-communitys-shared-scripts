@@ -9,14 +9,14 @@
 #define __PATH__ \css\lib
 
 //
-// Function func(CurrentCameraVector)
+// Function func(ViewportVector)
 //
 // Syntax:
 //     invoke(ViewportVector)
 // Returns the direction vector of the current camera.
 //
 
-func(CurrentCameraVector) = {
+func(ViewportVector) = {
     // Author of this way—Spooner (http://www.ofpec.com/forum/index.php?topic=31686.0)
     private ["_viewport", "_target"];
     _viewport = positionCameraToWorld [0, 0, 0];
@@ -86,7 +86,8 @@ func(GetFOV) = {
 // Syntax:
 //     (Position unitVector) invoke(Vector2Azimuth)
 //
-// Returns the angle (Number) in the center of the coordinate system between the Y axis and the point unitVector.
+// Returns the angle (Number) in the center of the coordinate system
+// between the Y axis and the point unitVector.
 // If the angle is impossible (zero vector)—returns a negative value.
 // Example: player weaponDirection currentWeapon player invoke(Vector2Azimuth)
 //
@@ -104,7 +105,8 @@ func(Vector2Azimuth) = {
 //
 // Syntax:
 //     [Position A, Position B] invoke(Azimuth)
-// Returns the azimuth (Number 0 .. 360), the angle at point A between the direction to the north and the direction to point B,
+// Returns the azimuth (Number 0 .. 360), the angle at point A between the
+// direction to the north and the direction to point B.
 // If the angle is impossible (same position)—returns a negative value.
 //
 
@@ -133,7 +135,8 @@ func(Azimuth) = {
 //    ] invoke(CompassPoint)
 // Arguments:
 //
-//    direction    — Source angle (Number) or a direction vector (Vector Array) or an two items array: [from_position, to_position]
+//    direction    — Source angle (Number) or a direction vector (Vector Array) or
+//                   an two items array: [from_position, to_position]
 //    limit        — The number of compass points (4, 8, 16, 32). Default: 16.
 //    format       — Format string, where:
 //                     %1 — Abbreviation of the compass points (the Dutch term (old international term)):
@@ -148,8 +151,8 @@ func(Azimuth) = {
 //                             0 .. 90 (N -> O, S -> W)
 //                             90 .. 0 (O -> S, W -> N)
 //                     %5..%19 — reserved
-//                     %20 and more — localize strings (require the <localization> argument(s)), optional argument,
-//                                     if isn't present, then by default uses a localizing string "%1"
+//                     %20 and more — localize strings (require the <localization> argument(s)), optional
+//                               argument, if isn't present, then by default uses a localizing string "%1"
 //
 //    localization  — Template of the localization string, such as "STR_COMPASS_POINT_%1_SHORTNAME",
 //                    where %1 — acronym of a compass point.

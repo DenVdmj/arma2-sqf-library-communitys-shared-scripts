@@ -40,7 +40,6 @@ func(List2Set) = {
     _col
 };
 
-
 //
 // Function func(CanonizeSet)
 // Syntax:
@@ -58,31 +57,25 @@ func(List2Set) = {
 //
 
 func(CanonizeSet) = {
-    private ["_set", "_keys", "_pos"];
+    private ["_set", "_keys", "_pos", "_pairref"];
     _set = [];
     _keys = [];
+    #define __key(r)   ((r) select 0)
+    #define __value(r) ((r) select 1)
     {
-        #define __oldKey    (_x select 0)
-        #define __oldValue  (_x select 1)
-        #define __newPair   (_set select _pos)
-        #define __newKey    (__newPair select 0)
-        #define __newValue  (__newPair select 1)
-        _pos = _keys find __oldKey;
+        _pos = _keys find __key(_x);
         if (_pos == -1) then {
-            __push(_set, _x);
-            __push(_keys, __oldKey);
+            __push(_set,_x);
+            __push(_keys,__key(_x));
         } else {
-            __newPair set [1, __newValue + __oldValue]
+            _pairref = _set select _pos;
+            _pairref set [1, __value(_pairref) + __value(_x)]
         };
-        #undef __oldKey
-        #undef __oldValue
-        #undef __newPair
-        #undef __newKey
-        #undef __newValue
     } foreach _this;
+    #undef __key
+    #undef __value
     _set
 };
-
 
 //
 // Function func(GetUnduplicatedArray)
@@ -92,7 +85,7 @@ func(CanonizeSet) = {
 //
 
 func(GetUnduplicatedArray) = {
-    private["_e","_i"];
+    private ["_e", "_i"];
     _i = 0;
     while { count _this != _i } do {
         _e = _this select _i;
@@ -105,7 +98,7 @@ func(GetUnduplicatedArray) = {
 //
 // Function func(RemoveItemsFromArray)
 // Syntax:
-//     [array list, arrayOfAnyValues removedEntries] invoke(removeItemsFromArray)
+//     [array list, arrayOfAnyValues removedEntries] invoke(RemoveItemsFromArray)
 // Deletes all specified entries from specified array. Returns the same modified array.
 // Use for cases where it is important to keep a reference to an array.
 //

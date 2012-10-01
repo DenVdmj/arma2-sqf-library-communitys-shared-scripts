@@ -37,22 +37,22 @@ func(ReadSlotHardMounted) = { floor(__readSlots(_this) / 65536 ) % 2 };
 func(ReadSlotItem)        = { floor(__readSlots(_this) / 131072 ) % 16 };
 
 //
-// Function func(isInheritFrom)
+// Function func(IsInheritFrom)
 // Syntax:
-//     [config someConfHandle, config theParentConfHandle] invoke(isInheritFrom)
+//     [config someConfHandle, config theParentConfHandle] invoke(IsInheritFrom)
 // Returns the true if someConfHandle is a subclass of theParentConfHandle.
 //
 // Example 1:
 //     [
 //         configFile >> "CfgWeapons" >> primaryWeapon player,
 //         configFile >> "CfgWeapons" >> "RifleCore"
-//     ] invoke(isInheritFrom);
+//     ] invoke(IsInheritFrom);
 //
 // Example 2:
 //     [
 //         configFile >> "CfgWeapons" >> primaryWeapon player,
 //         configFile >> "CfgWeapons" >> "MissileCore"
-//     ] invoke(isInheritFrom)
+//     ] invoke(IsInheritFrom)
 //
 
 func(IsInheritFrom) = {
@@ -648,9 +648,9 @@ func(WeaponInHand) = {
 };
 
 //
-// Function func(currentMuzzle)
+// Function func(CurrentMuzzle)
 // Syntax:
-//     (object soldier) invoke(currentMuzzle)
+//     (object soldier) invoke(CurrentMuzzle)
 // Returns current muzzle of weapons in the hands of soldiers.
 // if current muzzle is void string, returns the first muzzle of the current weapon. String type.
 // This function workaround for currentMuzzle's bug when void string returns for yet no shooted AI

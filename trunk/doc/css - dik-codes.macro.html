@@ -1,0 +1,237 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>«Community`s Shared Scripts» SQF-Library - /css/dik-codes.macro</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<style>
+  html {
+    font-family: Helvetica, Arial, sans-serif;
+  }
+  body {
+    margin: auto;
+    width: 50em;
+  }
+  * {
+    cursor: default;
+  }
+  pre {
+    padding: 1em 0;
+  }
+  pre.code,
+  pre.code b,
+  pre.code i,
+  pre.code s,
+  pre.code u,
+  pre.code tt,
+  pre.code em,
+  pre.code var {
+    text-decoration: none;
+    font: normal normal 14px/150% "Consolas", monospace;
+  }
+  pre.code b  { color: #009; }
+  pre.code i  { color: #080; }
+  pre.code s  { color: #BBB; font-style: italic; }
+  pre.code u  { color: #0A0; }
+  pre.code tt { color: #994; }
+  pre.code em { color: #A00; }
+  pre.code var { color: #5E5E5E; }
+
+  hr {
+    margin: 1em 0 .1em 0;
+    border: 1px dashed #EEE;
+  }
+  #unfoldcode:hover {
+    cursor: hand;
+    color: red
+  }
+  h2, h3, h4 {
+    margin: .5em 0;
+  }
+  h2 {
+    margin: 0;
+    padding: .2em .1em;
+    background: #EEE;
+  }
+</style>
+</head>
+<body>
+<h1>/css/dik-codes.macro</h1>
+<p><small><i>This documentation was generated automatically from the source code.</i></small></p>
+<pre class="code">
+
+
+<s>// SQF
+//
+// common macros "\css\dik-codes.macro"
+//</s>
+
+<em>#define</em><em> DIK_ESCAPE</em>          0x01
+<em>#define</em><em> DIK_1</em>               0x02
+<em>#define</em><em> DIK_2</em>               0x03
+<em>#define</em><em> DIK_3</em>               0x04
+<em>#define</em><em> DIK_4</em>               0x05
+<em>#define</em><em> DIK_5</em>               0x06
+<em>#define</em><em> DIK_6</em>               0x07
+<em>#define</em><em> DIK_7</em>               0x08
+<em>#define</em><em> DIK_8</em>               0x09
+<em>#define</em><em> DIK_9</em>               0x0A
+<em>#define</em><em> DIK_0</em>               0x0B
+<em>#define</em><em> DIK_MINUS</em>           0x0C    <s>/* - on main keyboard */</s>
+<em>#define</em><em> DIK_EQUALS</em>          0x0D
+<em>#define</em><em> DIK_BACK</em>            0x0E    <s>/* backspace */</s>
+<em>#define</em><em> DIK_TAB</em>             0x0F
+<em>#define</em><em> DIK_Q</em>               0x10
+<em>#define</em><em> DIK_W</em>               0x11
+<em>#define</em><em> DIK_E</em>               0x12
+<em>#define</em><em> DIK_R</em>               0x13
+<em>#define</em><em> DIK_T</em>               0x14
+<em>#define</em><em> DIK_Y</em>               0x15
+<em>#define</em><em> DIK_U</em>               0x16
+<em>#define</em><em> DIK_I</em>               0x17
+<em>#define</em><em> DIK_O</em>               0x18
+<em>#define</em><em> DIK_P</em>               0x19
+<em>#define</em><em> DIK_LBRACKET</em>        0x1A
+<em>#define</em><em> DIK_RBRACKET</em>        0x1B
+<em>#define</em><em> DIK_RETURN</em>          0x1C    <s>/* Enter on main keyboard */</s>
+<em>#define</em><em> DIK_LCONTROL</em>        0x1D
+<em>#define</em><em> DIK_A</em>               0x1E
+<em>#define</em><em> DIK_S</em>               0x1F
+<em>#define</em><em> DIK_D</em>               0x20
+<em>#define</em><em> DIK_F</em>               0x21
+<em>#define</em><em> DIK_G</em>               0x22
+<em>#define</em><em> DIK_H</em>               0x23
+<em>#define</em><em> DIK_J</em>               0x24
+<em>#define</em><em> DIK_K</em>               0x25
+<em>#define</em><em> DIK_L</em>               0x26
+<em>#define</em><em> DIK_SEMICOLON</em>       0x27
+<em>#define</em><em> DIK_APOSTROPHE</em>      0x28
+<em>#define</em><em> DIK_GRAVE</em>           0x29    <s>/* accent grave */</s>
+<em>#define</em><em> DIK_LSHIFT</em>          0x2A
+<em>#define</em><em> DIK_BACKSLASH</em>       0x2B
+<em>#define</em><em> DIK_Z</em>               0x2C
+<em>#define</em><em> DIK_X</em>               0x2D
+<em>#define</em><em> DIK_C</em>               0x2E
+<em>#define</em><em> DIK_V</em>               0x2F
+<em>#define</em><em> DIK_B</em>               0x30
+<em>#define</em><em> DIK_N</em>               0x31
+<em>#define</em><em> DIK_M</em>               0x32
+<em>#define</em><em> DIK_COMMA</em>           0x33
+<em>#define</em><em> DIK_PERIOD</em>          0x34    <s>/* . on main keyboard */</s>
+<em>#define</em><em> DIK_SLASH</em>           0x35    <s>/* / on main keyboard */</s>
+<em>#define</em><em> DIK_RSHIFT</em>          0x36
+<em>#define</em><em> DIK_MULTIPLY</em>        0x37    <s>/* * on numeric keypad */</s>
+<em>#define</em><em> DIK_LMENU</em>           0x38    <s>/* left Alt */</s>
+<em>#define</em><em> DIK_SPACE</em>           0x39
+<em>#define</em><em> DIK_CAPITAL</em>         0x3A
+<em>#define</em><em> DIK_F1</em>              0x3B
+<em>#define</em><em> DIK_F2</em>              0x3C
+<em>#define</em><em> DIK_F3</em>              0x3D
+<em>#define</em><em> DIK_F4</em>              0x3E
+<em>#define</em><em> DIK_F5</em>              0x3F
+<em>#define</em><em> DIK_F6</em>              0x40
+<em>#define</em><em> DIK_F7</em>              0x41
+<em>#define</em><em> DIK_F8</em>              0x42
+<em>#define</em><em> DIK_F9</em>              0x43
+<em>#define</em><em> DIK_F10</em>             0x44
+<em>#define</em><em> DIK_NUMLOCK</em>         0x45
+<em>#define</em><em> DIK_SCROLL</em>          0x46    <s>/* Scroll Lock */</s>
+<em>#define</em><em> DIK_NUMPAD7</em>         0x47
+<em>#define</em><em> DIK_NUMPAD8</em>         0x48
+<em>#define</em><em> DIK_NUMPAD9</em>         0x49
+<em>#define</em><em> DIK_SUBTRACT</em>        0x4A    <s>/* - on numeric keypad */</s>
+<em>#define</em><em> DIK_NUMPAD4</em>         0x4B
+<em>#define</em><em> DIK_NUMPAD5</em>         0x4C
+<em>#define</em><em> DIK_NUMPAD6</em>         0x4D
+<em>#define</em><em> DIK_ADD</em>             0x4E    <s>/* + on numeric keypad */</s>
+<em>#define</em><em> DIK_NUMPAD1</em>         0x4F
+<em>#define</em><em> DIK_NUMPAD2</em>         0x50
+<em>#define</em><em> DIK_NUMPAD3</em>         0x51
+<em>#define</em><em> DIK_NUMPAD0</em>         0x52
+<em>#define</em><em> DIK_DECIMAL</em>         0x53    <s>/* . on numeric keypad */</s>
+<em>#define</em><em> DIK_OEM_102</em>         0x56    <s>/* &lt; > | on UK/Germany keyboards */</s>
+<em>#define</em><em> DIK_F11</em>             0x57
+<em>#define</em><em> DIK_F12</em>             0x58
+<em>#define</em><em> DIK_F13</em>             0x64    <s>/*                     (NEC PC98) */</s>
+<em>#define</em><em> DIK_F14</em>             0x65    <s>/*                     (NEC PC98) */</s>
+<em>#define</em><em> DIK_F15</em>             0x66    <s>/*                     (NEC PC98) */</s>
+<em>#define</em><em> DIK_KANA</em>            0x70    <s>/* (Japanese keyboard)            */</s>
+<em>#define</em><em> DIK_ABNT_C1</em>         0x73    <s>/* / ? on Portugese (Brazilian) keyboards */</s>
+<em>#define</em><em> DIK_CONVERT</em>         0x79    <s>/* (Japanese keyboard)            */</s>
+<em>#define</em><em> DIK_NOCONVERT</em>       0x7B    <s>/* (Japanese keyboard)            */</s>
+<em>#define</em><em> DIK_YEN</em>             0x7D    <s>/* (Japanese keyboard)            */</s>
+<em>#define</em><em> DIK_ABNT_C2</em>         0x7E    <s>/* Numpad . on Portugese (Brazilian) keyboards */</s>
+<em>#define</em><em> DIK_NUMPADEQUALS</em>    0x8D    <s>/* = on numeric keypad (NEC PC98) */</s>
+<em>#define</em><em> DIK_PREVTRACK</em>       0x90    <s>/* Previous Track (DIK_CIRCUMFLEX on Japanese keyboard) */</s>
+<em>#define</em><em> DIK_AT</em>              0x91    <s>/*                     (NEC PC98) */</s>
+<em>#define</em><em> DIK_COLON</em>           0x92    <s>/*                     (NEC PC98) */</s>
+<em>#define</em><em> DIK_UNDERLINE</em>       0x93    <s>/*                     (NEC PC98) */</s>
+<em>#define</em><em> DIK_KANJI</em>           0x94    <s>/* (Japanese keyboard)            */</s>
+<em>#define</em><em> DIK_STOP</em>            0x95    <s>/*                     (NEC PC98) */</s>
+<em>#define</em><em> DIK_AX</em>              0x96    <s>/*                     (Japan AX) */</s>
+<em>#define</em><em> DIK_UNLABELED</em>       0x97    <s>/*                        (J3100) */</s>
+<em>#define</em><em> DIK_NEXTTRACK</em>       0x99    <s>/* Next Track */</s>
+<em>#define</em><em> DIK_NUMPADENTER</em>     0x9C    <s>/* Enter on numeric keypad */</s>
+<em>#define</em><em> DIK_RCONTROL</em>        0x9D
+<em>#define</em><em> DIK_MUTE</em>            0xA0    <s>/* Mute */</s>
+<em>#define</em><em> DIK_CALCULATOR</em>      0xA1    <s>/* Calculator */</s>
+<em>#define</em><em> DIK_PLAYPAUSE</em>       0xA2    <s>/* Play / Pause */</s>
+<em>#define</em><em> DIK_MEDIASTOP</em>       0xA4    <s>/* Media Stop */</s>
+<em>#define</em><em> DIK_VOLUMEDOWN</em>      0xAE    <s>/* Volume - */</s>
+<em>#define</em><em> DIK_VOLUMEUP</em>        0xB0    <s>/* Volume + */</s>
+<em>#define</em><em> DIK_WEBHOME</em>         0xB2    <s>/* Web home */</s>
+<em>#define</em><em> DIK_NUMPADCOMMA</em>     0xB3    <s>/* , on numeric keypad (NEC PC98) */</s>
+<em>#define</em><em> DIK_DIVIDE</em>          0xB5    <s>/* / on numeric keypad */</s>
+<em>#define</em><em> DIK_SYSRQ</em>           0xB7
+<em>#define</em><em> DIK_RMENU</em>           0xB8    <s>/* right Alt */</s>
+<em>#define</em><em> DIK_PAUSE</em>           0xC5    <s>/* Pause */</s>
+<em>#define</em><em> DIK_HOME</em>            0xC7    <s>/* Home on arrow keypad */</s>
+<em>#define</em><em> DIK_UP</em>              0xC8    <s>/* UpArrow on arrow keypad */</s>
+<em>#define</em><em> DIK_PRIOR</em>           0xC9    <s>/* PgUp on arrow keypad */</s>
+<em>#define</em><em> DIK_LEFT</em>            0xCB    <s>/* LeftArrow on arrow keypad */</s>
+<em>#define</em><em> DIK_RIGHT</em>           0xCD    <s>/* RightArrow on arrow keypad */</s>
+<em>#define</em><em> DIK_END</em>             0xCF    <s>/* End on arrow keypad */</s>
+<em>#define</em><em> DIK_DOWN</em>            0xD0    <s>/* DownArrow on arrow keypad */</s>
+<em>#define</em><em> DIK_NEXT</em>            0xD1    <s>/* PgDn on arrow keypad */</s>
+<em>#define</em><em> DIK_INSERT</em>          0xD2    <s>/* Insert on arrow keypad */</s>
+<em>#define</em><em> DIK_DELETE</em>          0xD3    <s>/* Delete on arrow keypad */</s>
+<em>#define</em><em> DIK_LWIN</em>            0xDB    <s>/* Left Windows key */</s>
+<em>#define</em><em> DIK_RWIN</em>            0xDC    <s>/* Right Windows key */</s>
+<em>#define</em><em> DIK_APPS</em>            0xDD    <s>/* AppMenu key */</s>
+<em>#define</em><em> DIK_POWER</em>           0xDE    <s>/* System Power */</s>
+<em>#define</em><em> DIK_SLEEP</em>           0xDF    <s>/* System Sleep */</s>
+<em>#define</em><em> DIK_WAKE</em>            0xE3    <s>/* System Wake */</s>
+<em>#define</em><em> DIK_WEBSEARCH</em>       0xE5    <s>/* Web Search */</s>
+<em>#define</em><em> DIK_WEBFAVORITES</em>    0xE6    <s>/* Web Favorites */</s>
+<em>#define</em><em> DIK_WEBREFRESH</em>      0xE7    <s>/* Web Refresh */</s>
+<em>#define</em><em> DIK_WEBSTOP</em>         0xE8    <s>/* Web Stop */</s>
+<em>#define</em><em> DIK_WEBFORWARD</em>      0xE9    <s>/* Web Forward */</s>
+<em>#define</em><em> DIK_WEBBACK</em>         0xEA    <s>/* Web Back */</s>
+<em>#define</em><em> DIK_MYCOMPUTER</em>      0xEB    <s>/* My Computer */</s>
+<em>#define</em><em> DIK_MAIL</em>            0xEC    <s>/* Mail */</s>
+<em>#define</em><em> DIK_MEDIASELECT</em>     0xED    <s>/* Media Select */
+
+/* Alternate names for keys, to facilitate transition from DOS. */</s>
+<em>#define</em><em> DIK_BACKSPACE</em>       DIK_BACK            <s>/* backspace */</s>
+<em>#define</em><em> DIK_NUMPADSTAR</em>      DIK_MULTIPLY        <s>/* * on numeric keypad */</s>
+<em>#define</em><em> DIK_LALT</em>            DIK_LMENU           <s>/* left Alt */</s>
+<em>#define</em><em> DIK_CAPSLOCK</em>        DIK_CAPITAL         <s>/* CapsLock */</s>
+<em>#define</em><em> DIK_NUMPADMINUS</em>     DIK_SUBTRACT        <s>/* - on numeric keypad */</s>
+<em>#define</em><em> DIK_NUMPADPLUS</em>      DIK_ADD             <s>/* + on numeric keypad */</s>
+<em>#define</em><em> DIK_NUMPADPERIOD</em>    DIK_DECIMAL         <s>/* . on numeric keypad */</s>
+<em>#define</em><em> DIK_NUMPADSLASH</em>     DIK_DIVIDE          <s>/* / on numeric keypad */</s>
+<em>#define</em><em> DIK_RALT</em>            DIK_RMENU           <s>/* right Alt */</s>
+<em>#define</em><em> DIK_UPARROW</em>         DIK_UP              <s>/* UpArrow on arrow keypad */</s>
+<em>#define</em><em> DIK_PGUP</em>            DIK_PRIOR           <s>/* PgUp on arrow keypad */</s>
+<em>#define</em><em> DIK_LEFTARROW</em>       DIK_LEFT            <s>/* LeftArrow on arrow keypad */</s>
+<em>#define</em><em> DIK_RIGHTARROW</em>      DIK_RIGHT           <s>/* RightArrow on arrow keypad */</s>
+<em>#define</em><em> DIK_DOWNARROW</em>       DIK_DOWN            <s>/* DownArrow on arrow keypad */</s>
+<em>#define</em><em> DIK_PGDN</em>            DIK_NEXT            <s>/* PgDn on arrow keypad */
+
+/* Alternate names for keys originally not used on US keyboards. */</s>
+<em>#define</em><em> DIK_CIRCUMFLEX</em>      DIK_PREVTRACK       <s>/* Japanese keyboard */</s>
+
+
+</pre>
+<p><small><i>This documentation was generated automatically from the source code.</i></small></p>
+</body>
+</html>
