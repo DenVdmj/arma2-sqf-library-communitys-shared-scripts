@@ -41,8 +41,8 @@ func(SetDate) = {
         setDate _this;
     };
     if (count _this > 5) then {
-        skipTime ((_this select 5) / 3600);
-        skipTime ((_this select 6) / 216000);
+        skipTime (arg(5) / 3600);
+        skipTime (arg(6) / 216000);
     };
 };
 

@@ -2,8 +2,8 @@
 mkdir 'css';
 
 for my $filename (
-    <../css/css>, 
-    <../css/lib/*.sqf>, 
+    <../css/css>,
+    <../css/lib/*.sqf>,
     <../css/lib/*.sqs>,
     <../css/*.macro>
 ) {
@@ -16,7 +16,8 @@ for my $filename (
 sub textReplace {
     my $contents = shift;
     $contents =~ s{((?:^|\n)\s*#\s*include\s*)"\\css\\([\w_.-]+)"}{$1"$2"}g;
-    $contents =~ s{((?:^|\n)\s*#\s*define\s+__PATH__\s+)\\css\\(\w+)}{$1$2}g;
+    $contents =~ s{((?:^|\n)\s*#\s*define\s+__PATH__\s+)\\css\\(\w+)}{$1css}g;
+    #$contents =~ s{((?:^|\n)\s*#\s*define\s+__PATH__\s+)\\css\\(\w+)}{$1$2}g;
     return $contents;
 }
 

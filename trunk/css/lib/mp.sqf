@@ -12,7 +12,7 @@
 // Function func(BroadcastCall)
 //
 // Syntax:
-//     [<condition>, <argument>, <sqf function>] invoke(BroadcastCall);
+//     [<condition>, <argument>, <function>] invoke(BroadcastCall);
 //
 // Arguments:
 //     <condition>
@@ -24,9 +24,10 @@
 //             'isServer'    — server only;
 //             'isDedicated' — dedicated server only.
 //     <argument>
-//         Argument them to pass to the function in the _this variables, any type.
-//     <sqf function>
-//         Code to execute
+//         The argument to pass to the sqf function, any type.
+//         Must be an array if passing more than one argument.
+//     <function>
+//         Code to execute, sqf-function.
 //
 // Example 1:
 //     [{isServer}, player, {

@@ -82,6 +82,7 @@ func(CreateDialog) = {
 
         // hidden in the namespace to not interfere with user code variables
         _this = call {
+            // yes, i know that clever code sucks, but... someday i'll rewrite it all over again
             private "_thisScope";
             _thisScope = [
                 "_thisScope", "_confDialog", "_idd",
@@ -163,6 +164,7 @@ func(CreateDialog) = {
                     if (_this >= 0) then {
                         _dsplMapConfs select _this
                     } else {
+                        // the void config reference
                         configFile >> ";)"
                     }
                 };

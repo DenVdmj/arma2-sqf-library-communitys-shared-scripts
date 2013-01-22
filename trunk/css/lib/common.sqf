@@ -17,7 +17,8 @@
 //     ] invoke(AddAction)
 //
 // Description:
-//     Function func(AddAction), it is wrapper over addAction for sqf-function directly usage.
+//     Function func(AddAction), it is wrapper for addAction which allows use directly
+//     specified sqf-function (instead of an external sqs-script).
 //
 // Parameters:
 //     0) Object object             — The object which the action is assigned to
@@ -72,7 +73,7 @@
 
 func(AddAction) = {
     private ["_lOperand", "_rOperand", "_function"];
-    _lOperand = _this select 0;
+    _lOperand = arg(0);
     _rOperand = [];
     // copy parameters from _this to _rOperand
     for "_i" from 1 to count _this-1 do {
@@ -130,15 +131,15 @@ func(GetAspectRatio) = (
 //
 
 func(NumToRadix) = {
-    private ['_base36chars', '_number', '_radix', '_minwidth', '_maxwidth', '_string'];
-    _base36chars = toArray '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    private ["_base36chars", "_number", "_radix", "_minwidth", "_maxwidth", "_string"];
+    _base36chars = toArray "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     _number = arg(0);
     _radix = argOr(1,16);
     assert (_radix >= 2 && _radix <= 36);
     if (_radix < 2 || _radix > 36) exitwith { "illegal radix" };
     _minwidth = argOr(2,1);
     _maxwidth = argOr(3,__mathInf);
-    _string = '';
+    _string = "";
     for "" from 1 to 10000 do {
         if (_maxwidth <= 0) exitwith {};
         if (_number <= 0 && _minwidth <= 0) exitwith {};

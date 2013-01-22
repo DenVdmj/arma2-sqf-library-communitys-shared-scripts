@@ -57,9 +57,10 @@ func(ReadSlotItem)        = { floor(__readSlots(_this) / 131072 ) % 16 };
 
 func(IsInheritFrom) = {
     private ["_curr", "_parent", "_void"];
-    _curr = _this select 0;
-    _parent = _this select 1;
-    _void = configFile >> "*";
+    _curr = arg(0);
+    _parent = arg(1);
+    // the void config reference
+    _void = configFile >> ";)";
     while { true }  do {
         if (_curr == _void) exitwith { false };
         if (_curr == _parent) exitwith { true };
@@ -235,7 +236,9 @@ func(FilterWeapon) = {
             }
         );
         _result
-    } catch { _exception }
+    } catch {
+        _exception
+    }
 };
 
 //
@@ -481,7 +484,7 @@ func(FilterFirearm) = {
 // Syntax:
 //     [string unitClassName, string targetAnimation] invoke(ReadActions)
 // Return the entrypoint to class Actions (configFile >> _unitClassNameMoves >> "Actions") for
-// specified unitClassName and his targetAnimation.
+// specified unitClassName and its targetAnimation.
 // Example:
 //     player playMove ([typeOf player, animationState player] invoke(ReadActions) >> "reloadMagazine")
 //     // is the same as that:
@@ -800,7 +803,7 @@ func(GetTurretPath) = {
 };
 
 func(GetUnitWeaponsExt) = if (count supportInfo "*:getweaponcargo*" != 0) then {{
-    (weapons _this) + (getWeaponCargo _this select 0)
+    (weapons _this) + ((getWeaponCargo _this) select 0)
 }} else {{
     (weapons _this)
 }};

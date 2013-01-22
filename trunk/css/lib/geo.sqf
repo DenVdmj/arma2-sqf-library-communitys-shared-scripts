@@ -39,6 +39,7 @@ func(ViewportVector) = {
 
 func(SightWorldPosition) = {
     private ["_boneHeadName", "_headPosition", "_weaponDirection", "_screenPosition"];
+    // either, we can use "memoryPointAim" instead of "boneHead"
     _boneHeadName = getText (configFile >> "CfgVehicles" >> typeof player >> "boneHead");
     _headPosition = player modelToWorld (player selectionPosition _boneHeadName);
     _weaponDirection = player weaponDirection "throw";
@@ -285,7 +286,7 @@ func(GetNearestForest) = {
 //
 
 func(GetNearestTopography) = {
-    // TODO!!! Переписать с использованием nearestLocations. Или вообще удалить нафиг эти функции
+    // TODO!!! Rewrite with using nearestLocations, or remove these funcs
     private [
         "_cfgRegion",
         "_cfgRegions",
