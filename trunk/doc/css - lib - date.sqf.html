@@ -161,8 +161,8 @@ You can use the following placeholders in the format string:
         <em>setDate</em> <var>_this</var><b>;
     };
     if (</b><em>count</em> <var>_this</var> > 5<b>) then {</b>
-        <em>skipTime</em> <b>((</b><var>_this</var> <em>select</em> 5<b>)</b> / 3600<b>);</b>
-        <em>skipTime</em> <b>((</b><var>_this</var> <em>select</em> 6<b>)</b> / 216000<b>);
+        <em>skipTime</em> <b>(arg(</b>5<b>)</b> / 3600<b>);</b>
+        <em>skipTime</em> <b>(arg(</b>6<b>)</b> / 216000<b>);
     };
 };</b>
 

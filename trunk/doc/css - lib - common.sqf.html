@@ -66,7 +66,8 @@
     ] invoke(AddAction)
 
 <strong>Description:
-</strong>    Function func(AddAction), it is wrapper over addAction for sqf-function directly usage.
+</strong>    Function func(AddAction), it is wrapper for addAction which allows use directly
+    specified sqf-function (instead of an external sqs-script).
 
 <strong>Parameters:
 </strong>    0) Object object             â€” The object which the action is assigned to
@@ -162,7 +163,8 @@ Returns html-style color string<hr />
 //     ] invoke(AddAction)
 //
 // Description:
-//     Function func(AddAction), it is wrapper over addAction for sqf-function directly usage.
+//     Function func(AddAction), it is wrapper for addAction which allows use directly
+//     specified sqf-function (instead of an external sqs-script).
 //
 // Parameters:
 //     0) Object object             — The object which the action is assigned to
@@ -217,7 +219,7 @@ Returns html-style color string<hr />
 
 <var>func(AddAction)</var> <b>= {
     private [</b><i>"_lOperand"</i><b>,</b> <i>"_rOperand"</i><b>,</b> <i>"_function"</i><b>];</b>
-    <var>_lOperand</var> <b>=</b> <var>_this</var> <em>select</em> 0<b>;</b>
+    <var>_lOperand</var> <b>= arg(</b>0<b>);</b>
     <var>_rOperand</var> <b>= [];</b>
     <s>// copy parameters from _this to _rOperand</s>
     <b>for</b> <i>"_i"</i> <b>from</b> 1 <b>to</b> <em>count</em> <var>_this</var>-1 <b>do {</b>
@@ -275,15 +277,15 @@ Returns html-style color string<hr />
 //</s>
 
 <var>func(NumToRadix)</var> <b>= {
-    private [</b><i>'_base36chars'</i><b>,</b> <i>'_number'</i><b>,</b> <i>'_radix'</i><b>,</b> <i>'_minwidth'</i><b>,</b> <i>'_maxwidth'</i><b>,</b> <i>'_string'</i><b>];</b>
-    <var>_base36chars</var> <b>=</b> <em>toArray</em> <i>'0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'</i><b>;</b>
+    private [</b><i>"_base36chars"</i><b>,</b> <i>"_number"</i><b>,</b> <i>"_radix"</i><b>,</b> <i>"_minwidth"</i><b>,</b> <i>"_maxwidth"</i><b>,</b> <i>"_string"</i><b>];</b>
+    <var>_base36chars</var> <b>=</b> <em>toArray</em> <i>"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"</i><b>;</b>
     <var>_number</var> <b>= arg(</b>0<b>);</b>
     <var>_radix</var> <b>= argOr(</b>1<b>,</b>16<b>);</b>
     <em>assert</em> <b>(</b><var>_radix</var> <b>>=</b> 2 <b>&amp;&amp;</b> <var>_radix</var> <b>&lt;=</b> 36<b>);
     if (</b><var>_radix</var> &lt; 2 <b>||</b> <var>_radix</var> > 36<b>) exitwith {</b> <i>"illegal radix"</i> <b>};</b>
     <var>_minwidth</var> <b>= argOr(</b>2<b>,</b>1<b>);</b>
     <var>_maxwidth</var> <b>= argOr(</b>3<b>,</b><tt>__mathInf</tt><b>);</b>
-    <var>_string</var> <b>=</b> <i>''</i><b>;
+    <var>_string</var> <b>=</b> <i>""</i><b>;
     for</b> <i>""</i> <b>from</b> 1 <b>to</b> 10000 <b>do {
         if (</b><var>_maxwidth</var> <b>&lt;=</b> 0<b>) exitwith {};
         if (</b><var>_number</var> <b>&lt;=</b> 0 <b>&amp;&amp;</b> <var>_minwidth</var> <b>&lt;=</b> 0<b>) exitwith {};</b>

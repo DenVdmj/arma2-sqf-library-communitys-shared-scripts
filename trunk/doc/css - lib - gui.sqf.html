@@ -182,8 +182,9 @@ if (</b><em>isNil</em><b>{</b><tt>__getStorage</tt><b>}) then { []</b> <tt>__set
         ];</b>
 
         <s>// hidden in the namespace to not interfere with user code variables</s>
-        <var>_this</var> <b>= call {
-            private</b> <i>"_thisScope"</i><b>;</b>
+        <var>_this</var> <b>= call {</b>
+            <s>// yes, i know that clever code sucks, but... someday i'll rewrite it all over again</s>
+            <b>private</b> <i>"_thisScope"</i><b>;</b>
             <var>_thisScope</var> <b>= [</b>
                 <i>"_thisScope"</i><b>,</b> <i>"_confDialog"</i><b>,</b> <i>"_idd"</i><b>,</b>
                 <i>"_dsplPrivateValues"</i><b>,</b> <i>"_dsplMapClassnames"</i><b>,</b> <i>"_dsplMapCtrls"</i><b>,</b> <i>"_dsplMapConfs"</i><b>,</b> <i>"_dsplGetConfByCtrl"</i><b>,</b>
@@ -264,6 +265,7 @@ if (</b><em>isNil</em><b>{</b><tt>__getStorage</tt><b>}) then { []</b> <tt>__set
                     if (</b><var>_this</var> <b>>=</b> 0<b>) then {</b>
                         <var>_dsplMapConfs</var> <em>select</em> <var>_this</var>
                     <b>} else {</b>
+                        <s>// the void config reference</s>
                         <em>configFile</em> >> <i>";)"</i>
                     <b>}
                 };

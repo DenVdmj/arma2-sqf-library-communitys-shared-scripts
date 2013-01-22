@@ -251,6 +251,7 @@ Return value: config
 
 <var>func(SightWorldPosition)</var> <b>= {
     private [</b><i>"_boneHeadName"</i><b>,</b> <i>"_headPosition"</i><b>,</b> <i>"_weaponDirection"</i><b>,</b> <i>"_screenPosition"</i><b>];</b>
+    <s>// either, we can use "memoryPointAim" instead of "boneHead"</s>
     <var>_boneHeadName</var> <b>=</b> <em>getText</em> <b>(</b><em>configFile</em> >> <i>"CfgVehicles"</i> >> <em>typeof</em> <em>player</em> >> <i>"boneHead"</i><b>);</b>
     <var>_headPosition</var> <b>=</b> <em>player</em> <em>modelToWorld</em> <b>(</b><em>player</em> <em>selectionPosition</em> <var>_boneHeadName</var><b>);</b>
     <var>_weaponDirection</var> <b>=</b> <em>player</em> <em>weaponDirection</em> <i>"throw"</i><b>;</b>
@@ -497,7 +498,7 @@ Return value: config
 //</s>
 
 <var>func(GetNearestTopography)</var> <b>= {</b>
-    <s>// TODO!!! Переписать с использованием nearestLocations. Или вообще удалить нафиг эти функции</s>
+    <s>// TODO!!! Rewrite with using nearestLocations, or remove these funcs</s>
     <b>private [</b>
         <i>"_cfgRegion"</i><b>,</b>
         <i>"_cfgRegions"</i><b>,</b>

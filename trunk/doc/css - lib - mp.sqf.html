@@ -61,7 +61,7 @@
 <hr /><h2>Function func(BroadcastCall)</h2>
 
 <strong>Syntax:
-</strong>    [&lt;condition&gt;, &lt;argument&gt;, &lt;sqf function&gt;] invoke(BroadcastCall);
+</strong>    [&lt;condition&gt;, &lt;argument&gt;, &lt;function&gt;] invoke(BroadcastCall);
 
 <strong>Arguments:
 </strong>    &lt;condition&gt;
@@ -73,9 +73,10 @@
             'isServer'    â€” server only;
             'isDedicated' â€” dedicated server only.
     &lt;argument&gt;
-        Argument them to pass to the function in the _this variables, any type.
-    &lt;sqf function&gt;
-        Code to execute
+        The argument to pass to the sqf function, any type.
+        Must be an array if passing more than one argument.
+    &lt;function&gt;
+        Code to execute, sqf-function.
 
 <strong>Example 1:
 </strong>    [{isServer}, player, {
@@ -115,7 +116,7 @@
 // Function func(BroadcastCall)
 //
 // Syntax:
-//     [&lt;condition>, &lt;argument>, &lt;sqf function>] invoke(BroadcastCall);
+//     [&lt;condition>, &lt;argument>, &lt;function>] invoke(BroadcastCall);
 //
 // Arguments:
 //     &lt;condition>
@@ -127,9 +128,10 @@
 //             'isServer'    — server only;
 //             'isDedicated' — dedicated server only.
 //     &lt;argument>
-//         Argument them to pass to the function in the _this variables, any type.
-//     &lt;sqf function>
-//         Code to execute
+//         The argument to pass to the sqf function, any type.
+//         Must be an array if passing more than one argument.
+//     &lt;function>
+//         Code to execute, sqf-function.
 //
 // Example 1:
 //     [{isServer}, player, {

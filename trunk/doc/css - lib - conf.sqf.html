@@ -281,7 +281,7 @@ format is similar to the output format of the function FilterWeaponSD.
 <strong>Syntax:
 </strong>    [string unitClassName, string targetAnimation] invoke(ReadActions)
 Return the entrypoint to class Actions (configFile &gt;&gt; _unitClassNameMoves &gt;&gt; &quot;Actions&quot;) for
-specified unitClassName and his targetAnimation.
+specified unitClassName and its targetAnimation.
 <strong>Example:
 </strong>    player playMove ([typeOf player, animationState player] invoke(ReadActions) &gt;&gt; &quot;reloadMagazine&quot;)
     // is the same as that:
@@ -476,9 +476,10 @@ Returns first found turret path for specified weapon.
 
 <var>func(IsInheritFrom)</var> <b>= {
     private [</b><i>"_curr"</i><b>,</b> <i>"_parent"</i><b>,</b> <i>"_void"</i><b>];</b>
-    <var>_curr</var> <b>=</b> <var>_this</var> <em>select</em> 0<b>;</b>
-    <var>_parent</var> <b>=</b> <var>_this</var> <em>select</em> 1<b>;</b>
-    <var>_void</var> <b>=</b> <em>configFile</em> >> <i>"*"</i><b>;
+    <var>_curr</var> <b>= arg(</b>0<b>);</b>
+    <var>_parent</var> <b>= arg(</b>1<b>);</b>
+    <s>// the void config reference</s>
+    <var>_void</var> <b>=</b> <em>configFile</em> >> <i>";)"</i><b>;
     while { true }  do {
         if (</b><var>_curr</var> <b>==</b> <var>_void</var><b>) exitwith { false };
         if (</b><var>_curr</var> <b>==</b> <var>_parent</var><b>) exitwith { true };</b>
@@ -654,7 +655,9 @@ Returns first found turret path for specified weapon.
             }
         );</b>
         <var>_result</var>
-    <b>} catch {</b> <var>_exception</var> <b>}
+    <b>} catch {</b>
+        <var>_exception</var>
+    <b>}
 };</b>
 
 <s>//
@@ -900,7 +903,7 @@ Returns first found turret path for specified weapon.
 // Syntax:
 //     [string unitClassName, string targetAnimation] invoke(ReadActions)
 // Return the entrypoint to class Actions (configFile >> _unitClassNameMoves >> "Actions") for
-// specified unitClassName and his targetAnimation.
+// specified unitClassName and its targetAnimation.
 // Example:
 //     player playMove ([typeOf player, animationState player] invoke(ReadActions) >> "reloadMagazine")
 //     // is the same as that:
@@ -1219,7 +1222,7 @@ Returns first found turret path for specified weapon.
 };</b>
 
 <var>func(GetUnitWeaponsExt)</var> <b>= if (</b><em>count</em> <em>supportInfo</em> <i>"*:getweaponcargo*"</i> <b>!=</b> 0<b>) then {{
-    (</b><em>weapons</em> <var>_this</var><b>)</b> + <b>(</b><em>getWeaponCargo</em> <var>_this</var> <em>select</em> 0<b>)
+    (</b><em>weapons</em> <var>_this</var><b>)</b> + <b>((</b><em>getWeaponCargo</em> <var>_this</var><b>)</b> <em>select</em> 0<b>)
 }} else {{
     (</b><em>weapons</em> <var>_this</var><b>)
 }};</b>
