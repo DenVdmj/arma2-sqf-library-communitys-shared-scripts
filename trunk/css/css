@@ -150,6 +150,7 @@
 #define __isString(v)   (typeName(v) == "STRING")
 #define __isTask(v)     (typeName(v) == "TASK")
 #define __isText(v)     (typeName(v) == "TEXT")
+#define __isTeamMember(v) (typeName(v) == "TEAM_MEMBER")
 
 #define __isBoolean(v)  __isBool(v)
 #define __isFunction(v) __isCode(v)

@@ -137,7 +137,7 @@ func(Azimuth) = {
 // Arguments:
 //
 //    direction    — Source angle (Number) or a direction vector (Vector Array) or
-//                   an two items array: [from_position, to_position]
+//                   a two items array: [from_position, to_position]
 //    limit        — The number of compass points (4, 8, 16, 32). Default: 16.
 //    format       — Format string, where:
 //                     %1 — Abbreviation of the compass points (the Dutch term (old international term)):

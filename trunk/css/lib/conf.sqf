@@ -655,8 +655,8 @@ func(WeaponInHand) = {
 // Syntax:
 //     (object soldier) invoke(CurrentMuzzle)
 // Returns current muzzle of weapons in the hands of soldiers.
-// if current muzzle is void string, returns the first muzzle of the current weapon. String type.
-// This function workaround for currentMuzzle's bug when void string returns for yet no shooted AI
+// If current muzzle is void string, returns the first muzzle of the current weapon. String type.
+// This function is workaround for a currentMuzzle's bug when void string returns for yet no shooted AI
 //
 
 func(CurrentMuzzle) = {

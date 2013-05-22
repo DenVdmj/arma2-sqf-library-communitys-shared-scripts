@@ -61,10 +61,10 @@ func(SetDate) = {
 // You can use the following placeholders in the format string:
 //     %1 — year
 //     %2 — month number
-//    %12 — month string (localized: "January", "Leden", "Januar",
-//           "Styczen", "Январь", "Janvier", "Enero", "Gennaio")
-//    %22 — month string, genitive case for slavic languages. (localized: "january",
-//           "ledna", "januar", "stycznia", "января", "janvier", "enero", "gennaio")
+//    %12 — month string 
+//          (localized: "Январь", "Јануар", "Januar")
+//    %22 — month string, genitive case for slavic languages, non-capital form for all languages.
+//          (localized: "января", "јануара", "januara")
 //     %3 — day
 //     %4 — hour
 //    %44 — hour as AM/PM (ante/post meridiem)
