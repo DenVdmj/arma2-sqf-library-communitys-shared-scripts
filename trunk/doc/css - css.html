@@ -187,7 +187,8 @@
 // for, map, grep
 //</s>
 
-<em>#define</em><em> __forConf(list)</em> <b>call{private</b><i>"_0n_"</i><b>;</b><var>_0n_</var><b>=</b><em>list</em><b>;for</b><i>"_i"</i><b>from(</b>0<b>)to(</b><em>count</em> <var>_0n_</var>-1<b>)do{private</b><i>"_x"</i><b>;</b><var>_x</var><b>=</b><var>_0n_</var> <em>select</em> <var>_i</var><b>;private</b><i>"_0n_"</i><b>;</b><var>_x</var> <b>call</b> <var>_this</var><b>}}</b>
+<em>#define</em><em> __for(list)</em> <b>call{private</b><i>"_0n_"</i><b>;</b><var>_0n_</var><b>=</b><em>list</em><b>;for</b><i>"_i"</i><b>from(</b>0<b>)to(</b><em>count</em> <var>_0n_</var>-1<b>)do{private</b><i>"_x"</i><b>;</b><var>_x</var><b>=</b><var>_0n_</var> <em>select</em> <var>_i</var><b>;private</b><i>"_0n_"</i><b>;</b><var>_x</var> <b>call</b> <var>_this</var><b>}}</b>
+<em>#define</em><em> __forConf(list)</em> <tt>__for</tt><b>(</b><em>list</em><b>)</b>
 <em>#define</em><em> __mapArray(list)</em> <b>call{private</b><i>"_0r_"</i><b>;</b><var>_0r_</var><b>=[];{</b><var>_0r_</var> <em>set</em><b>[</b><em>count</em> <var>_0r_</var><b>,call{private</b><i>"_0r_"</i><b>;</b><var>_x</var> <b>call</b> <var>_this</var><b>}]}foreach(</b><em>list</em><b>);</b><var>_0r_</var><b>}</b>
 <em>#define</em><em> __grepArray(list)</em> <b>call{private</b><i>"_0r_"</i><b>;</b><var>_0r_</var><b>=[];{if(call{private</b><i>"_0r_"</i><b>;</b><var>_x</var> <b>call</b> <var>_this</var><b>})then{</b><tt>__push</tt><b>(</b><var>_0r_</var><b>,</b><var>_x</var><b>)}}foreach(</b><em>list</em><b>);</b><var>_0r_</var><b>}</b>
 <em>#define</em><em> __map(list)</em> <b>call{private[</b><i>"_0r_"</i><b>,</b><i>"_0n_"</i><b>];</b><var>_0r_</var><b>=[];</b><var>_0n_</var><b>=</b><em>list</em><b>;for</b><i>"_i"</i><b>from(</b>0<b>)to(</b><em>count</em> <var>_0n_</var>-1<b>)do{private</b><i>"_x"</i><b>;</b><var>_x</var><b>=</b><var>_0n_</var> <em>select</em> <var>_i</var><b>;</b><var>_0r_</var> <em>set</em><b>[</b><em>count</em> <var>_0r_</var><b>,call{private[</b><i>"_0r_"</i><b>,</b><i>"_0n_"</i><b>];call</b> <var>_this</var><b>}]};</b><var>_0r_</var><b>}</b>
@@ -212,6 +213,7 @@
 <em>#define</em><em> __isString(v)</em>   <b>(</b><em>typeName</em><b>(</b>v<b>) ==</b> <i>"STRING"</i><b>)</b>
 <em>#define</em><em> __isTask(v)</em>     <b>(</b><em>typeName</em><b>(</b>v<b>) ==</b> <i>"TASK"</i><b>)</b>
 <em>#define</em><em> __isText(v)</em>     <b>(</b><em>typeName</em><b>(</b>v<b>) ==</b> <i>"TEXT"</i><b>)</b>
+<em>#define</em><em> __isTeamMember(v)</em> <b>(</b><em>typeName</em><b>(</b>v<b>) ==</b> <i>"TEAM_MEMBER"</i><b>)</b>
 
 <em>#define</em><em> __isBoolean(v)</em>  <tt>__isBool</tt><b>(</b>v<b>)</b>
 <em>#define</em><em> __isFunction(v)</em> <tt>__isCode</tt><b>(</b>v<b>)</b>

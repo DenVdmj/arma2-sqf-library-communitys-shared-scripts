@@ -359,8 +359,8 @@ Returns weapons in the hands of soldiers. String type.<hr /><h2>Function func(Cu
 <strong>Syntax:
 </strong>    (object soldier) invoke(CurrentMuzzle)
 Returns current muzzle of weapons in the hands of soldiers.
-if current muzzle is void string, returns the first muzzle of the current weapon. String type.
-This function workaround for currentMuzzle's bug when void string returns for yet no shooted AI<hr /><h2>Function func(GetWeaponByTypes)</h2>
+If current muzzle is void string, returns the first muzzle of the current weapon. String type.
+This function is workaround for a currentMuzzle's bug when void string returns for yet no shooted AI<hr /><h2>Function func(GetWeaponByTypes)</h2>
 <strong>Syntax:
 </strong>    [array weaponsList, array weaponTypeList] invoke(GetWeaponByTypes)
     [object soldier, array weaponTypeList] invoke(GetWeaponByTypes)
@@ -1074,8 +1074,8 @@ Returns first found turret path for specified weapon.
 // Syntax:
 //     (object soldier) invoke(CurrentMuzzle)
 // Returns current muzzle of weapons in the hands of soldiers.
-// if current muzzle is void string, returns the first muzzle of the current weapon. String type.
-// This function workaround for currentMuzzle's bug when void string returns for yet no shooted AI
+// If current muzzle is void string, returns the first muzzle of the current weapon. String type.
+// This function is workaround for a currentMuzzle's bug when void string returns for yet no shooted AI
 //</s>
 
 <var>func(CurrentMuzzle)</var> <b>= {

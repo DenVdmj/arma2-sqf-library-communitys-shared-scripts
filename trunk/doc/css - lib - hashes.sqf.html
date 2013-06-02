@@ -1,0 +1,205 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>«Community`s Shared Scripts» SQF-Library - /css/lib/hashes.sqf</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<style>
+  html {
+    font-family: Helvetica, Arial, sans-serif;
+  }
+  body {
+    margin: auto;
+    width: 50em;
+  }
+  * {
+    cursor: default;
+  }
+  pre {
+    padding: 1em 0;
+  }
+  pre.code,
+  pre.code b,
+  pre.code i,
+  pre.code s,
+  pre.code u,
+  pre.code tt,
+  pre.code em,
+  pre.code var {
+    text-decoration: none;
+    font: normal normal 14px/150% "Consolas", monospace;
+  }
+  pre.code b  { color: #009; }
+  pre.code i  { color: #080; }
+  pre.code s  { color: #BBB; font-style: italic; }
+  pre.code u  { color: #0A0; }
+  pre.code tt { color: #994; }
+  pre.code em { color: #A00; }
+  pre.code var { color: #5E5E5E; }
+
+  hr {
+    margin: 1em 0 .1em 0;
+    border: 1px dashed #EEE;
+  }
+  #unfoldcode:hover {
+    cursor: hand;
+    color: red
+  }
+  h2, h3, h4 {
+    margin: .5em 0;
+  }
+  h2 {
+    margin: 0;
+    padding: .2em .1em;
+    background: #EEE;
+  }
+</style>
+</head>
+<body>
+<h1>/css/lib/hashes.sqf</h1>
+<p><small><i>This documentation was generated automatically from the source code.</i></small></p>
+<pre class="code">
+<hr /><h2>Function func(HashCreate)</h2>
+<strong>Syntax:
+</strong>    _someHash = invoke(HashCreate);<hr /><h2>Function func(HashDelete)</h2>
+<strong>Syntax:
+</strong>    _someHash invoke(HashDelete);<hr /><h2>Function func(HashSet)</h2>
+<strong>Syntax:
+</strong>    [_someHash, _newKey, _newValue] invoke(HashSet)<hr /><h2>Function func(HashGet)</h2>
+<strong>Syntax:
+</strong>    _value = [_someHash, _key] invoke(HashGet)<hr /><h2>Function func(HashExist)</h2>
+<strong>Syntax:
+</strong>    _isKeyAExist = [_someHash, &quot;keyA&quot;] invoke(HashExist)<hr /><h2>Function func(HashRemoveKey)</h2>
+<strong>Syntax:
+</strong>    [_someHash, _someKey] invoke(HashRemoveKey)<hr /><h2>Function func(HashKeys)</h2>
+<strong>Syntax:
+</strong>    _keys = _someHash invoke(HashKeys);<hr /><h2>Function func(HashValues)</h2>
+<strong>Syntax:
+</strong>    _values = _someHash invoke(HashValues);<hr />
+<a
+  href="#unfoldcode"
+  id="unfoldcode"
+  onclick="
+    var el = document.getElementById('sqfsrc');
+    el.style.display = el.style.display == '' ? 'none' : ''
+  "
+>Source of &ldquo;css/lib/hashes.sqf&rdquo;</a>
+<div style='display: none' id='sqfsrc'>
+<h2>&ldquo;css/lib/hashes.sqf&rdquo;</h2>
+
+
+<s>// SQF
+//
+// sqf-library "\css\lib\hashes.sqf"
+// Copyright (c) 2009-2013 Denis Usenko (DenVdmj)
+// MIT-style license
+//</s>
+
+<em>#include "\css\css"</em>
+<em>#define</em><em> __PATH__</em> \css\lib
+
+<s>//
+// Function func(HashCreate)
+// Syntax:
+//     _someHash = invoke(HashCreate);
+//</s>
+
+<var>func(HashCreate)</var> <b>= {
+    [</b><i>"logic"</i> <em>createVehicleLocal</em> <b>[</b>0<b>,</b>0<b>,</b>0<b>], []]
+};</b>
+
+<s>//
+// Function func(HashDelete)
+// Syntax:
+//     _someHash invoke(HashDelete);
+//</s>
+
+<var>func(HashDelete)</var> <b>= {</b>
+    <em>deleteVehicle</em> <b>arg(</b>0<b>);</b>
+    <var>_this</var> <em>set</em> <b>[</b>0<b>, nil];</b>
+    <var>_this</var> <em>set</em> <b>[</b>1<b>, nil];
+};</b>
+
+<s>//
+// Function func(HashSet)
+// Syntax:
+//     [_someHash, _newKey, _newValue] invoke(HashSet)
+//</s>
+
+<var>func(HashSet)</var> <b>= {
+    private [</b><i>"_hash"</i><b>,</b> <i>"_key"</i><b>,</b> <i>"_value"</i><b>];</b>
+    <var>_hash</var> <b>= arg(</b>0<b>);</b>
+    <var>_key</var> <b>= arg(</b>1<b>);</b>
+    <var>_value</var> <b>= arg(</b>2<b>);
+    if (</b><em>isNil</em> <var>func(HashGet)</var><b>) then {</b>
+        <tt>__push</tt><b>(</b><var>_hash</var> <em>select</em> 1<b>,</b> <var>_key</var><b>);
+    };
+    (</b><var>_hash</var> <em>select</em> 0<b>)</b> <em>setVariable</em> <b>[</b><var>_key</var><b>,</b> <var>_value</var><b>];
+};</b>
+
+<s>//
+// Function func(HashGet)
+// Syntax:
+//     _value = [_someHash, _key] invoke(HashGet)
+//</s>
+
+<var>func(HashGet)</var> <b>= {
+    (arg(</b>0<b>)</b> <em>select</em> 0<b>)</b> <em>getVariable</em> <b>arg(</b>1<b>);
+};</b>
+
+<s>//
+// Function func(HashExist)
+// Syntax:
+//     _isKeyAExist = [_someHash, "keyA"] invoke(HashExist)
+//</s>
+
+<var>func(HashExist)</var> <b>= {
+    !</b><em>isNil</em> <var>func(HashGet)</var><b>;
+};</b>
+
+<s>//
+// Function func(HashRemoveKey)
+// Syntax:
+//     [_someHash, _someKey] invoke(HashRemoveKey)
+//</s>
+
+<var>func(HashRemoveKey)</var> <b>= {
+    private [</b><i>"_hash"</i><b>,</b> <i>"_key"</i><b>];</b>
+    <var>_hash</var> <b>= arg(</b>0<b>);</b>
+    <var>_key</var> <b>= arg(</b>1<b>);
+    (</b><var>_hash</var> <em>select</em> 0<b>)</b> <em>setVariable</em> <b>[</b><var>_key</var><b>, nil];</b>
+    <var>_hash</var> <em>set</em> <b>[</b>1<b>, (</b><var>_hash</var> <em>select</em> 1<b>)</b> - <b>[</b><var>_key</var><b>]];
+};</b>
+
+<s>//
+// Function func(HashKeys)
+// Syntax:
+//     _keys = _someHash invoke(HashKeys);
+//</s>
+
+<var>func(HashKeys)</var> <b>= {</b>
+    +<b>arg(</b>1<b>);
+};</b>
+
+<s>//
+// Function func(HashValues)
+// Syntax:
+//     _values = _someHash invoke(HashValues);
+//</s>
+
+<var>func(HashValues)</var> <b>= {
+    private</b> <i>"_values"</i><b>;</b>
+    <var>_values</var> <b>= [];
+    {</b>
+        <var>_values</var> <em>set</em> <b>[</b><em>count</em> <var>_values</var><b>, [</b><var>_this</var><b>,</b> <var>_x</var><b>] invoke(</b>HashGet<b>)]
+    } foreach (</b><var>_this</var> <b>invoke(</b>HashKeys<b>));</b>
+    <var>_values</var>
+<b>};</b>
+
+
+
+
+<hr />
+</pre>
+<p><small><i>This documentation was generated automatically from the source code.</i></small></p>
+</body>
+</html>
