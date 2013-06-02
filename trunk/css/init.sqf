@@ -5,7 +5,7 @@
 // MIT-style license
 //
 
-if ( isNil {missionNamespace getVariable "/CSS/IsPresent"} ) then {
+if (isNil {missionNamespace getVariable "/CSS/IsPresent"}) then {
     missionNamespace setVariable ["/CSS/IsPresent", "Бдыщщ!"];
     private "_cssLibPath";
     _cssLibPath = ((if (isClass (configFile >> "CfgPatches" >> "css_lib")) then {"\"} else {""}) + "css\lib\");

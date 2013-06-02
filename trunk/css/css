@@ -125,7 +125,8 @@
 // for, map, grep
 //
 
-#define __forConf(list) call{private"_0n_";_0n_=list;for"_i"from(0)to(count _0n_-1)do{private"_x";_x=_0n_ select _i;private"_0n_";_x call _this}}
+#define __for(list) call{private"_0n_";_0n_=list;for"_i"from(0)to(count _0n_-1)do{private"_x";_x=_0n_ select _i;private"_0n_";_x call _this}}
+#define __forConf(list) __for(list)
 #define __mapArray(list) call{private"_0r_";_0r_=[];{_0r_ set[count _0r_,call{private"_0r_";_x call _this}]}foreach(list);_0r_}
 #define __grepArray(list) call{private"_0r_";_0r_=[];{if(call{private"_0r_";_x call _this})then{__push(_0r_,_x)}}foreach(list);_0r_}
 #define __map(list) call{private["_0r_","_0n_"];_0r_=[];_0n_=list;for"_i"from(0)to(count _0n_-1)do{private"_x";_x=_0n_ select _i;_0r_ set[count _0r_,call{private["_0r_","_0n_"];call _this}]};_0r_}

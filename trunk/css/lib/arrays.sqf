@@ -99,7 +99,7 @@ func(GetUnduplicatedArray) = {
 // Function func(RemoveItemsFromArray)
 // Syntax:
 //     [array list, arrayOfAnyValues removedEntries] invoke(RemoveItemsFromArray)
-// Deletes all specified entries from specified array. Returns the same modified array.
+// Deletes all specified entries from a specified array. Returns the same modified array.
 // Use for cases where it is important to keep a reference to an array.
 //
 
