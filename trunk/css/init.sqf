@@ -5,20 +5,29 @@
 // MIT-style license
 //
 
-if (isNil {missionNamespace getVariable "/CSS/IsPresent"}) then {
+if (isNil { missionNamespace getVariable "/CSS/IsPresent" }) then {
     missionNamespace setVariable ["/CSS/IsPresent", "Бдыщщ!"];
-    private "_cssLibPath";
-    _cssLibPath = ((if (isClass (configFile >> "CfgPatches" >> "css_lib")) then {"\"} else {""}) + "css\lib\");
-    { call compile preprocessFileLineNumbers (_cssLibPath + _x) } foreach [
-        "arrays.sqf",
-        "common.sqf",
-        "conf.sqf",
-        "date.sqf",
-        "geo.sqf",
-        "gui.sqf",
-        "mp.sqf",
-        "strings.sqf",
-        "vectors.sqf",
-        "vehicles.sqf"
-    ];
+    (
+        if (isClass (configFile >> "CfgPatches" >> "css_lib")) then {
+            "\css\lib\"
+        } else {
+            "css\"
+        }
+    ) call {
+        {
+            call compile preprocessFileLineNumbers (_this + _x)
+        } foreach [
+            "arrays.sqf",
+            "common.sqf",
+            "conf.sqf",
+            "date.sqf",
+            "geo.sqf",
+            "gui.sqf",
+            "hashes.sqf",
+            "mp.sqf",
+            "strings.sqf",
+            "vectors.sqf",
+            "vehicles.sqf"
+        ];
+    }
 };

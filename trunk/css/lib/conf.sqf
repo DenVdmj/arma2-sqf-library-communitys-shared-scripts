@@ -610,7 +610,7 @@ func(WeaponInHand) = {
     _upDegree = _this invoke(ReadUpDegree);
     {
         if (_upDegree in (
-        /*
+
             switch (_x invoke(ReadWeaponType)) do {
                 case __WeaponSlotPrimary: {
                     [__ManPosCrouch, __ManPosCombat, __ManPosStand, __ManPosLying]
@@ -629,7 +629,7 @@ func(WeaponInHand) = {
                 };
                 default {[]};
             }
-        */
+            /*
             (_x invoke(ReadWeaponType)) call {
                 if (_this == __WeaponSlotPrimary || _this == __WeaponSlotMachinegun) exitwith {
                     [__ManPosCrouch, __ManPosCombat, __ManPosStand, __ManPosLying]
@@ -645,6 +645,7 @@ func(WeaponInHand) = {
                 };
                 []
             }
+            */
         )) exitwith { _x };
         ""
     } foreach weapons _this
@@ -669,8 +670,8 @@ func(CurrentMuzzle) = {
 //
 // Function func(GetWeaponByTypes)
 // Syntax:
-//     [array weaponsList, array weaponTypeList] invoke(GetWeaponByTypes)
-//     [object soldier, array weaponTypeList] invoke(GetWeaponByTypes)
+//     [array weaponsList, array weaponTypesList] invoke(GetWeaponByTypes)
+//     [object soldier, array weaponTypesList] invoke(GetWeaponByTypes)
 // Returns weapon with the specified weapon type. String type.
 //
 

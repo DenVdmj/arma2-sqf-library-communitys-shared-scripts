@@ -159,4 +159,11 @@
 #define __isNumber(v)   __isScalar(v)
 #define __isSGML(v)     __isText(v)
 
+//
+//  Workaround for lnbValue bug
+//
+
+#define __lnbRowSize(lnb) ((lnbSize(lnb))select 1)
+#define __lnbValue(lnb,row,col) ((lnb)lbValue((row)*__lnbRowSize(lnb)+(col)))
+
 #endif
