@@ -221,6 +221,13 @@
 <em>#define</em><em> __isNumber(v)</em>   <tt>__isScalar</tt><b>(</b>v<b>)</b>
 <em>#define</em><em> __isSGML(v)</em>     <tt>__isText</tt><b>(</b>v<b>)</b>
 
+<s>//
+//  Workaround for lnbValue bug
+//</s>
+
+<em>#define</em><em> __lnbRowSize(lnb)</em> <b>((</b><em>lnbSize</em><b>(</b>lnb<b>))</b><em>select</em> 1<b>)</b>
+<em>#define</em><em> __lnbValue(lnb,row,col)</em> <b>((</b>lnb<b>)</b><em>lbValue</em><b>((</b>row<b>)</b>*<tt>__lnbRowSize</tt><b>(</b>lnb<b>)</b>+<b>(</b>col<b>)))</b>
+
 <em>#endif</em>
 
 </pre>
