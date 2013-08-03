@@ -80,7 +80,7 @@ func(CanonizeSet) = {
 //
 // Function func(GetUnduplicatedArray)
 // Syntax:
-//     _arrayWithDuplicates invoke(UnduplicatedArray)
+//     _arrayWithDuplicates invoke(GetUnduplicatedArray)
 // Deletes all duplicate entries in array. Returns new array.
 //
 

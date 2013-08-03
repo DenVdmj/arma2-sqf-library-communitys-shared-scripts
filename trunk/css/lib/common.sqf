@@ -92,6 +92,79 @@ func(AddAction) = {
 };
 
 //
+// Function func(GetNearestFromList)
+// Syntax:
+//     _nearestObject = [_objectList, _position] invoke(GetNearestFromList)
+// Description:
+//     Returns nearest object to given position
+//
+//
+
+func(GetNearestFromList) = {
+    private ["_position", "_nearestUnitDistance", "_nearestUnit", "_distance"];
+    _position = arg(1);
+    _nearestUnitDistance = argOr(2, __mathInf);
+    _nearestUnit = objNull;
+    {
+        _distance = _position distance _x;
+        if (_distance < _nearestUnitDistance) then {
+            _nearestUnit = _x;
+            _nearestUnitDistance = _distance;
+        };
+    } foreach arg(0);
+    _nearestUnit;
+};
+
+func(IsEqual) = {
+    private ["_a", "_b"];
+    _a = arg(0);
+    _b = arg(1);
+
+    if (isNil "_a") exitWith {
+        isNil "_b"
+    };
+
+    if (typeName _a != typeName _b) exitWith {
+        false
+    };
+
+    if (typeName _a != "ARRAY") exitWith {
+        _a in [_b]
+    };
+
+    if (count _a != count _b) exitWith {
+        false
+    };
+
+    for "_i" from 0 to count _a - 1 do {
+        if !([_a select _i, _b select _i] call func_isEqual_2) exitWith {
+            false
+        };
+        true;
+    };
+};
+
+//
+// Function func(GetSquadNumber)
+// Syntax:
+//     _someUnit invoke(GetSquadNumber)
+// Description:
+//     Returns squad numberof given unit.
+//
+
+func(GetSquadNumber) = {
+    private ["_varName", "_strUnit", "_index"];
+    _varName = vehicleVarName _this;
+    _this setVehicleVarName "";
+    _strUnit = toArray str _this;
+    _this setVehicleVarName _varName;
+    _index = _strUnit find 58;
+    if (_index < 0) exitwith { -1 };
+    _strUnit set [_index, 62];
+    parseNumber str parseText ("< " + toString _strUnit);
+};
+
+//
 // Function func(CallOnOneTick)
 // Syntax:
 //     _result = [_sqfFunction, _arguments] invoke(CallOnOneTick)
