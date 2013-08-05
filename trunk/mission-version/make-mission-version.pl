@@ -7,6 +7,7 @@ for my $filename (
     <../css/css>,
     <../css/lib/*.sqf>,
     <../css/lib/*.sqs>,
+    <../css/lib/*.macro>,
     <../css/init.sqf>,
     <../css/*.macro>
 ) {

@@ -1,0 +1,116 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>«Community`s Shared Scripts» SQF-Library - /css/lib/uiEvents.onload.sqf</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<style>
+  html {
+    font-family: Helvetica, Arial, sans-serif;
+  }
+  body {
+    margin: auto;
+    width: 50em;
+  }
+  * {
+    cursor: default;
+  }
+  pre {
+    padding: 1em 0;
+  }
+  pre.code,
+  pre.code b,
+  pre.code i,
+  pre.code s,
+  pre.code u,
+  pre.code tt,
+  pre.code em,
+  pre.code var {
+    text-decoration: none;
+    font: normal normal 14px/150% "Consolas", monospace;
+  }
+  pre.code b  { color: #009; }
+  pre.code i  { color: #080; }
+  pre.code s  { color: #BBB; font-style: italic; }
+  pre.code u  { color: #0A0; }
+  pre.code tt { color: #994; }
+  pre.code em { color: #A00; }
+  pre.code var { color: #5E5E5E; }
+
+  hr {
+    margin: 1em 0 .1em 0;
+    border: 1px dashed #EEE;
+  }
+  #unfoldcode:hover {
+    cursor: hand;
+    color: red
+  }
+  h2, h3, h4 {
+    margin: .5em 0;
+  }
+  h2 {
+    margin: 0;
+    padding: .2em .1em;
+    background: #EEE;
+  }
+</style>
+</head>
+<body>
+<h1>/css/lib/uiEvents.onload.sqf</h1>
+<p><small><i>This documentation was generated automatically from the source code.</i></small></p>
+<pre class="code">
+
+
+
+<em>#include "\css\css"</em>
+<em>#include "uiEvents.macro"</em>
+
+<b>(call {
+    private [</b><i>"_dspl"</i><b>,</b> <i>"_arr"</i><b>,</b> <i>"_idd"</i><b>];</b>
+
+    <var>_dspl</var> <b>= arg(</b>0<b>);</b>
+    <var>_arr</var> <b>=</b> <em>toArray</em> <em>str</em> <var>_dspl</var><b>;
+
+    for</b> <i>"_i"</i> <b>from</b> 0 <b>to</b> 8 <b>do {</b>
+        <var>_arr</var> <em>set</em> <b>[</b><var>_i</var><b>,</b> 0x30<b>]
+    };</b>
+
+    <var>_idd</var> <b>=</b> <em>parseNumber</em> <em>toString</em> <var>_arr</var><b>;
+
+    {</b>
+        <var>_dspl</var> <em>displayAddEventHandler</em> <b>[</b><var>_x</var><b>,</b> <em>format</em> <b>[</b><i>'[%1, "%2", _this] call (missionNamespace getVariable __funcCommonEH)'</i><b>,</b> <var>_idd</var><b>,</b> <var>_x</var><b>]];
+    } foreach (</b><tt>__supportedEHTypes</tt> - <b>[</b><i>"load"</i><b>]);
+
+    if (</b><em>isNil</em> <tt>__ehID</tt><b>(</b><var>_idd</var><b>)) then {</b>
+        <em>missionNamespace</em> <em>setVariable</em> <b>[</b><tt>__ehID</tt><b>(</b><var>_idd</var><b>),</b> 0<b>];
+    };
+
+    if (</b><em>isNil</em> <tt>__funcCommonEH</tt><b>) then {</b>
+        <em>missionNamespace</em> <em>setVariable</em> <b>[</b><tt>__funcCommonEH</tt><b>, {
+            try {
+                {
+                    ((</b>+<b>arg(</b>2<b>)) call</b> <var>_x</var><b>) call {
+                        if (</b><em>typeName</em> <var>_this</var> <b>==</b> <em>typeName</em> <b>true) then {
+                            if (</b><var>_this</var><b>) then {
+                                throw true
+                            }
+                        }
+                    }
+                } foreach (</b><em>missionNamespace</em> <em>getVariable</em> <tt>__ehList</tt><b>(arg(</b>0<b>),arg(</b>1<b>)));
+                false
+            } catch {</b>
+                <var>_exception</var>
+            <b>}
+        }];
+    };
+
+    [</b><var>_idd</var><b>,</b> <i>"load"</i><b>,</b> <var>_this</var><b>]
+
+}) call {</b>
+    <var>_this</var> <b>call (</b><em>missionNamespace</em> <em>getVariable</em> <tt>__funcCommonEH</tt><b>);
+};</b>
+
+
+</pre>
+<p><small><i>This documentation was generated automatically from the source code.</i></small></p>
+</body>
+</html>

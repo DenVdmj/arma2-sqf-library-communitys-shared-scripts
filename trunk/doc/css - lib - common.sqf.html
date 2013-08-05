@@ -117,7 +117,15 @@ Return value:
         //, hideOnUse
         //, shortcut
         //, condition
-    ] invoke(AddAction);<hr /><h2>Function func(CallOnOneTick)</h2>
+    ] invoke(AddAction);<hr /><h2>Function func(GetNearestFromList)</h2>
+<strong>Syntax:
+</strong>    _nearestObject = [_objectList, _position] invoke(GetNearestFromList)
+<strong>Description:
+</strong>    Returns nearest object to given position<hr /><h2>Function func(GetSquadNumber)</h2>
+<strong>Syntax:
+</strong>    _someUnit invoke(GetSquadNumber)
+<strong>Description:
+</strong>    Returns squad numberof given unit.<hr /><h2>Function func(CallOnOneTick)</h2>
 <strong>Syntax:
 </strong>    _result = [_sqfFunction, _arguments] invoke(CallOnOneTick)
 <strong>Description:
@@ -235,6 +243,79 @@ Returns html-style color string<hr />
     <var>_rOperand</var> <em>set</em> <b>[</b>1<b>,</b> <i>'__PATH__\action.sqs'</i><b>];</b>
     <s>// add action</s>
     <var>_lOperand</var> <em>addAction</em> <var>_rOperand</var><b>;
+};</b>
+
+<s>//
+// Function func(GetNearestFromList)
+// Syntax:
+//     _nearestObject = [_objectList, _position] invoke(GetNearestFromList)
+// Description:
+//     Returns nearest object to given position
+//
+//</s>
+
+<var>func(GetNearestFromList)</var> <b>= {
+    private [</b><i>"_position"</i><b>,</b> <i>"_nearestUnitDistance"</i><b>,</b> <i>"_nearestUnit"</i><b>,</b> <i>"_distance"</i><b>];</b>
+    <var>_position</var> <b>= arg(</b>1<b>);</b>
+    <var>_nearestUnitDistance</var> <b>= argOr(</b>2<b>,</b> <tt>__mathInf</tt><b>);</b>
+    <var>_nearestUnit</var> <b>=</b> <em>objNull</em><b>;
+    {</b>
+        <var>_distance</var> <b>=</b> <var>_position</var> <em>distance</em> <var>_x</var><b>;
+        if (</b><var>_distance</var> &lt; <var>_nearestUnitDistance</var><b>) then {</b>
+            <var>_nearestUnit</var> <b>=</b> <var>_x</var><b>;</b>
+            <var>_nearestUnitDistance</var> <b>=</b> <var>_distance</var><b>;
+        };
+    } foreach arg(</b>0<b>);</b>
+    <var>_nearestUnit</var><b>;
+};</b>
+
+<var>func(IsEqual)</var> <b>= {
+    private [</b><i>"_a"</i><b>,</b> <i>"_b"</i><b>];</b>
+    <var>_a</var> <b>= arg(</b>0<b>);</b>
+    <var>_b</var> <b>= arg(</b>1<b>);
+
+    if (</b><em>isNil</em> <i>"_a"</i><b>) exitWith {</b>
+        <em>isNil</em> <i>"_b"</i>
+    <b>};
+
+    if (</b><em>typeName</em> <var>_a</var> <b>!=</b> <em>typeName</em> <var>_b</var><b>) exitWith {
+        false
+    };
+
+    if (</b><em>typeName</em> <var>_a</var> <b>!=</b> <i>"ARRAY"</i><b>) exitWith {</b>
+        <var>_a</var> <em>in</em> <b>[</b><var>_b</var><b>]
+    };
+
+    if (</b><em>count</em> <var>_a</var> <b>!=</b> <em>count</em> <var>_b</var><b>) exitWith {
+        false
+    };
+
+    for</b> <i>"_i"</i> <b>from</b> 0 <b>to</b> <em>count</em> <var>_a</var> - 1 <b>do {
+        if !([</b><var>_a</var> <em>select</em> <var>_i</var><b>,</b> <var>_b</var> <em>select</em> <var>_i</var><b>] call</b> func_isEqual_2<b>) exitWith {
+            false
+        };
+        true;
+    };
+};</b>
+
+<s>//
+// Function func(GetSquadNumber)
+// Syntax:
+//     _someUnit invoke(GetSquadNumber)
+// Description:
+//     Returns squad numberof given unit.
+//</s>
+
+<var>func(GetSquadNumber)</var> <b>= {
+    private [</b><i>"_varName"</i><b>,</b> <i>"_strUnit"</i><b>,</b> <i>"_index"</i><b>];</b>
+    <var>_varName</var> <b>=</b> <em>vehicleVarName</em> <var>_this</var><b>;</b>
+    <var>_this</var> <em>setVehicleVarName</em> <i>""</i><b>;</b>
+    <var>_strUnit</var> <b>=</b> <em>toArray</em> <em>str</em> <var>_this</var><b>;</b>
+    <var>_this</var> <em>setVehicleVarName</em> <var>_varName</var><b>;</b>
+    <var>_index</var> <b>=</b> <var>_strUnit</var> <em>find</em> 58<b>;
+    if (</b><var>_index</var> &lt; 0<b>) exitwith {</b> -1 <b>};</b>
+    <var>_strUnit</var> <em>set</em> <b>[</b><var>_index</var><b>,</b> 62<b>];</b>
+    <em>parseNumber</em> <em>str</em> <em>parseText</em> <b>(</b><i>"&lt; "</i> + <em>toString</em> <var>_strUnit</var><b>);
 };</b>
 
 <s>//

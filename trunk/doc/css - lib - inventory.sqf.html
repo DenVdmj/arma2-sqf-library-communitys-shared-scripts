@@ -1,0 +1,120 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>«Community`s Shared Scripts» SQF-Library - /css/lib/inventory.sqf</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<style>
+  html {
+    font-family: Helvetica, Arial, sans-serif;
+  }
+  body {
+    margin: auto;
+    width: 50em;
+  }
+  * {
+    cursor: default;
+  }
+  pre {
+    padding: 1em 0;
+  }
+  pre.code,
+  pre.code b,
+  pre.code i,
+  pre.code s,
+  pre.code u,
+  pre.code tt,
+  pre.code em,
+  pre.code var {
+    text-decoration: none;
+    font: normal normal 14px/150% "Consolas", monospace;
+  }
+  pre.code b  { color: #009; }
+  pre.code i  { color: #080; }
+  pre.code s  { color: #BBB; font-style: italic; }
+  pre.code u  { color: #0A0; }
+  pre.code tt { color: #994; }
+  pre.code em { color: #A00; }
+  pre.code var { color: #5E5E5E; }
+
+  hr {
+    margin: 1em 0 .1em 0;
+    border: 1px dashed #EEE;
+  }
+  #unfoldcode:hover {
+    cursor: hand;
+    color: red
+  }
+  h2, h3, h4 {
+    margin: .5em 0;
+  }
+  h2 {
+    margin: 0;
+    padding: .2em .1em;
+    background: #EEE;
+  }
+</style>
+</head>
+<body>
+<h1>/css/lib/inventory.sqf</h1>
+<p><small><i>This documentation was generated automatically from the source code.</i></small></p>
+<pre class="code">
+
+
+<s>// SQF
+//
+// sqf-library "\css\lib\inventory.sqf"
+// Copyright (c) 2012 Denis Usenko (DenVdmj)
+// MIT-style license
+//</s>
+
+<em>#include "\css\css"</em>
+<em>#define</em><em> __PATH__</em> \css\inventory.sqf
+
+<var>func(InvUnpackSlots)</var> <b>= {</b>
+    def<b>(</b><var>_slotsTable</var><b>) = [];
+    {</b>
+        <var>_slotsTable</var> <em>set</em> <b>[</b><var>_forEachIndex</var><b>,</b> <em>floor</em> <b>(</b><var>_this</var> / <b>(</b><var>_x</var> <em>select</em> 0<b>))</b> % <b>(</b><var>_x</var> <em>select</em> 1<b>)];
+    } foreach [[</b>1<b>,</b>2<b>],[</b>2<b>,</b>2<b>],[</b>4<b>,</b>2<b>],[</b>16<b>,</b>16<b>],[</b>256<b>,</b>16<b>],[</b>4096<b>,</b>8<b>],[</b>65536<b>,</b>2<b>],[</b>131072<b>,</b>16<b>]];</b>
+    <var>_slotsTable</var><b>;
+};</b>
+
+<var>func(InvGetSuperfluousSlots)</var> <b>= {
+    private [</b><i>"_unit"</i><b>,</b> <i>"_unitProvidedSlots"</i><b>,</b> <i>"_calcSuperfluous"</i><b>];</b>
+    <var>_unit</var> <b>=</b> <var>_this</var><b>;</b>
+    <var>_unitProvidedSlots</var> <b>=</b> <em>getNumber</em> <b>(</b><em>configFile</em> >> <i>"CfgVehicles"</i> >> <em>typeOf</em> <var>_unit</var> >> <i>"weaponSlots"</i><b>);</b>
+    <var>_calcSuperfluous</var> <b>= {
+        private [</b>
+            <i>"_itemsList"</i><b>,</b> <i>"_cfgSection"</i><b>,</b> <i>"_freeSlotsTable"</i><b>,</b> <i>"_superfluous"</i><b>,</b>
+            <i>"_requiredSlotsTable"</i><b>,</b> <i>"_isSuperfluous"</i><b>,</b> <i>"_freeSlots"</i>
+        <b>];</b>
+        <var>_itemsList</var> <b>= arg(</b>0<b>);</b>
+        <var>_cfgSection</var> <b>=</b> <em>configFile</em> >> <b>arg(</b>1<b>);</b>
+        <var>_freeSlotsTable</var> <b>=</b> <var>_unitProvidedSlots</var> <b>invoke(</b>InvUnpackSlots<b>);</b>
+        <var>_superfluous</var> <b>= [];
+        {</b>
+            <var>_requiredSlotsTable</var> <b>=</b> <em>getNumber</em> <b>(</b><var>_cfgSection</var> >> <var>_x</var> >> <i>"type"</i><b>) invoke(</b>InvUnpackSlots<b>);</b>
+            <var>_isSuperfluous</var> <b>= false;
+            for</b> <i>"_i"</i> <b>from</b> 0 <b>to</b> <em>count</em> <var>_requiredSlotsTable</var> -1 <b>do {</b>
+                <var>_freeSlots</var> <b>= (</b><var>_freeSlotsTable</var> <em>select</em> <var>_i</var><b>)</b> - <b>(</b><var>_requiredSlotsTable</var> <em>select</em> <var>_i</var><b>);</b>
+                <var>_freeSlotsTable</var> <em>set</em> <b>[</b><var>_i</var><b>,</b> <var>_freeSlots</var><b>];
+                if (</b><var>_freeSlots</var> &lt; 0<b>) then {</b>
+                    <var>_isSuperfluous</var> <b>= true;
+                };
+            };
+            if (</b><var>_isSuperfluous</var><b>) then {</b>
+                <tt>__push</tt><b>(</b><var>_superfluous</var><b>,</b> <var>_x</var><b>);
+            };
+        } foreach</b> <var>_itemsList</var><b>;</b>
+        <var>_superfluous</var>
+    <b>};
+    [
+        [</b><em>weapons</em> <var>_unit</var><b>,</b> <i>"CfgWeapons"</i><b>] call</b> <var>_calcSuperfluous</var><b>,
+        [</b><em>magazines</em> <var>_unit</var><b>,</b> <i>"CfgMagazines"</i><b>] call</b> <var>_calcSuperfluous</var>
+    <b>]
+};</b>
+
+
+</pre>
+<p><small><i>This documentation was generated automatically from the source code.</i></small></p>
+</body>
+</html>

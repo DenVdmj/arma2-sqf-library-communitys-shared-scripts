@@ -30,7 +30,7 @@ walkDir(
         #    push(@contentFileChunks, qq(<a href="$linkInfo->{href}">/$linkInfo->{title}</a>\n));
         #};
 
-        if ($file =~ /(?:\.(?:macro|sqf)$)|(?:\bcss$)/) {
+        if ($file =~ /(?:\bcss\/[\w-]+\.macro$)|(?:\.sqf$)|(?:\bcss$)/) {
             my @content = parseSqfInlineDocs($file);
             if (scalar @content > 0) {
                 my $linkInfo = processFile($file, $relPath, sub {
