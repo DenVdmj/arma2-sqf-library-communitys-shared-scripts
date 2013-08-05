@@ -50,7 +50,7 @@ func(MissionDisplayAddEventHandler) = {
 };
 
 //
-// Function func(MissionDisplayAddEventHandler)
+// Function func(MissionDisplayRemoveEventHandler)
 // Syntax:
 //     [number IDD, string EventType, number EventHandlerID] invoke(MissionDisplayRemoveEventHandler)
 //  Remove display event handler

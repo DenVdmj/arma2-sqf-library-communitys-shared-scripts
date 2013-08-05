@@ -66,7 +66,12 @@
  For example, we add &quot;onload&quot; event handler on RscDisplayGear
  display, for interrupt of opening inventory:
 
-     _ehID = [106, &quot;load&quot;, {hint str _this}] invoke(MissionDisplayAddEventHandler)<hr />
+     _ehID = [106, &quot;load&quot;, {hint str _this}] invoke(MissionDisplayAddEventHandler)<hr /><h2>Function func(MissionDisplayRemoveEventHandler)</h2>
+<strong>Syntax:
+</strong>    [number IDD, string EventType, number EventHandlerID] invoke(MissionDisplayRemoveEventHandler)
+ Remove display event handler
+ Example:
+     [106, &quot;load&quot;, _ehID] invoke(MissionDisplayRemoveEventHandler)<hr />
 <a
   href="#unfoldcode"
   id="unfoldcode"
@@ -131,7 +136,7 @@
 };</b>
 
 <s>//
-// Function func(MissionDisplayAddEventHandler)
+// Function func(MissionDisplayRemoveEventHandler)
 // Syntax:
 //     [number IDD, string EventType, number EventHandlerID] invoke(MissionDisplayRemoveEventHandler)
 //  Remove display event handler
