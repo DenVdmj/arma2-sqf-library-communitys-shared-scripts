@@ -4,7 +4,9 @@ class CfgPatches {
         units[] = {};
         weapons[] = {};
         requiredVersion = 0.1;
-        requiredAddons[] = {};
+        requiredAddons[] = {
+            "CAUI"
+        };
     };
 };
 
@@ -23,7 +25,7 @@ class CfgMods {
 class CfgVehicles {
     class Logic;
     class css_lib : Logic {
-        displayName = "Community`s shared scripts library";
+        displayName = "Function library";
         icon = "\css\files\ico\icon.paa";
         picture = "\css\files\ico\icon.paa";
         vehicleClass = "Modules";
@@ -32,3 +34,5 @@ class CfgVehicles {
         };
     };
 };
+
+#include "UIEventHandlers.hpp"

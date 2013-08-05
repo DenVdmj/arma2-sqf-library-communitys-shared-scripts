@@ -1,0 +1,9 @@
+// SQF
+
+#define __supportedEHTypes ["load", "unload", "keydown", "keyup", "mousemoving", "mousezchanged"]
+#define __supportedDisplays [46, 54, 106]
+
+#define __funcCommonEH  (__q(/css/ui/eh/funcCommonEH))
+#define __ehList(N,T)   (__q(/css/ui/eh/ehList/dslp/)+str(N)+'/'+(T))
+#define __idList(N,T)   (__q(/css/ui/eh/idList/dslp/)+str(N)+'/'+(T))
+#define __ehID(N)       (__q(/css/ui/eh/id/dslp/)+str(N))

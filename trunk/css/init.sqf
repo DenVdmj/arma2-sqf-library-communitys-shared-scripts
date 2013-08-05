@@ -24,8 +24,10 @@ if (isNil { missionNamespace getVariable "/CSS/IsPresent" }) then {
             "geo.sqf",
             "gui.sqf",
             "hashes.sqf",
+            "inventory.sqf",
             "mp.sqf",
             "strings.sqf",
+            "uiEvents.sqf",
             "vectors.sqf",
             "vehicles.sqf"
         ];
