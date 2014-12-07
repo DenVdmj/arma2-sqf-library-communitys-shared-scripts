@@ -1,7 +1,7 @@
 @echo off
 rem ----------------------------------------------------------------------------------------------
 rem Relative (by Arma2 folder) path to mod folder
-set RelativeModDir=@\@@vdmj\css
+set RelativeModDir=@\#vdmj\css
 rem Addons directories list, may be a mask, as %~dp0/*
 set DirList="%~dp0css"
 rem Requires binarize

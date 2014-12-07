@@ -184,11 +184,54 @@ func(MapGrep) = {
 //     ]
 //
 
-func(SortArray)={private["_s","_1","_2","_t","_i","_l","_u","_c","_a","_d"];_s={_a=_1 select
-_l;_d=_2 select _l;while{_c=_l+_l+1;if(_c<=_u)then{if(_c<_u)then{if(_1 select _c+1>_1 select
-_c)then{_c=_c+1}};if(_1 select _c>_a)then{_1 set[_l,_1 select _c];_2 set[_l,_2 select
-_c];_l=_c;true}}}do{};_1 set[_l,_a];_2 set[_l,_d]};_1=_this select 0;_2=_this select
-1;_t=count _1-1;_i=floor(_t*.5);while{_i>=0}do{_l=_i;_u=_t;call
-_s;_i=_i-1};_i=_t;while{_i>0}do{_a=_1 select 0;_1 set[0,_1 select
-_i];_1 set[_i,_a];_d=_2 select 0;_2 set[0,_2 select
-_i];_2 set[_i,_d];_l=0;_u=_i-1;call _s;_i=_i-1};_this};
+func(SortArray) = {
+    private ["_s", "_1", "_2", "_t", "_i", "_l", "_u", "_c", "_a", "_d"];
+    _1 = arg(0);
+    _2 = arg(1);
+    _s = {
+        _a = _1 select _l;
+        _d = _2 select _l;
+        while {
+            _c = _l+_l+1;
+            if (_c <= _u) then {
+                if (_c < _u) then {
+                    if (_1 select _c+1 > _1 select _c) then {
+                        _c = _c+1
+                    }
+                };
+                if (_1 select _c > _a) then {
+                    _1 set [_l, _1 select _c];
+                    _2 set [_l, _2 select _c];
+                    _l = _c;
+                    true
+                }
+            }
+        } do {};
+        _1 set [_l, _a];
+        _2 set [_l, _d]
+    };
+    _t = count _1-1;
+    _i = floor (_t*.5);
+    while { _i >= 0 } do {
+        _l = _i;
+        _u = _t;
+        call _s;
+        _i = _i-1
+    };
+    _i = _t;
+    while { _i > 0 } do {
+        _a = _1 select 0;
+        _1 set [0, _1 select _i];
+        _1 set [_i, _a];
+
+        _d = _2 select 0;
+        _2 set [0, _2 select _i];
+        _2 set [_i, _d];
+
+        _l = 0;
+        _u = _i-1;
+        call _s;
+        _i = _i-1
+    };
+    _this
+};

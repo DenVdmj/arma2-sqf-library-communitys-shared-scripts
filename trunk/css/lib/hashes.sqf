@@ -25,9 +25,11 @@ func(HashCreate) = {
 //
 
 func(HashDelete) = {
+    // free memory
     deleteVehicle arg(0);
     _this set [0, nil];
     _this set [1, nil];
+    _this resize 0;
 };
 
 //

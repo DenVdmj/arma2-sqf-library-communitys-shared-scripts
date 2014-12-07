@@ -6,7 +6,7 @@
 //
 
 #include "\css\css"
-#define __PATH__ \css\inventory.sqf
+#define __PATH__ \css\lib
 
 func(InvUnpackSlots) = {
     def(_slotsTable) = [];

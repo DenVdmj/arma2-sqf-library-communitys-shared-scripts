@@ -137,7 +137,7 @@ func(IsEqual) = {
     };
 
     for "_i" from 0 to count _a - 1 do {
-        if !([_a select _i, _b select _i] call func_isEqual_2) exitWith {
+        if !([_a select _i, _b select _i] invoke(IsEqual)) exitWith {
             false
         };
         true;

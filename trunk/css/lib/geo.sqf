@@ -30,14 +30,14 @@ func(ViewportVector) = {
 
 
 //
-// Function func(SightWorldPosition)
+// Function func(GetAimPosATL)
 //
 // Syntax:
-//     invoke(SightWorldPosition)
+//     invoke(GetAimPosATL)
 // Returns the position of the weapon cursor projection on landscape.
 //
 
-func(SightWorldPosition) = {
+func(GetAimPosATL) = {
     private ["_boneHeadName", "_headPosition", "_weaponDirection", "_screenPosition"];
     // either, we can use "memoryPointAim" instead of "boneHead"
     _boneHeadName = getText (configFile >> "CfgVehicles" >> typeof player >> "boneHead");
@@ -184,8 +184,16 @@ func(CompassPoint) = {
     _degree = round (
         arg(0) call {
             if (__isArray(_this)) then {
-                _this call ( if (__isArray(arg(0))) then { func(Azimuth) } else { func(Vector2Azimuth) } )
-            } else { _this }
+                _this call (
+                    if (__isArray(arg(0))) then {
+                        func(Azimuth)
+                    } else {
+                        func(Vector2Azimuth)
+                    }
+                )
+            } else {
+                _this
+            }
         }
     );
     _rumbsLimit = argOr(1,16);

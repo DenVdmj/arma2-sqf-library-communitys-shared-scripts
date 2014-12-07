@@ -2,56 +2,70 @@
 <html>
 <head>
 <title>«Community`s Shared Scripts» SQF-Library - /css/lib/arrays.sqf</title>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta charset="utf-8" />
 <style>
-  html {
-    font-family: Helvetica, Arial, sans-serif;
-  }
-  body {
-    margin: auto;
-    width: 50em;
-  }
-  * {
-    cursor: default;
-  }
-  pre {
-    padding: 1em 0;
-  }
-  pre.code,
-  pre.code b,
-  pre.code i,
-  pre.code s,
-  pre.code u,
-  pre.code tt,
-  pre.code em,
-  pre.code var {
-    text-decoration: none;
-    font: normal normal 14px/150% "Consolas", monospace;
-  }
-  pre.code b  { color: #009; }
-  pre.code i  { color: #080; }
-  pre.code s  { color: #BBB; font-style: italic; }
-  pre.code u  { color: #0A0; }
-  pre.code tt { color: #994; }
-  pre.code em { color: #A00; }
-  pre.code var { color: #5E5E5E; }
+html {
+ font-family: "PragmataPro";
+}
+body {
+ margin: auto;
+ width: 50em;
+}
+* {
+ cursor: default;
+}
+pre {
+ padding: 1em 0;
+}
+pre.code,
+pre.code b,
+pre.code i,
+pre.code s,
+pre.code u,
+pre.code tt,
+pre.code em,
+pre.code var {
+ text-decoration: none;
+ font: normal normal 11pt/150% "PragmataPro", "Consolas", monospace;
+}
+pre.code b  { color: #339; }
+pre.code i  { color: #080; }
+pre.code s  { color: #BBB; font-style: italic; }
+pre.code u  { color: #0A0; }
+pre.code tt { color: #994; }
+pre.code em { color: #A00; }
+pre.code var { color: #5E5E5E; }
 
-  hr {
-    margin: 1em 0 .1em 0;
-    border: 1px dashed #EEE;
-  }
-  #unfoldcode:hover {
-    cursor: hand;
-    color: red
-  }
-  h2, h3, h4 {
-    margin: .5em 0;
-  }
-  h2 {
-    margin: 0;
-    padding: .2em .1em;
-    background: #EEE;
-  }
+hr {
+ display: none;
+}
+#unfoldcode:hover {
+ cursor: hand;
+ color: red
+}
+h1 { font-size: 200%; }
+h2 { font-size: 140%; }
+h3 { font-size: 120%; }
+h4 { font-size: 110%; }
+h5 { font-size: 105%; }
+h6 { font-size: 100%; }
+h2, h3, h4, h5, h6 {
+ margin: 2em 0 .5em 0;
+}
+h2, h3, h4 {
+ font-weight: 400;
+}
+h2 {
+ padding: .4em .2em;
+ margin: 2em 0 0 -.2em;
+ border-radius: .2em;
+ background: linear-gradient(90deg, rgba(100,100,100,.15),rgba(0,0,0,0)); /* CSS3: Firefox, Opera, Chrome */
+}
+b, strong {
+ font-weight: 400;
+ color: #000;
+ text-shadow: 0 0 0 #000
+}
 </style>
 </head>
 <body>
@@ -335,14 +349,57 @@ Format of arrays:
 //     ]
 //</s>
 
-<var>func(SortArray)</var><b>={private[</b><i>"_s"</i><b>,</b><i>"_1"</i><b>,</b><i>"_2"</i><b>,</b><i>"_t"</i><b>,</b><i>"_i"</i><b>,</b><i>"_l"</i><b>,</b><i>"_u"</i><b>,</b><i>"_c"</i><b>,</b><i>"_a"</i><b>,</b><i>"_d"</i><b>];</b><var>_s</var><b>={</b><var>_a</var><b>=</b><var>_1</var> <em>select</em>
-<var>_l</var><b>;</b><var>_d</var><b>=</b><var>_2</var> <em>select</em> <var>_l</var><b>;while{</b><var>_c</var><b>=</b><var>_l</var>+<var>_l</var>+1<b>;if(</b><var>_c</var><b>&lt;=</b><var>_u</var><b>)then{if(</b><var>_c</var>&lt;<var>_u</var><b>)then{if(</b><var>_1</var> <em>select</em> <var>_c</var>+1><var>_1</var> <em>select</em>
-<var>_c</var><b>)then{</b><var>_c</var><b>=</b><var>_c</var>+1<b>}};if(</b><var>_1</var> <em>select</em> <var>_c</var>><var>_a</var><b>)then{</b><var>_1</var> <em>set</em><b>[</b><var>_l</var><b>,</b><var>_1</var> <em>select</em> <var>_c</var><b>];</b><var>_2</var> <em>set</em><b>[</b><var>_l</var><b>,</b><var>_2</var> <em>select</em>
-<var>_c</var><b>];</b><var>_l</var><b>=</b><var>_c</var><b>;true}}}do{};</b><var>_1</var> <em>set</em><b>[</b><var>_l</var><b>,</b><var>_a</var><b>];</b><var>_2</var> <em>set</em><b>[</b><var>_l</var><b>,</b><var>_d</var><b>]};</b><var>_1</var><b>=</b><var>_this</var> <em>select</em> 0<b>;</b><var>_2</var><b>=</b><var>_this</var> <em>select</em>
-1<b>;</b><var>_t</var><b>=</b><em>count</em> <var>_1</var>-1<b>;</b><var>_i</var><b>=</b><em>floor</em><b>(</b><var>_t</var>*.5<b>);while{</b><var>_i</var><b>>=</b>0<b>}do{</b><var>_l</var><b>=</b><var>_i</var><b>;</b><var>_u</var><b>=</b><var>_t</var><b>;call</b>
-<var>_s</var><b>;</b><var>_i</var><b>=</b><var>_i</var>-1<b>};</b><var>_i</var><b>=</b><var>_t</var><b>;while{</b><var>_i</var>>0<b>}do{</b><var>_a</var><b>=</b><var>_1</var> <em>select</em> 0<b>;</b><var>_1</var> <em>set</em><b>[</b>0<b>,</b><var>_1</var> <em>select</em>
-<var>_i</var><b>];</b><var>_1</var> <em>set</em><b>[</b><var>_i</var><b>,</b><var>_a</var><b>];</b><var>_d</var><b>=</b><var>_2</var> <em>select</em> 0<b>;</b><var>_2</var> <em>set</em><b>[</b>0<b>,</b><var>_2</var> <em>select</em>
-<var>_i</var><b>];</b><var>_2</var> <em>set</em><b>[</b><var>_i</var><b>,</b><var>_d</var><b>];</b><var>_l</var><b>=</b>0<b>;</b><var>_u</var><b>=</b><var>_i</var>-1<b>;call</b> <var>_s</var><b>;</b><var>_i</var><b>=</b><var>_i</var>-1<b>};</b><var>_this</var><b>};</b>
+<var>func(SortArray)</var> <b>= {
+    private [</b><i>"_s"</i><b>,</b> <i>"_1"</i><b>,</b> <i>"_2"</i><b>,</b> <i>"_t"</i><b>,</b> <i>"_i"</i><b>,</b> <i>"_l"</i><b>,</b> <i>"_u"</i><b>,</b> <i>"_c"</i><b>,</b> <i>"_a"</i><b>,</b> <i>"_d"</i><b>];</b>
+    <var>_1</var> <b>= arg(</b>0<b>);</b>
+    <var>_2</var> <b>= arg(</b>1<b>);</b>
+    <var>_s</var> <b>= {</b>
+        <var>_a</var> <b>=</b> <var>_1</var> <em>select</em> <var>_l</var><b>;</b>
+        <var>_d</var> <b>=</b> <var>_2</var> <em>select</em> <var>_l</var><b>;
+        while {</b>
+            <var>_c</var> <b>=</b> <var>_l</var>+<var>_l</var>+1<b>;
+            if (</b><var>_c</var> <b>&lt;=</b> <var>_u</var><b>) then {
+                if (</b><var>_c</var> &lt; <var>_u</var><b>) then {
+                    if (</b><var>_1</var> <em>select</em> <var>_c</var>+1 > <var>_1</var> <em>select</em> <var>_c</var><b>) then {</b>
+                        <var>_c</var> <b>=</b> <var>_c</var>+1
+                    <b>}
+                };
+                if (</b><var>_1</var> <em>select</em> <var>_c</var> > <var>_a</var><b>) then {</b>
+                    <var>_1</var> <em>set</em> <b>[</b><var>_l</var><b>,</b> <var>_1</var> <em>select</em> <var>_c</var><b>];</b>
+                    <var>_2</var> <em>set</em> <b>[</b><var>_l</var><b>,</b> <var>_2</var> <em>select</em> <var>_c</var><b>];</b>
+                    <var>_l</var> <b>=</b> <var>_c</var><b>;
+                    true
+                }
+            }
+        } do {};</b>
+        <var>_1</var> <em>set</em> <b>[</b><var>_l</var><b>,</b> <var>_a</var><b>];</b>
+        <var>_2</var> <em>set</em> <b>[</b><var>_l</var><b>,</b> <var>_d</var><b>]
+    };</b>
+    <var>_t</var> <b>=</b> <em>count</em> <var>_1</var>-1<b>;</b>
+    <var>_i</var> <b>=</b> <em>floor</em> <b>(</b><var>_t</var>*.5<b>);
+    while {</b> <var>_i</var> <b>>=</b> 0 <b>} do {</b>
+        <var>_l</var> <b>=</b> <var>_i</var><b>;</b>
+        <var>_u</var> <b>=</b> <var>_t</var><b>;
+        call</b> <var>_s</var><b>;</b>
+        <var>_i</var> <b>=</b> <var>_i</var>-1
+    <b>};</b>
+    <var>_i</var> <b>=</b> <var>_t</var><b>;
+    while {</b> <var>_i</var> > 0 <b>} do {</b>
+        <var>_a</var> <b>=</b> <var>_1</var> <em>select</em> 0<b>;</b>
+        <var>_1</var> <em>set</em> <b>[</b>0<b>,</b> <var>_1</var> <em>select</em> <var>_i</var><b>];</b>
+        <var>_1</var> <em>set</em> <b>[</b><var>_i</var><b>,</b> <var>_a</var><b>];</b>
+
+        <var>_d</var> <b>=</b> <var>_2</var> <em>select</em> 0<b>;</b>
+        <var>_2</var> <em>set</em> <b>[</b>0<b>,</b> <var>_2</var> <em>select</em> <var>_i</var><b>];</b>
+        <var>_2</var> <em>set</em> <b>[</b><var>_i</var><b>,</b> <var>_d</var><b>];</b>
+
+        <var>_l</var> <b>=</b> 0<b>;</b>
+        <var>_u</var> <b>=</b> <var>_i</var>-1<b>;
+        call</b> <var>_s</var><b>;</b>
+        <var>_i</var> <b>=</b> <var>_i</var>-1
+    <b>};</b>
+    <var>_this</var>
+<b>};</b>
 
 
 <hr />

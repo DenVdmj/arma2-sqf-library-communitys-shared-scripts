@@ -105,8 +105,8 @@ sub parseSqfInlineDocs {
             (?:\*\n*([\x20\x09]+)?(?:(?:function)\s+)?((func(?:\w+|\(\w+\))).*?)\n\*/\s*\6\s*\=\s*)
         >gcisx
     ) {
-        my $padding = $1 | $4;
-        my $text = $2 | $5;
+        my $padding = $1 || $4;
+        my $text = $2 || $5;
 
         $text = "Function $text";
         $text =~ s{\n//$padding?}{\n}g;

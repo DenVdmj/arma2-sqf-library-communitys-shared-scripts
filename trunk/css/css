@@ -5,9 +5,6 @@
 // MIT-style license
 //
 
-#ifndef __common_macro_present
-#define __common_macro_present present
-
 #ifndef __project_name
 #define __project_name css
 #endif
@@ -15,6 +12,9 @@
 #ifndef __module_name
 #define __module_name -
 #endif
+
+#ifndef __common_macro_present
+#define __common_macro_present present
 
 #define __ns_prefix /__project_name/__module_name
 #define __q(str) #str

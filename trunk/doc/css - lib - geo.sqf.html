@@ -2,56 +2,70 @@
 <html>
 <head>
 <title>«Community`s Shared Scripts» SQF-Library - /css/lib/geo.sqf</title>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta charset="utf-8" />
 <style>
-  html {
-    font-family: Helvetica, Arial, sans-serif;
-  }
-  body {
-    margin: auto;
-    width: 50em;
-  }
-  * {
-    cursor: default;
-  }
-  pre {
-    padding: 1em 0;
-  }
-  pre.code,
-  pre.code b,
-  pre.code i,
-  pre.code s,
-  pre.code u,
-  pre.code tt,
-  pre.code em,
-  pre.code var {
-    text-decoration: none;
-    font: normal normal 14px/150% "Consolas", monospace;
-  }
-  pre.code b  { color: #009; }
-  pre.code i  { color: #080; }
-  pre.code s  { color: #BBB; font-style: italic; }
-  pre.code u  { color: #0A0; }
-  pre.code tt { color: #994; }
-  pre.code em { color: #A00; }
-  pre.code var { color: #5E5E5E; }
+html {
+ font-family: "PragmataPro";
+}
+body {
+ margin: auto;
+ width: 50em;
+}
+* {
+ cursor: default;
+}
+pre {
+ padding: 1em 0;
+}
+pre.code,
+pre.code b,
+pre.code i,
+pre.code s,
+pre.code u,
+pre.code tt,
+pre.code em,
+pre.code var {
+ text-decoration: none;
+ font: normal normal 11pt/150% "PragmataPro", "Consolas", monospace;
+}
+pre.code b  { color: #339; }
+pre.code i  { color: #080; }
+pre.code s  { color: #BBB; font-style: italic; }
+pre.code u  { color: #0A0; }
+pre.code tt { color: #994; }
+pre.code em { color: #A00; }
+pre.code var { color: #5E5E5E; }
 
-  hr {
-    margin: 1em 0 .1em 0;
-    border: 1px dashed #EEE;
-  }
-  #unfoldcode:hover {
-    cursor: hand;
-    color: red
-  }
-  h2, h3, h4 {
-    margin: .5em 0;
-  }
-  h2 {
-    margin: 0;
-    padding: .2em .1em;
-    background: #EEE;
-  }
+hr {
+ display: none;
+}
+#unfoldcode:hover {
+ cursor: hand;
+ color: red
+}
+h1 { font-size: 200%; }
+h2 { font-size: 140%; }
+h3 { font-size: 120%; }
+h4 { font-size: 110%; }
+h5 { font-size: 105%; }
+h6 { font-size: 100%; }
+h2, h3, h4, h5, h6 {
+ margin: 2em 0 .5em 0;
+}
+h2, h3, h4 {
+ font-weight: 400;
+}
+h2 {
+ padding: .4em .2em;
+ margin: 2em 0 0 -.2em;
+ border-radius: .2em;
+ background: linear-gradient(90deg, rgba(100,100,100,.15),rgba(0,0,0,0)); /* CSS3: Firefox, Opera, Chrome */
+}
+b, strong {
+ font-weight: 400;
+ color: #000;
+ text-shadow: 0 0 0 #000
+}
 </style>
 </head>
 <body>
@@ -62,10 +76,10 @@
 
 <strong>Syntax:
 </strong>    invoke(ViewportVector)
-Returns the direction vector of the current camera.<hr /><h2>Function func(SightWorldPosition)</h2>
+Returns the direction vector of the current camera.<hr /><h2>Function func(GetAimPosATL)</h2>
 
 <strong>Syntax:
-</strong>    invoke(SightWorldPosition)
+</strong>    invoke(GetAimPosATL)
 Returns the position of the weapon cursor projection on landscape.<hr /><h2>Function func(ViewportPosition)</h2>
 
 <strong>Syntax:
@@ -242,14 +256,14 @@ Return value: config
 
 
 <s>//
-// Function func(SightWorldPosition)
+// Function func(GetAimPosATL)
 //
 // Syntax:
-//     invoke(SightWorldPosition)
+//     invoke(GetAimPosATL)
 // Returns the position of the weapon cursor projection on landscape.
 //</s>
 
-<var>func(SightWorldPosition)</var> <b>= {
+<var>func(GetAimPosATL)</var> <b>= {
     private [</b><i>"_boneHeadName"</i><b>,</b> <i>"_headPosition"</i><b>,</b> <i>"_weaponDirection"</i><b>,</b> <i>"_screenPosition"</i><b>];</b>
     <s>// either, we can use "memoryPointAim" instead of "boneHead"</s>
     <var>_boneHeadName</var> <b>=</b> <em>getText</em> <b>(</b><em>configFile</em> >> <i>"CfgVehicles"</i> >> <em>typeof</em> <em>player</em> >> <i>"boneHead"</i><b>);</b>
@@ -396,8 +410,16 @@ Return value: config
     <var>_degree</var> <b>=</b> <em>round</em> <b>(
         arg(</b>0<b>) call {
             if (</b><tt>__isArray</tt><b>(</b><var>_this</var><b>)) then {</b>
-                <var>_this</var> <b>call ( if (</b><tt>__isArray</tt><b>(arg(</b>0<b>))) then {</b> <var>func(Azimuth)</var> <b>} else {</b> <var>func(Vector2Azimuth)</var> <b>} )
-            } else {</b> <var>_this</var> <b>}
+                <var>_this</var> <b>call (
+                    if (</b><tt>__isArray</tt><b>(arg(</b>0<b>))) then {</b>
+                        <var>func(Azimuth)</var>
+                    <b>} else {</b>
+                        <var>func(Vector2Azimuth)</var>
+                    <b>}
+                )
+            } else {</b>
+                <var>_this</var>
+            <b>}
         }
     );</b>
     <var>_rumbsLimit</var> <b>= argOr(</b>1<b>,</b>16<b>);</b>
